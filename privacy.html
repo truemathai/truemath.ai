@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Privacy Policy — TrueMath</title>
+  <meta name="description" content="How TrueMath collects, uses, shares, and protects personal information across our website, applications, and APIs.">
+  <link rel="canonical" href="https://truemath.ai/privacy.html">
+
+  <meta property="og:title" content="Privacy Policy — TrueMath">
+  <meta property="og:description" content="How TrueMath collects, uses, shares, and protects personal information across our website, applications, and APIs.">
+  <meta property="og:url" content="https://truemath.ai/privacy.html">
+  <meta property="og:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy — TrueMath">
+  <meta name="twitter:description" content="How TrueMath collects, uses, shares, and protects personal information across our website, applications, and APIs.">
+  <meta name="twitter:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6QKEF8PLS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J6QKEF8PLS');
+  </script>
+</head>
+<body class="page-privacy">
+
+<nav>
+  <a href="/index.html" class="nav-logo">
+    <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+  </a>
+  <ul class="nav-links">
+    <li><a href="/index.html#why">Why TrueMath</a></li>
+    <li><a href="/index.html#library">Professionals</a></li>
+    <li><a href="/index.html#developers">Developers</a></li>
+    <li><a href="/index.html#about">About</a></li>
+    <li><a href="/faq.html">FAQ</a></li>
+    <li><a href="https://blog.truemath.ai/">Blog</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+    <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul class="mobile-menu-links">
+    <li><a href="/index.html#why">Why TrueMath</a></li>
+    <li><a href="/index.html#library">Professionals</a></li>
+    <li><a href="/index.html#developers">Developers</a></li>
+    <li><a href="/index.html#about">About</a></li>
+    <li><a href="/faq.html">FAQ</a></li>
+    <li><a href="https://blog.truemath.ai/">Blog</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+    <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <span class="doc-label">Legal</span>
+  <h1 class="doc-title">Privacy Policy</h1>
+  <p class="doc-effective">Effective Date: May 13, 2026</p>
+
+  <p class="doc-intro">TrueMath, Inc., a Delaware corporation ("TrueMath," "we," "us," or "our"), is committed to protecting your privacy. This Privacy Policy describes how we collect, use, share, and protect personal information when you use our website, applications, APIs, and related services (collectively, the "Services"). It applies to all users of the Services. If you have a separately signed agreement with TrueMath that addresses how we handle specific data, that agreement controls to the extent it conflicts with this Policy.</p>
+
+  <p>Please also review our <a href="/terms.html">Terms of Service</a>, which govern your use of the Services.</p>
+
+  <h2>How TrueMath Processes Your Data</h2>
+  <p>Before describing the categories of personal information we collect, it helps to understand how TrueMath actually processes data, because the architecture matters for privacy.</p>
+
+  <p>The Services consist of two layers. The first is a deterministic mathematical computation engine that runs on TrueMath's infrastructure inside Amazon Web Services. The second is a natural language interpretation layer powered by Anthropic's Claude, accessed through Amazon Bedrock. When you submit a request, the interpretation layer converts your natural language into a structured calculation request, and the computation engine executes the calculation.</p>
+
+  <p>This split is important because:</p>
+  <ul>
+    <li>Your inputs and the prompts derived from them pass through Amazon Bedrock to Anthropic's Claude</li>
+    <li>Under AWS's published Bedrock terms, your prompts and completions are not used to train any foundation model, model providers (including Anthropic) do not have access to them, and the data stays inside AWS infrastructure during the call</li>
+    <li>TrueMath does not train any large language model on your inputs, your outputs, or any content you submit to the Services</li>
+    <li>The deterministic computation engine processes your inputs entirely within TrueMath's AWS environment</li>
+  </ul>
+
+  <p>The current Bedrock data privacy commitments are published at <a href="https://aws.amazon.com/bedrock/security-compliance/" target="_blank" rel="noopener">aws.amazon.com/bedrock/security-compliance</a>.</p>
+
+  <h2>Personal Information We Collect</h2>
+
+  <h3>Information You Provide to Us</h3>
+  <ul>
+    <li><strong>Account Information.</strong> When you create an account, we collect your name, email address, login credentials, and, for paid plans, billing and payment information processed by our payment provider.</li>
+    <li><strong>Content You Submit.</strong> The inputs, prompts, file uploads, methodology descriptions, and other materials you provide when using the Services, along with the calculation outputs and lineage records returned to you. The Terms of Service describe how this Content is owned, used, and protected.</li>
+    <li><strong>Communications.</strong> Information you provide when you contact us for support, sales inquiries, or other purposes, including the contents of your messages.</li>
+    <li><strong>Survey and Event Information.</strong> Information you provide when you participate in surveys, events, beta programs, or similar interactions.</li>
+    <li><strong>Identity Verification.</strong> If we need to verify your identity, the information you provide for that purpose.</li>
+  </ul>
+
+  <h3>Information Collected Automatically</h3>
+  <ul>
+    <li><strong>Log Data.</strong> Information your browser or device sends automatically when you use the Services, including IP address, browser type and version, operating system, referring pages, and the date and time of requests.</li>
+    <li><strong>Usage Data.</strong> Information about how you interact with the Services, including features used, calculations run, pages viewed, and timestamps.</li>
+    <li><strong>Device Information.</strong> Device identifiers, device type, and similar technical information necessary to deliver the Services.</li>
+  </ul>
+
+  <h3>Cookies and Similar Technologies</h3>
+  <p>The specific technologies set by TrueMath differ between our public marketing site (truemath.ai) and our application (app.truemath.ai).</p>
+
+  <p><strong>Marketing site (truemath.ai).</strong></p>
+  <ul>
+    <li><strong>Google Analytics 4.</strong> The marketing site uses Google Analytics 4 to measure traffic and improve the site. GA4 sets first-party cookies (such as <code>_ga</code> and <code>_ga_*</code>) used to distinguish users and sessions for traffic measurement. We do not use GA4 for advertising or for cross-site profiling. You can opt out of Google Analytics across all sites using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</li>
+    <li><strong>Google Fonts.</strong> The marketing site loads typography from <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>. Google receives your IP address as part of normal HTTP delivery; no cookies are set by this loader.</li>
+    <li><strong>Cloudflare.</strong> Cloudflare provides DNS and edge-network services in front of the site. Cloudflare may set a <code>__cf_bm</code> bot-management cookie (lifespan around 30 minutes) for security purposes; this cookie is not used for tracking and is documented in <a href="https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/" target="_blank" rel="noopener">Cloudflare's cookie reference</a>.</li>
+    <li><strong>Hosting.</strong> The marketing site is served by GitHub Pages. Standard server-side request logs apply.</li>
+  </ul>
+
+  <p><strong>Application (app.truemath.ai).</strong> The application uses cookies and similar technologies only for local browser preferences and authenticated session state (for example, keeping you signed in and remembering UI preferences across visits). The application does not set cross-site tracking cookies, advertising cookies, or third-party analytics cookies, and we do not engage in cross-context behavioral advertising.</p>
+
+  <h3>Information from Third Parties</h3>
+  <p>We may receive information about you from third parties when you sign in through a third-party identity provider, when you interact with TrueMath on a social platform, or when third parties (such as our service providers) provide us with information needed to deliver the Services.</p>
+
+  <h2>How We Use Personal Information</h2>
+  <p>We use personal information to:</p>
+  <ul>
+    <li>Provide, maintain, operate, and secure the Services</li>
+    <li>Authenticate users and manage accounts</li>
+    <li>Process payments and manage subscriptions</li>
+    <li>Communicate with you about the Services, including transactional and operational messages</li>
+    <li>Respond to support requests and other inquiries</li>
+    <li>Improve, develop, and expand the Services and our platform technology, including the Library and the Domain Builder Assistant, using aggregated and anonymized patterns derived from usage. We do not use the substance of your Content to train any large language model.</li>
+    <li>Detect, prevent, and address fraud, abuse, security incidents, and violations of our Terms</li>
+    <li>Comply with legal obligations and respond to lawful requests from authorities</li>
+    <li>Manage business operations, including, where applicable, evaluating, negotiating, and effecting mergers, acquisitions, financings, or other corporate transactions</li>
+  </ul>
+
+  <h3>Aggregated and De-identified Information</h3>
+  <p>We may aggregate or de-identify personal information so that it can no longer reasonably identify you, and we may use such aggregated or de-identified information for any business purpose without restriction. We do not attempt to re-identify aggregated or de-identified information except as required by law.</p>
+
+  <h2>Legal Bases for Processing (EEA, UK, and Switzerland)</h2>
+  <p>If you are located in the European Economic Area, the United Kingdom, or Switzerland, we process your personal information on the following legal bases:</p>
+  <ul>
+    <li><strong>Performance of a contract.</strong> To provide the Services you have requested under our Terms of Service.</li>
+    <li><strong>Legitimate interests.</strong> To operate, secure, and improve the Services, to communicate with you about the Services, and to protect TrueMath and our users from fraud and abuse, where these interests are not overridden by your rights.</li>
+    <li><strong>Compliance with legal obligations.</strong> Where we are required by law to process your personal information.</li>
+    <li><strong>Consent.</strong> Where we ask for your consent to a specific processing activity, in which case you may withdraw consent at any time.</li>
+  </ul>
+
+  <h2>How We Share Personal Information</h2>
+  <p>We share personal information in the following circumstances:</p>
+  <ul>
+    <li><strong>Service Providers.</strong> With third-party providers who help us operate the Services, including cloud infrastructure (Amazon Web Services), the natural language interpretation layer (Anthropic Claude via Amazon Bedrock), payment processing, customer support, and analytics. These providers are bound by contract to use personal information only for the purposes we direct.</li>
+    <li><strong>Account Administrators.</strong> If you use the Services through a team or organization account, the administrators of that account may have access to your account information, your usage of the Services, and the Content created within that account.</li>
+    <li><strong>Sharing You Initiate.</strong> When you share calculation records, lineage, or other Content with third parties through features the Services provide, the recipient will see what you have shared. You control what is shared and with whom.</li>
+    <li><strong>Legal Requests.</strong> Where required by law, regulation, legal process, or governmental request, or where we believe in good faith that disclosure is necessary to protect our rights, our users, or the public.</li>
+    <li><strong>Corporate Transactions.</strong> In connection with a merger, acquisition, financing, reorganization, sale of assets, bankruptcy, or similar transaction, in which case personal information may be transferred to the successor entity. We will notify you of any such transfer and any choices you may have.</li>
+    <li><strong>Affiliates.</strong> With our corporate affiliates, who will process the information in a manner consistent with this Policy.</li>
+    <li><strong>With Your Consent.</strong> For other purposes with your consent.</li>
+  </ul>
+
+  <p>We do not sell personal information, and we do not share personal information with third parties for cross-context behavioral advertising purposes.</p>
+
+  <h2>Your Rights and Choices</h2>
+  <p>Depending on where you live, you may have some or all of the following rights with respect to your personal information:</p>
+  <ul>
+    <li>The right to access the personal information we hold about you</li>
+    <li>The right to correct inaccurate personal information</li>
+    <li>The right to request deletion of your personal information</li>
+    <li>The right to data portability</li>
+    <li>The right to restrict or object to certain processing</li>
+    <li>The right to withdraw consent where processing is based on consent</li>
+    <li>The right to opt out of the sale or sharing of personal information (we do not sell or share for cross-context advertising, but you have this right regardless)</li>
+    <li>The right to lodge a complaint with a supervisory authority</li>
+  </ul>
+
+  <p>To exercise these rights, contact us at <a href="mailto:hello@truemath.ai">hello@truemath.ai</a>. We will respond consistent with applicable law. We may need to verify your identity before fulfilling certain requests.</p>
+
+  <h3>California Residents</h3>
+  <p>If you are a California resident, the California Consumer Privacy Act (CCPA), as amended, gives you the rights described above. The categories of personal information we collect, the purposes for which we use it, and the categories of recipients with whom we share it are described in the relevant sections of this Policy. We do not sell your personal information, and we do not share it for cross-context behavioral advertising. We do not use sensitive personal information for purposes that would trigger the CCPA's right to limit such use. You have the right to be free from discrimination for exercising your CCPA rights.</p>
+
+  <h3>EEA, UK, and Swiss Residents</h3>
+  <p>If you are located in the EEA, UK, or Switzerland, you have the rights described above under the General Data Protection Regulation (GDPR) or equivalent local law. You may also lodge a complaint with your local data protection supervisory authority. Our legal bases for processing are described in the section above.</p>
+
+  <h2>International Data Transfers</h2>
+  <p>TrueMath is based in the United States, and the Services are hosted on Amazon Web Services infrastructure in the United States. If you access the Services from outside the United States, your personal information will be transferred to and processed in the United States and other jurisdictions where our service providers operate.</p>
+  <p>For transfers of personal information from the EEA, UK, or Switzerland to countries that do not have an adequacy decision under applicable law, we rely on appropriate safeguards, including the European Commission's Standard Contractual Clauses (and the UK International Data Transfer Addendum where applicable), supplemented by additional measures where required. Customers requiring a Data Processing Addendum that incorporates these safeguards may request one by contacting us at <a href="mailto:hello@truemath.ai">hello@truemath.ai</a>.</p>
+
+  <h2>Security</h2>
+  <p>We protect personal information using a combination of organizational, technical, and administrative measures, including:</p>
+  <ul>
+    <li>Encryption of data in transit (TLS) and at rest</li>
+    <li>Authenticated access controls scoped to individual accounts</li>
+    <li>Tenant isolation within our multi-tenant architecture</li>
+    <li>Audit logging of access to systems and data</li>
+    <li>Operating within Amazon Web Services' secure cloud environment</li>
+  </ul>
+  <p>No security control is perfect, and no online service is entirely free of risk. We work continuously to improve our security posture, and we will notify affected users in the event of a security incident as required by applicable law.</p>
+
+  <h2>Data Retention</h2>
+  <p>We retain personal information for as long as necessary to provide the Services to you, to comply with our legal obligations, to resolve disputes, and to enforce our agreements. Specific retention periods depend on the type of information, the purpose for which it was collected, and applicable legal requirements. When personal information is no longer necessary for these purposes, we delete it or de-identify it.</p>
+
+  <h2>Children</h2>
+  <p>The Services are intended for professional and business use and are not directed to children. We do not knowingly collect personal information from anyone under 18 years of age. If we become aware that we have collected personal information from someone under 18, we will take steps to delete that information promptly. If you believe we may have collected information from a minor, please contact us at <a href="mailto:hello@truemath.ai">hello@truemath.ai</a>.</p>
+
+  <h2>Third-Party Services and Links</h2>
+  <p>The Services may contain links to or interoperate with third-party websites, products, or services that have their own privacy practices. This Policy does not apply to those third parties, and we encourage you to review their privacy notices.</p>
+
+  <h2>Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. When we make material changes, we will provide reasonable advance notice through the Services or by other appropriate means, and we will update the Effective Date at the top of this Policy.</p>
+
+  <h2>Governing Law</h2>
+  <p>This Privacy Policy is governed by the laws of the State of Delaware, without regard to its conflict-of-laws principles. The dispute resolution provisions in our <a href="/terms.html">Terms of Service</a> apply to any dispute relating to this Policy.</p>
+
+  <div class="contact-box">
+    <h2 style="margin-top:0; border-bottom:none; padding-bottom:0;">Contact Us</h2>
+    <p>For privacy questions, requests to exercise your rights, or other concerns about how we handle personal information, contact us at <a href="mailto:hello@truemath.ai">hello@truemath.ai</a>.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">
+    <a href="/index.html" class="footer-logo">
+      <picture>
+        <source srcset="/images/logos/truemath-logo-long-white.png" media="(prefers-color-scheme: dark)">
+        <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+      </picture>
+    </a>
+    <span class="footer-copy">© 2026 TrueMath, Inc.</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/terms.html">Terms</a></li>
+    <li><a href="https://app.truemath.ai/contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script src="/js/site.js" defer></script>
+</body>
+</html>

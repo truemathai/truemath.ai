@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F6F2">
+
+  <title>TrueMath: The Math Engine for the AI Age</title>
+  <meta name="description" content="TrueMath is the auditable math engine for the AI age. Deterministic calculations with full lineage, for professionals, teams, and developers building on AI.">
+
+  <link rel="canonical" href="https://truemath.ai/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://truemath.ai/">
+  <meta property="og:title" content="TrueMath: The Math Engine for the AI Age">
+  <meta property="og:description" content="The auditable math engine whenever 90% right is 100% wrong. Deterministic. Auditable. Shareable.">
+  <meta property="og:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://truemath.ai/">
+  <meta name="twitter:title" content="TrueMath: The Math Engine for the AI Age">
+  <meta name="twitter:description" content="The auditable math engine whenever 90% right is 100% wrong. Deterministic. Auditable. Shareable.">
+  <meta name="twitter:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/site.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6QKEF8PLS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J6QKEF8PLS');
+  </script>
+</head>
+<body class="page-home">
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#why">Why TrueMath</a></li>
+      <li><a href="#library">Professionals</a></li>
+      <li><a href="#developers">Developers</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU PANEL -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="#why">Why TrueMath</a></li>
+      <li><a href="#library">Professionals</a></li>
+      <li><a href="#developers">Developers</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="mobile-menu-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+
+    <div class="hero-content">
+      <picture>
+        <source srcset="/images/logos/truemath-logo-white.png" media="(prefers-color-scheme: dark)">
+        <img src="/images/logos/truemath-logo-color.png" alt="TrueMath" class="hero-logo">
+      </picture>
+
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        Private beta. Invitations by conversation.
+      </div>
+
+      <h1 class="hero-headline">
+        Unlock the math AI keeps getting wrong. <span class="hero-once">For you, for your team, for <em>everyone</em> in the room.</span>
+      </h1>
+
+      <p class="hero-subhead">
+        TrueMath is the auditable math engine whenever 90% right is 100% wrong.
+      </p>
+
+      <span class="hero-tagline">Deterministic.&nbsp;&nbsp;Auditable.&nbsp;&nbsp;Shareable.</span>
+
+      <div class="hero-actions" style="margin-top:36px;">
+        <a href="https://app.truemath.ai/signup" class="btn-large">Get invited</a>
+        <a href="#developers" class="btn-hero-secondary">
+          Integrate via API
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="verticals-strip" style="margin-top:36px;">
+        <span class="verticals-label">Built for</span>
+        <span class="domain-carousel-pill" id="carousel-pill"></span>
+        <span class="build-own-pill">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          build your own
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY TRUEMATH -->
+  <div id="why" class="section-divider">
+    <div class="section">
+      <div class="why-layout">
+        <div>
+          <span class="section-label">Why TrueMath</span>
+          <h2 class="section-headline">AI got you to the door. TrueMath gets you through.</h2>
+          <p class="section-body">AI changed how you and your team work. You're more productive, you sound and look more professional. The next phase is the numbers. Imagine what happens to dealflow, closes, and client engagement when the math gets the same upgrade.</p>
+
+          <div class="why-cards">
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3v12" stroke="#502878" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="why-card-title">Ask the way you actually talk.</div>
+                <div class="why-card-body">No formulas, no spreadsheet syntax. Describe the calculation the way you'd explain it to a colleague. TrueMath figures out the rest and returns a result you can stake your reputation on.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2.5" y="2.5" width="13" height="13" rx="2" stroke="#502878" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="#502878" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="why-card-title">Every answer is auditable.</div>
+                <div class="why-card-body">TrueMath doesn't estimate. It finds the right calculation path, runs the math precisely, and returns the result with full lineage: variables used, steps taken, logic behind every number.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="4.5" cy="9" r="2" stroke="#502878" stroke-width="1.5"/><circle cx="13.5" cy="4.5" r="2" stroke="#502878" stroke-width="1.5"/><circle cx="13.5" cy="13.5" r="2" stroke="#502878" stroke-width="1.5"/><path d="M6.3 8l5.4-2.7M6.3 10l5.4 2.7" stroke="#502878" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div class="why-card-title">Shareable proof, not just an answer.</div>
+                <div class="why-card-body">Speak the calculation into existence as fast as the conversation moves. Send it to a client with a quote. Share it with a counterparty on a deal. Everyone is looking at the same math, the same method, the same assumptions, so the room can agree and move on.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-card-icon">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#502878" stroke-width="1.5"/><circle cx="9" cy="9" r="3.5" stroke="#502878" stroke-width="1.5"/><circle cx="9" cy="9" r="1" fill="#502878"/></svg>
+              </div>
+              <div>
+                <div class="why-card-title">Teamwork powered by reliable math.</div>
+                <div class="why-card-body">TrueMath gives your team a focal point. One set of calculations, one set of defaults, one set of customizations. The most powerful tool you can take into battle is coordination.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL LIBRARY -->
+  <div id="library">
+    <div class="section">
+      <span class="section-label">For Professionals</span>
+      <h2 class="section-headline">A running start. Built for the work you already do.</h2>
+      <p class="section-body">Calculation domains built for the work you and your team already do, ready the moment you sign in. Use, share, and customize, as a sole contributor and as a team.</p>
+
+      <div class="category-strip">
+        <span class="category-tag">Financial Advisory</span>
+        <span class="category-tag">Investment Banking &amp; Private Capital</span>
+        <span class="category-tag">Corporate Finance</span>
+        <span class="category-tag">Real Estate</span>
+        <span class="category-tag">Construction</span>
+        <span class="category-tag">Cloud &amp; Tech</span>
+        <span class="category-tag">Insurance</span>
+        <span class="category-tag">Legal &amp; Advisory</span>
+        <span class="category-tag">Healthcare</span>
+      </div>
+
+      <p class="carousel-question">How could <em>you</em> use AI with reliable math?</p>
+
+      <div class="carousel-outer" id="carousel-outer">
+        <div class="carousel-track" id="track">
+
+          <!-- CARD 1: Financial Advisor -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The Financial Advisor</div>
+              <div class="role-category">Financial Advisory</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/financial-advisor.jpg" alt="Financial Advisor" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">You asked</div>
+                    <div class="prompt-text">Show Maria's retirement trajectory at her current savings rate vs. increasing contributions by $500/month, assuming 6.5% annual return.</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>TrueMath</div>
+                  <div class="answer-text">
+                    At current rate: <strong>$1,847,320</strong> at 65<br>
+                    With +$500/mo: <strong>$2,341,880</strong> at 65<br>
+                    Difference: <strong>+$494,560</strong> (26.8%)<br>
+                    Monthly income delta: <strong>+$1,648/mo</strong><span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: Contractor Estimator -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The Contractor Estimator</div>
+              <div class="role-category">Construction</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/contractor-estimator.jpg" alt="Contractor Estimator" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">You asked</div>
+                    <div class="prompt-text">Break out the $2.4M renovation bid: materials at 38% markup, labor at $62/hr blended, subs at 12% overhead, 6% contingency on base costs.</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>TrueMath</div>
+                  <div class="answer-text">
+                    Materials w/ markup: <strong>$905,000</strong><br>
+                    Labor burden: <strong>$790,000</strong><br>
+                    Subcontractor costs: <strong>$569,000</strong><br>
+                    Contingency (6%): <strong>$135,840</strong><span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: M&A Advisor -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The M&amp;A Advisor</div>
+              <div class="role-category">Investment Banking &amp; Private Capital</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/ma-advisor-team.jpg" alt="M&A Advisor team" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">You asked</div>
+                    <div class="prompt-text">Quote our fee on this $180M deal. Modified Lehman: 5% on first $1M, 4% next $9M, 3% next $40M, 2% above. $50k monthly retainer credited 100%. $1.5M floor.</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>TrueMath</div>
+                  <div class="answer-text">
+                    Tiered success fee: <strong>$4,210,000</strong><br>
+                    Retainer credit (6 mo): <strong>&minus;$300,000</strong><br>
+                    Net fee at close: <strong>$3,910,000</strong><br>
+                    Effective rate: <strong>2.17%</strong> of deal<span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: Estate Planner -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The Estate Planner</div>
+              <div class="role-category">Financial Advisory</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/estate-planner.jpg" alt="Estate Planner" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">You asked</div>
+                    <div class="prompt-text">What does a $2M zeroed-out GRAT return to heirs at 7.5% growth vs. the 3.8% AFR, over 5 years?</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>TrueMath</div>
+                  <div class="answer-text">
+                    Annuity payment: <strong>$446,733/yr</strong><br>
+                    Trust FV at 7.5%: <strong>$2,871,259</strong><br>
+                    Annuities returned: <strong>$2,594,801</strong><br>
+                    Remainder to heirs: <strong>$276,458</strong> tax-free<span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 5: Solution Architect -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The Solution Architect</div>
+              <div class="role-category">Cloud &amp; Tech</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/solution-architect.jpg" alt="Solution Architect team" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">You asked</div>
+                    <div class="prompt-text">TCO comparison: on-prem at $1.2M capex, 3-year refresh, $88k/yr maintenance vs. cloud at $28k/month plus $280k migration cost, over 5 years.</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>TrueMath</div>
+                  <div class="answer-text">
+                    On-prem 5yr TCO: <strong>$2,840,000</strong><br>
+                    Cloud 5yr TCO: <strong>$1,960,000</strong><br>
+                    Cloud savings: <strong>$880,000</strong><br>
+                    Migration payback: <strong>Month 14</strong><span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 6: Developer -->
+          <div class="vignette-card">
+            <div class="card-header">
+              <div class="role-label">The Developer</div>
+              <div class="role-category">API Integration</div>
+            </div>
+            <div class="session-panel">
+              <div class="session-content">
+                <div class="prompt-row">
+                  <div class="headshot-wrap">
+                    <img src="/images/developer.jpg" alt="Developer" class="headshot-img">
+                  </div>
+                  <div class="prompt-bubble">
+                    <div class="prompt-label">POST /v1/calculate</div>
+                    <div class="prompt-text" style="font-family:var(--font-mono);font-size:12px;line-height:1.7;">"domain": "cre_investor",<br>"prompt": "IRR on this deal?",<br>"inputs": {"purchase": 4200000,<br>&nbsp;"noi": 273000, "hold": 5,<br>&nbsp;"exit_value": 4840000,<br>&nbsp;"ltv": 0.60, "loan_rate": 0.065}</div>
+                  </div>
+                </div>
+                <div class="answer-bubble">
+                  <div class="answer-label"><span class="answer-dot"></span>200 OK</div>
+                  <div class="answer-text">
+                    "irr": <strong>0.1243</strong>,<br>
+                    "irr_formatted": <strong>"12.43%"</strong>,<br>
+                    "deterministic": <strong>true</strong>,<br>
+                    "activity": <strong>"levered_irr"</strong><span class="cursor"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Carousel controls -->
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prev" aria-label="Previous">
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <path d="M10 12L6 8l4-4" stroke="#3D3B52" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="carousel-btn" id="pause-btn" aria-label="Pause">
+          <svg id="pause-icon" width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <rect x="4" y="3" width="3" height="10" rx="1" fill="#3D3B52"/>
+            <rect x="9" y="3" width="3" height="10" rx="1" fill="#3D3B52"/>
+          </svg>
+          <svg id="play-icon" width="16" height="16" fill="none" viewBox="0 0 16 16" style="display:none;">
+            <path d="M5 3l9 5-9 5V3z" fill="#3D3B52"/>
+          </svg>
+        </button>
+        <button class="carousel-btn" id="next" aria-label="Next">
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+            <path d="M6 4l4 4-4 4" stroke="#3D3B52" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="carousel-dots" id="dots"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVELOPERS -->
+  <div id="developers" class="section-divider">
+    <div class="section">
+      <div class="dev-layout">
+        <div>
+          <span class="section-label">For Developers</span>
+          <h2 class="section-headline">Embed deterministic math into any product</h2>
+          <p class="section-body">The TrueMath API connects your application to the same math engine professionals use every day. Send a natural-language or structured prompt with your inputs. Get back a precise, auditable answer, with full lineage.</p>
+
+          <div class="integration-tags">
+            <span class="integration-tag available">REST API: available now</span>
+            <span class="integration-tag">MCP integration: coming soon</span>
+          </div>
+
+          <a href="https://app.truemath.ai/signup" class="btn-large" style="font-size:15px;padding:13px 28px;">Request API access</a>
+        </div>
+
+        <div>
+          <div class="code-panel">
+            <div class="code-panel-header">
+              <span class="code-panel-label">REQUEST</span>
+              <span class="code-panel-endpoint">truemath-sdk &middot; TypeScript</span>
+            </div>
+            <div class="code-panel-body">
+              <span class="code-comment">// Auto-handles polling for long calculations</span><br>
+              <span class="code-kw">const</span> result = <span class="code-kw">await</span> sdk.calculations.<span class="code-fn">calculateAndWait</span>({<br>
+              &nbsp;&nbsp;<span class="code-key">domainId</span>: <span class="code-str">"00000000-0000-0000-0000-000000000001"</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">inputFormat</span>: <span class="code-str">"natural_language"</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">prompt</span>:<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"Levered IRR on $4.2M, $273K NOI, "</span> +<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"65% LTV @ 6.25%, 5yr hold"</span><br>
+              });
+            </div>
+          </div>
+
+          <div class="code-panel" style="margin-top:12px;">
+            <div class="code-panel-header">
+              <span class="code-panel-label">RESPONSE</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:#A8D8A8;">200 OK</span>
+            </div>
+            <div class="code-panel-body">
+              {<br>
+              &nbsp;<span class="code-key">"status"</span>: <span class="code-str">"completed"</span>,<br>
+              &nbsp;<span class="code-key">"results"</span>: {<br>
+              &nbsp;&nbsp;<span class="code-key">"leveredIrr"</span>: <span class="code-num">0.1843</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">"formatted"</span>: <span class="code-str">"18.43%"</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">"equityMultiple"</span>: <span class="code-num">2.21</span><br>
+              &nbsp;},<br>
+              &nbsp;<span class="code-key">"lineage"</span>: {<br>
+              &nbsp;&nbsp;<span class="code-key">"activity"</span>: <span class="code-str">"levered_irr"</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">"variables"</span>: <span class="code-num">7</span>,<br>
+              &nbsp;&nbsp;<span class="code-key">"deterministic"</span>: <span class="code-num">true</span><br>
+              &nbsp;}<br>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSISTANT STRIP -->
+  <div class="section-tint">
+    <div class="section">
+      <div class="assistant-layout">
+        <div>
+          <span class="section-label">The TrueMath Assistant</span>
+          <h2 class="section-headline">Need a domain that isn't here? Build it in plain language.</h2>
+          <p class="section-body">Tell the TrueMath Assistant what you need to calculate, in plain language, and it builds the domain for you, or extends one you already have. No configuration files, no technical setup. You describe it, it builds it.</p>
+          <div class="assistant-paid">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="5.5" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 5.5V4a2.5 2.5 0 015 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <span>The Assistant will be a paid feature after <strong>beta</strong>. The Library will always have a <strong>free</strong> tier.</span>
+          </div>
+          <div style="margin-top:28px;">
+            <a href="https://app.truemath.ai/signup" class="btn-large">Get invited</a>
+          </div>
+        </div>
+
+        <div>
+          <img src="/images/customizer-screenshot.jpg" alt="Screenshot of the TrueMath Assistant customizing a Retirement Income Drawdown Strategy domain" class="assistant-screenshot">
+          <p class="assistant-screenshot-caption">Customizing the Retirement Income Drawdown Strategy domain in plain language.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about">
+    <div class="section">
+      <span class="section-label">About TrueMath</span>
+      <h2 class="section-headline">Built on 30 years of calculation experience and 30 million users</h2>
+
+      <div class="about-layout">
+        <div class="about-philosophy">
+          <p>Every time technology advances, our tools for working with numbers evolve too &mdash; from abacuses to calculators to spreadsheets, and now to AI.</p>
+          <p>TrueMath is built on PowerOne, a calculation platform developed over 30 years by TrueMath co-founder Elia Freedman. With 30 million downloads and a reputation for precision across finance, engineering, and science, PowerOne became the foundation Elia committed to TrueMath &mdash; bringing three decades of real-world calculation experience into the AI age.</p>
+          <p>The result is a math engine with thirty years of real-world use behind it, rebuilt for the way professionals work today.</p>
+          <p style="margin-top:36px;">
+            <a href="https://app.truemath.ai/contact" style="font-size:15px;font-weight:500;color:var(--purple);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color 0.2s;">
+              Get in touch
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <img src="/images/bill-kelly.jpg" alt="Bill Kelly" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border-purple);flex-shrink:0;">
+            <div>
+              <div class="team-name">Bill Kelly</div>
+              <div class="team-title">Chief Executive Officer</div>
+              <a href="https://www.linkedin.com/in/wjkellypdx/" class="team-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+          <div class="team-card">
+            <img src="/images/elia-freedman.jpg" alt="Elia Freedman" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border-purple);flex-shrink:0;">
+            <div>
+              <div class="team-name">Elia Freedman</div>
+              <div class="team-title">Chief Technology Officer</div>
+              <a href="https://www.linkedin.com/in/eliafreedman/" class="team-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+          <div class="team-card">
+            <img src="/images/elizabeth-magliana.jpg" alt="Elizabeth Magliana" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border-purple);flex-shrink:0;">
+            <div>
+              <div class="team-name">Elizabeth Magliana</div>
+              <div class="team-title">Enterprise Sales</div>
+              <a href="https://www.linkedin.com/in/elizabethmagliana/" class="team-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2 class="cta-headline">The key is TrueMath.</h2>
+      <p class="cta-subhead">AI handles the conversation. TrueMath handles the math.</p>
+      <a href="https://app.truemath.ai/signup" class="btn-cta">Get invited</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <a href="/" class="footer-logo">
+        <picture>
+          <source srcset="/images/logos/truemath-logo-long-white.png" media="(prefers-color-scheme: dark)">
+          <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+        </picture>
+      </a>
+      <span class="footer-copy">&copy; 2026 TrueMath, Inc.</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="https://app.truemath.ai/contact">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script defer src="/js/site.js"></script>
+</body>
+</html>

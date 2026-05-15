@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>TrueMath FAQ: Frequently Asked Questions</title>
+  <meta name="description" content="Frequently asked questions about TrueMath: how it works, what's free, how the math is verified, data privacy, and developer integration.">
+  <link rel="canonical" href="https://truemath.ai/faq.html">
+
+  <meta property="og:title" content="TrueMath FAQ">
+  <meta property="og:description" content="How TrueMath works, what's free, how the math is verified, how your data is handled, and what developers can build with it.">
+  <meta property="og:url" content="https://truemath.ai/faq.html">
+  <meta property="og:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TrueMath FAQ">
+  <meta name="twitter:description" content="How TrueMath works, what's free, how the math is verified, how your data is handled, and what developers can build with it.">
+  <meta name="twitter:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6QKEF8PLS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J6QKEF8PLS');
+  </script>
+</head>
+<body class="page-faq">
+
+  <div class="beta-banner" role="status">
+    <span class="beta-banner-dot" aria-hidden="true"></span>
+    <span><strong>Beta in motion.</strong> The platform is real and working today. We're inviting professionals into the private beta as we tune the experience, and you may see this FAQ update in real time.</span>
+  </div>
+
+  <nav>
+    <a href="/index.html" class="nav-logo">
+      <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html#why">Why TrueMath</a></li>
+      <li><a href="/index.html#library">Professionals</a></li>
+      <li><a href="/index.html#developers">Developers</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="/index.html#why">Why TrueMath</a></li>
+      <li><a href="/index.html#library">Professionals</a></li>
+      <li><a href="/index.html#developers">Developers</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="mobile-menu-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+  </div>
+
+  <section class="faq-hero">
+    <span class="faq-eyebrow">Frequently Asked Questions</span>
+    <h1 class="faq-title">Answers about TrueMath</h1>
+    <p class="faq-subtitle">How TrueMath works, what's free, how the math is verified, how your data is handled, and what developers can build with it.</p>
+  </section>
+
+  <div class="faq-layout">
+
+    <aside class="faq-sidebar">
+      <div class="faq-sidebar-title">Sections</div>
+      <ul class="faq-sidebar-links">
+        <li><a href="#getting-started" data-section="getting-started">Getting Started</a></li>
+        <li><a href="#how-it-works" data-section="how-it-works">How TrueMath Works</a></li>
+        <li><a href="#trust-privacy" data-section="trust-privacy">Trust and Privacy</a></li>
+        <li><a href="#developers" data-section="developers">For Developers</a></li>
+      </ul>
+
+      <div class="faq-search-wrap">
+        <label class="faq-search-label" for="faq-search">Search</label>
+        <div class="faq-search-input-wrap">
+          <span class="faq-search-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M8.5 8.5l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </span>
+          <input type="search" id="faq-search" class="faq-search-input" placeholder="Search the FAQ" autocomplete="off" spellcheck="false">
+          <span class="faq-search-shortcut" id="faq-search-shortcut">⌘K</span>
+          <button type="button" class="faq-search-clear" id="faq-search-clear" aria-label="Clear search">
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 2l5 5M7 2l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="faq-content">
+
+      <div class="faq-no-results" id="faq-no-results" role="status" aria-live="polite">
+        <strong>No questions match that search.</strong>
+        Try fewer or different words, or clear the search to see everything.
+      </div>
+
+      <section id="getting-started" class="faq-section">
+        <span class="faq-section-label">Getting Started</span>
+        <h2 class="faq-section-headline">The basics</h2>
+        <p class="faq-section-intro">What TrueMath is, who it's for, and what it costs.</p>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What is TrueMath?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>TrueMath is a calculation platform for professionals who need answers they can <strong>defend, share, and move on from</strong>. You ask a question in plain language, TrueMath figures out which calculation to run, executes it precisely on its own deterministic math engine, and returns the result with full lineage: every variable, every step, every assumption. That lineage is what makes the answer auditable when you're the one being questioned, and what makes it portable when you're the one pitching a client or aligning a counterparty on a deal.</p>
+            <p>The same calculations and lineage are available to your whole team, so the answers you defend internally are the answers you produce as a firm.</p>
+            <p>AI handles the conversation. TrueMath handles the math.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Who is TrueMath for?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Professionals whose work depends on getting the numbers right, <em>and</em> on getting the people across the table to agree the numbers are right. Financial advisors walking clients through retirement assumptions. CPAs explaining a return to a partner. M&amp;A advisors quoting fees in an engagement letter. Mortgage brokers showing a borrower how the rate-and-points trade-off actually pencils out. Sales engineers sizing a deal in front of a procurement team.</p>
+            <p>It's also for the teams those professionals work on. TrueMath is built for individual practitioners and for the firms they belong to, where consistency across colleagues is as important as accuracy in any single answer.</p>
+            <p>If you've ever pasted numbers into a chat assistant and then double-checked the answer in Excel because you didn't quite trust it, TrueMath is built for you. If you've ever finished the math and then spent an hour trying to walk a client or a counterparty through how you got there, TrueMath is <em>especially</em> built for you.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What's free, and what costs money?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>The Library is free, with a generous monthly allowance of calculations included. You can browse the full set of pre-built calculation domains, run real work in them, and invite colleagues to share an account. Your team works from the same calculation pool.</p>
+            <p>A paid plan unlocks four things:</p>
+            <ul>
+              <li>More monthly calculations than the free tier includes</li>
+              <li>The TrueMath Assistant, which builds new domains for you in plain language</li>
+              <li>Customization: forking and extending Library domains with your firm's specific calculation paths and defaults</li>
+              <li>Sharing beyond your team: sending calculations to clients, counterparties, regulators, or anyone who isn't on your account</li>
+            </ul>
+            <p>The platform is in private beta as we ready it for general availability. Tell us where you'd start and we'll be in touch about access.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What's a "domain"?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>A domain is a curated bundle of calculations for a specific kind of work. The Retirement Income Drawdown Strategy domain, for example, is built for financial advisors planning a client's retirement.</p>
+            <p>Inside a domain are three things that work together:</p>
+            <p><strong>Activities</strong> are the individual calculations a domain can perform. The Retirement Income Drawdown Strategy domain has activities like Annual Spending Requirement, Bracket-Fill Roth Conversion Amount, IRMAA Surcharge Projection, Sequence-of-Returns Risk Test, and Tax-Efficient Withdrawal Order. Each activity is a defined computation: a series, a single calculation, a simulation, a test, or a decision.</p>
+            <p><strong>Variables</strong> are the typed, self-describing pieces of data that activities consume and produce. A variable like Retirement Age or Taxable Balance carries more than a value. It carries its type (age, currency, percentage), its display units (years, dollars, basis points), its presentation format (a single number, a table, a chart), its decimal precision for display, and an optional default. The underlying value is always stored at full floating-point accuracy; the variable just knows how to present itself sensibly. A variable also carries a description, which is what helps TrueMath map your natural language to the right input.</p>
+            <p><strong>The connection between them is what makes domains powerful.</strong> A single variable typically appears in multiple activities. Retirement Age, for example, is an input to half a dozen activities in a retirement domain. Because activities share variables, they can chain together: the output of one activity becomes the input of another, fully formatted and ready to display, without anyone gluing the pieces together by hand. That chaining is what lets a domain handle questions you didn't pre-author. You're not picking a fixed calculator off a shelf; you're working inside a graph of related calculations that can compose to answer what you actually need.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How active is the beta? Should I expect things to change?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>The beta is fully functional. The math engine is solid; the calculation lineage is solid; the deterministic guarantees are solid. The professionals we've invited in are running real work in their Library domains today.</p>
+            <p>What's still moving is the surface around it. The Library is growing weekly. The customization workflow is being refined. New activity types are being added. The Assistant is getting more capable. Some screens may look polished today and a little different next week.</p>
+            <p>If you join the private beta now, expect to see meaningful improvements over the coming months, and expect the occasional rough edge while we tune things. If you find one, tell us. We're building this with the professionals using it, and that's exactly the point of running a private beta.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How does TrueMath work for a team?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>A team on TrueMath shares more than a login. You share a calculation pool, a set of customizations, a set of defaults, and a set of domains your firm has built or extended. When one of you opens an activity, you're working from the same calculation path the rest of your team would use, with the same variable names, the same conventions, the same assumptions baked in.</p>
+            <p>That matters because professional work is rarely a solo handoff. An analyst runs the numbers, a senior reviews them, a partner takes them to a client. Without a shared method, those three steps create three slightly different views of the same calculation. With TrueMath, they don't. The same answer comes out at every step, and the lineage attached to it travels with it.</p>
+            <p>Sharing within your team is included in every plan, free or paid.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How do I get started?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>TrueMath is in private beta. Tell us where you'd start, who you work with, and what you'd want a calculation domain to handle for you. We'll be in touch as we onboard new professionals.</p>
+            <p><a href="https://app.truemath.ai/signup">Reach out at app.truemath.ai</a>.</p>
+          </div>
+        </details>
+      </section>
+
+      <section id="how-it-works" class="faq-section">
+        <span class="faq-section-label">How It Works</span>
+        <h2 class="faq-section-headline">Under the hood</h2>
+        <p class="faq-section-intro">Why the math is reliable and how TrueMath is different from a calculator, a spreadsheet, or a chat assistant.</p>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How is this different from just asking ChatGPT or Claude to do the math?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Large language models are pattern matchers. They predict what numbers should look like, which is why they can confidently produce answers that are almost right but slightly wrong, and they can deliver wrong answers with the same confidence as right ones. There's nothing in the response that tells you which kind you're looking at.</p>
+            <p>Even when an LLM gets the math approximately right, two runs of the same question can arrive at the same answer through different reasoning paths. Now you have a different kind of audit problem: even if Run A and Run B both produced $4.21M, you can't be sure they got there the same way, with the same assumptions, applied in the same order. For a defensible answer, the path matters as much as the result.</p>
+            <p>TrueMath uses an LLM only to interpret what you're asking. The math itself runs on a separate deterministic calculation engine built over thirty years by TrueMath co-founder Elia Freedman, the same engine behind PowerOne, which has more than thirty million downloads. The LLM never does the math. Same inputs, same calculation path, same result, every time. That separation is the whole point: a natural language interface, and a calculation you can actually defend.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How is this different from a spreadsheet?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>A spreadsheet is a blank canvas. Every user builds their own version. Every formula is maintained by hand. Every team ends up with three slightly different copies of the same model, and nobody is sure which one is the source of truth on the day a client asks.</p>
+            <p>TrueMath domains arrive complete and consistent. The calculation logic is already there, peer-reviewed, and identical across every user on your team. When your colleague runs the same activity, they get the same answer with the same lineage. There's no reconciliation step.</p>
+            <p>We watch the Library closely as the world changes, but the more important monitoring is yours. When you customize a Library domain or build a new one with the Assistant, you decide what changes when. That change propagates to your whole team at once. The lineage in every result tells you exactly which version of which activity ran.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What happens when the LLM gets the question wrong?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>First, what we mean by "wrong." TrueMath uses an LLM for one specific job: converting your natural-language prompt into the structured request the math engine actually runs (the right activity, the right variables, the right inputs). The math itself never depends on the LLM. So when we talk about LLM errors here, we mean failures in that interpretation step, not in the calculation.</p>
+            <p>The most common failure looks like this: you describe an input in natural language ("the senior debt rate," say), and the LLM doesn't recognize it as one of the activity's named variables (<code>debt_interest_rate</code>). The activity then has a missing input and can't run, or runs against the wrong variable.</p>
+            <p>Two things fix this:</p>
+            <ul>
+              <li><strong>Improve the variable description.</strong> If a variable is described in a way that anticipates the words your team actually uses, the LLM matches it correctly. The Assistant lets you edit variable descriptions in plain language, and that change propagates to every activity that uses the variable.</li>
+              <li><strong>Reword the prompt.</strong> The simpler and more direct the request ("Calculate IRR with senior debt at 6.5%"), the more reliably it maps to structured inputs.</li>
+            </ul>
+            <p>Either way, when a calculation fails or looks off, TrueMath shows you exactly what was attempted: which activity, which variables, which inputs. You can read it before you act on it. The math engine doesn't depend on the LLM being right; it just needs to know what to calculate, and you have the final say.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Can the same question return different answers on different runs?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>For the same calculation path with the same inputs, no. The math engine is deterministic. Same inputs, same answer, every time.</p>
+            <p>The interpretation step (the LLM picking which calculation to run) can vary slightly between runs, which is why TrueMath shows you the calculation path it chose. Once you've confirmed the path, the result is reproducible.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Can I build my own domain or extend an existing one?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. The TrueMath Assistant lets you describe what you need to calculate in plain language, and it builds the domain for you. You can also fork an existing Library domain and customize it: add calculation paths specific to your firm, change variable defaults, rename variables to match your terminology.</p>
+            <p>Building and customizing domains is part of the paid tier. Browsing and using the Library is free.</p>
+          </div>
+        </details>
+      </section>
+
+      <section id="trust-privacy" class="faq-section">
+        <span class="faq-section-label">Trust and Privacy</span>
+        <h2 class="faq-section-headline">Where your data goes</h2>
+        <p class="faq-section-intro">How TrueMath is hosted, what happens to your inputs, and how the LLM call is structured.</p>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Where is TrueMath hosted?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Inside AWS. The TrueMath application, the calculation engine, and the LLM interface all run within AWS's secure environment. Data is encrypted in transit and at rest.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Which AI model does TrueMath use?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>TrueMath uses Anthropic's Claude, accessed through Amazon Bedrock. The LLM interprets what you're asking and which calculation to run; it does not perform the math itself. The math runs on TrueMath's deterministic calculation engine.</p>
+            <p>We chose Bedrock specifically because of how it handles data, which is the next question.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What happens to my data when the LLM call is made?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>The LLM call goes through Amazon Bedrock, which is AWS's managed service for invoking foundation models. AWS's published Bedrock terms commit to the following:</p>
+            <ul>
+              <li>Customer prompts and completions are not used to train the underlying foundation models</li>
+              <li>Model providers, including Anthropic, do not have access to your prompts or completions</li>
+              <li>Data stays inside AWS infrastructure during the call and is not exposed to the public internet</li>
+              <li>Inputs and outputs are encrypted in transit and at rest</li>
+            </ul>
+            <p>TrueMath operates within these terms. Your calculation inputs, the prompts derived from them, and the LLM's responses stay inside the AWS environment for the duration of the request.</p>
+            <p>For the most current details, AWS publishes the Bedrock data privacy commitments at <a href="https://aws.amazon.com/bedrock/security-compliance/" target="_blank" rel="noopener">aws.amazon.com/bedrock/security-compliance</a>.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Does TrueMath use my data to train any models?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>No. TrueMath does not train models on your calculation inputs or outputs, and the underlying foundation models accessed through Bedrock are not trained on your prompts either.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Is TrueMath multi-tenant or single-tenant?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>TrueMath is a multi-tenant application with standard AWS-grade tenant isolation. Each customer's data is logically separated, encrypted, and accessed only through authenticated, authorized API calls scoped to that customer.</p>
+            <p>Enterprise customers with stricter requirements should contact us; we're happy to discuss what's possible for specific compliance regimes.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Can someone outside my team see a calculation if I share it with them?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, when you're on a paid plan. Sharing a calculation outside your team produces a viewable record with full lineage: every variable, every activity, every assumption. The recipient can examine it without needing a TrueMath account. They see exactly what you saw.</p>
+            <p>The shared record is a snapshot of that specific calculation. It's not a window into your account, your team's other work, or any inputs you didn't deliberately include. The recipient can read; they can't run new calculations on your dime or see anything else.</p>
+            <p>Sharing within your team is included in every plan, free or paid.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Is the math itself audit-ready?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Every TrueMath result includes the calculation path used, the variables and values applied, and the assumptions invoked. You can show the lineage to a client, a counterparty, an auditor, or a regulator and walk them through every step. The same record that lets you defend the answer internally is what lets you align stakeholders externally.</p>
+            <p>TrueMath does not produce "estimates" with hidden assumptions. If something was approximated, the approximation is in the lineage.</p>
+          </div>
+        </details>
+      </section>
+
+      <section id="developers" class="faq-section">
+        <span class="faq-section-label">For Developers</span>
+        <h2 class="faq-section-headline">API and integration</h2>
+        <p class="faq-section-intro">Embedding TrueMath into your own product, agent, or workflow.</p>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Does TrueMath have an API?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes. The TrueMath REST API is available now. Send a domain identifier and either a natural-language prompt or a structured prompt with named variables; get back a precise, audit-ready answer with full calculation lineage.</p>
+            <p>SDKs for Python and JavaScript/TypeScript, plus an MCP integration for agentic workflows, are in development.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            How do I get API access?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p><a href="https://app.truemath.ai/signup">Reach out at app.truemath.ai</a> with a bit about what you're building. During the private beta, API access is granted on a case-by-case basis so we can support each integration well.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What does a typical API request look like?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>You hit <code>POST /v1/calculate</code> with a JSON body containing the domain identifier (e.g. <code>"cre_investor"</code>) and either a natural-language prompt or a structured prompt with named variables. You don't need to send both. If you send natural language, the LLM converts it to structure on the way in. If you send structure, the call goes straight to the math engine.</p>
+            <p>You get back the result, the calculation path, and the lineage. The homepage Developers section shows the request and response shapes.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Can I use TrueMath as a tool inside an AI agent?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>That's one of the primary use cases. If you're building an agent that needs to do real math, TrueMath is the calculation layer the agent calls when it hits a number it actually has to get right. The agent decides what to calculate; TrueMath calculates it deterministically and returns a defensible answer.</p>
+            <p>An MCP integration is in development to make this even more direct.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            What about pricing for API usage?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>API pricing tiers will be published when we exit beta. During beta, API access is free for approved integration partners. If you're building something specific, get in touch and we'll discuss what makes sense.</p>
+          </div>
+        </details>
+
+        <details class="faq-card">
+          <summary class="faq-question">
+            Is TrueMath available on AWS Marketplace?
+            <span class="faq-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </summary>
+          <div class="faq-answer">
+            <p>Not yet, but soon. We're in the process of listing TrueMath on AWS Marketplace, which will make procurement easier for enterprise customers who already have AWS spend committed. The Marketplace listing will cover the same product available at app.truemath.ai. Get in touch if you'd like to be notified when it goes live.</p>
+          </div>
+        </details>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="faq-cta">
+    <div class="faq-cta-content">
+      <h2 class="faq-cta-headline">Still have questions?</h2>
+      <p class="faq-cta-subhead">Get in touch and we'll answer them.</p>
+      <a href="https://app.truemath.ai/contact" class="btn-cta">Get in touch</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <a href="/index.html" class="footer-logo">
+        <picture>
+          <source srcset="/images/logos/truemath-logo-long-white.png" media="(prefers-color-scheme: dark)">
+          <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+        </picture>
+      </a>
+      <span class="footer-copyright">&copy; 2026 TrueMath, Inc.</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="https://app.truemath.ai/contact">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

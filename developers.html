@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>TrueMath for Developers: Stop Hardcoding Math. Start Shipping It.</title>
+  <meta name="description" content="A single API that gives your app deterministic, auditable calculation logic. Stop hardcoding math, stop debugging formulas, stop losing enterprise deals over audit trails.">
+  <link rel="canonical" href="https://truemath.ai/developers.html">
+
+  <meta property="og:title" content="TrueMath for Developers">
+  <meta property="og:description" content="A single API that gives your app deterministic, auditable calculation logic.">
+  <meta property="og:url" content="https://truemath.ai/developers.html">
+  <meta property="og:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TrueMath for Developers">
+  <meta name="twitter:description" content="A single API that gives your app deterministic, auditable calculation logic.">
+  <meta name="twitter:image" content="https://truemath.ai/images/logos/truemath-logo-long-color.png">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6QKEF8PLS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J6QKEF8PLS');
+  </script>
+</head>
+<body class="page-developers">
+
+  <nav>
+    <a href="/index.html" class="nav-logo">
+      <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html#why">Why TrueMath</a></li>
+      <li><a href="/index.html#library">Professionals</a></li>
+      <li><a href="/index.html#developers">Developers</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="/index.html#why">Why TrueMath</a></li>
+      <li><a href="/index.html#library">Professionals</a></li>
+      <li><a href="/index.html#developers">Developers</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="https://blog.truemath.ai/">Blog</a></li>
+    </ul>
+    <div class="mobile-menu-cta">
+      <a href="https://app.truemath.ai" class="btn-ghost">Log in</a>
+      <a href="https://app.truemath.ai/signup" class="btn-primary">Talk to us</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          For Developers Shipping AI Features
+        </div>
+
+        <h1 class="hero-headline">
+          Stop hardcoding math. <em>Start shipping it.</em>
+        </h1>
+
+        <p class="hero-subhead">
+          TrueMath is a single API that gives your app deterministic, auditable calculation logic, without you ever writing, maintaining, or debugging another formula.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://app.truemath.ai/signup" class="btn-large">Book a build session</a>
+          <a href="/index.html#developers" class="btn-hero-secondary">
+            See the API docs
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="code-panel">
+          <div class="code-panel-header">
+            <span class="code-panel-label">YOUR INTEGRATION</span>
+            <span class="code-panel-endpoint">truemath-sdk · TypeScript</span>
+          </div>
+          <div class="code-panel-body">
+            <span class="code-comment">// One call. Any domain.</span><br>
+            <span class="code-kw">const</span> result = <span class="code-kw">await</span> truemath<br>
+            &nbsp;&nbsp;.<span class="code-fn">calculate</span>({<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-key">domain</span>: <span class="code-str">"mortgage"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-key">prompt</span>: userQuery,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-key">tenant</span>: orgId<br>
+            &nbsp;&nbsp;});<br><br>
+            <span class="code-comment">// Returns: result +</span><br>
+            <span class="code-comment">// full audit trail.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider">
+    <div class="section">
+      <span class="section-label">The problem</span>
+      <h2 class="section-headline">Three ways calculation features <em>quietly kill</em> your roadmap.</h2>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-num">Problem 01</div>
+          <div class="problem-head">LLMs hallucinate numbers</div>
+          <div class="problem-body">GPT gets the vibe right. It gets the math wrong. One wrong loan estimate, one incorrect tax figure, one hallucinated return projection, and you own the support ticket.</div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-num">Problem 02</div>
+          <div class="problem-head">Hardcoded formulas rot</div>
+          <div class="problem-body">You ship a working formula. Six months later a product requirement changes, a regulation updates, or a client has a new edge case. Now it's a three-sprint refactor.</div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-num">Problem 03</div>
+          <div class="problem-head">No audit trail, no enterprise deal</div>
+          <div class="problem-body">Your first enterprise prospect asks how you handle calculation traceability. "It's in the code" is not the answer they want. Deals stall. Procurement loops. Quarters slip.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section">
+      <span class="section-label">The choice</span>
+      <h2 class="section-headline">How developers actually build calculation features.</h2>
+      <p class="section-body">Two paths. The first one looks faster on day one. The second one survives every conversation that follows: enterprise security review, compliance, the next product change, the next client.</p>
+
+      <div class="compare-grid">
+        <div class="cg-header"></div>
+        <div class="cg-header">Without TrueMath</div>
+        <div class="cg-header tm">With TrueMath</div>
+
+        <div class="cg-row-label">Math logic</div>
+        <div class="cg-cell">Hardcoded or LLM-generated. Both drift. Both break. Both become your problem.</div>
+        <div class="cg-cell tm"><strong>Defined once in plain language.</strong> Versioned. Governed. Never breaks silently.</div>
+
+        <div class="cg-row-label">Audit trail</div>
+        <div class="cg-cell">Log the inputs. Hope that's enough. It isn't, not for enterprise, not for regulated verticals.</div>
+        <div class="cg-cell tm"><strong>Every output carries provenance:</strong> formula, version, inputs, timestamp. Ready for procurement review.</div>
+
+        <div class="cg-row-label">Methodology changes</div>
+        <div class="cg-cell">Find the formula in the codebase. Write tests. Stage the fix. Pray nothing downstream breaks.</div>
+        <div class="cg-cell tm"><strong>Update the domain description.</strong> Version bumps automatically. Old calculations stay traceable.</div>
+
+        <div class="cg-row-label">Multi-tenant logic</div>
+        <div class="cg-cell">A different formula per client means a different code path per client. Unscalable by sprint four.</div>
+        <div class="cg-cell tm"><strong>Tenant-isolated domains.</strong> Each client gets their own methodology. One API call handles all of them.</div>
+
+        <div class="cg-grid-bottom-row" style="display:contents;">
+          <div class="cg-row-label">Time to ship</div>
+          <div class="cg-cell">Weeks to prototype. Months to harden. Quarters to pass enterprise security review.</div>
+          <div class="cg-cell tm"><strong>Live in days.</strong> Audit trail, versioning, and tenant isolation ship with the first call.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section">
+      <span class="section-label">What developers ship with TrueMath</span>
+      <h2 class="section-headline">Calculation features that don't <em>quietly break.</em></h2>
+
+      <div class="use-grid">
+        <div class="use-card">
+          <div class="use-category">Lending &amp; Mortgage Apps</div>
+          <div class="use-title">Loan calculators that don't lie</div>
+          <div class="use-body">Repayment schedules, APR, affordability, debt-to-income. Deterministic to the cent, traceable to the formula.</div>
+          <div class="use-example">"What's the monthly payment on a $420k loan at 6.8% over 30 years with 10% down?"</div>
+        </div>
+        <div class="use-card">
+          <div class="use-category">Wealth &amp; Investment Platforms</div>
+          <div class="use-title">Returns your users can trust</div>
+          <div class="use-body">Portfolio projections, compound growth, scenario modelling. Auditable for compliance, explainable for users.</div>
+          <div class="use-example">"How much will $50k grow at 7% annually over 20 years with $500/month contributions?"</div>
+        </div>
+        <div class="use-card">
+          <div class="use-category">Real Estate &amp; PropTech</div>
+          <div class="use-title">Deal math that closes deals</div>
+          <div class="use-body">Cap rates, NOI, cash-on-cash returns, DSCR. Calculated correctly, versioned to your methodology.</div>
+          <div class="use-example">"What's the cap rate on a $1.2M property with $84k annual NOI?"</div>
+        </div>
+        <div class="use-card">
+          <div class="use-category">Insurance &amp; Risk Apps</div>
+          <div class="use-title">Pricing without guessing</div>
+          <div class="use-body">Premium calculations, risk-adjusted returns, coverage modelling. Governed logic your underwriters approve.</div>
+          <div class="use-example">"Price a $500k term policy for a 38-year-old non-smoker over 20 years."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="urgency-band">
+    <div class="urgency-inner">
+      <div class="urgency-label">⚡ Right now</div>
+      <div class="urgency-text">
+        <strong>April 14, 2026. OpenAI acquires Hiro Finance.</strong> Native financial reasoning is now built into ChatGPT. That isn't a feature update. It's a new category of competitor for every app in your vertical. The apps that win the next eighteen months are the ones that can answer <em>"how did you get that number?"</em> The ones that can't will lose enterprise deals to the ones that can. EU AI Act enforcement starts August 2026. Explainability is now a legal requirement in high-risk systems, not a product differentiator.
+      </div>
+    </div>
+  </div>
+
+  <section class="cta-section">
+    <div class="cta-box">
+      <h2 class="cta-headline">Your calculation feature. Live this sprint.</h2>
+      <p class="cta-subhead">Thirty minutes. We'll connect TrueMath to your use case, build a working domain from your requirements, and show you a real audit trail output. You leave with something you can demo, not a slide about what's possible.</p>
+      <a href="https://app.truemath.ai/signup" class="btn-cta">Book a build session</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">
+      <a href="/index.html" class="footer-logo">
+        <picture>
+          <source srcset="/images/logos/truemath-logo-long-white.png" media="(prefers-color-scheme: dark)">
+          <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+        </picture>
+      </a>
+      <span class="footer-copy">© 2026 TrueMath, Inc.</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="https://app.truemath.ai/contact">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
