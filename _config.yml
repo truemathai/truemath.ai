@@ -1,0 +1,23 @@
+# TrueMath marketing site — Jekyll config
+title: TrueMath
+url: https://truemath.ai
+
+# Used by the analytics snippet in the shared layout.
+google_analytics: G-J6QKEF8PLS
+
+# Default social-share image (pages can override with `og_image` front matter).
+og_image: /images/logos/truemath-logo-long-color.png
+
+# No Jekyll theme — the site ships its own complete stylesheet at css/site.css.
+# GitHub Pages otherwise defaults to jekyll-theme-primer, which we don't use.
+theme: null
+
+# Keep Jekyll from touching things it shouldn't, and copy static files through.
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+keep_files:
+  - CNAME
