@@ -23,6 +23,7 @@ to `main` — there is no separate build step or CI to manage.
 ├── css/site.css             Consolidated stylesheet (page-scoped via body class)
 ├── js/site.js               Consolidated behaviors (hamburger, carousel, FAQ search)
 ├── images/                  Photos + logos
+├── icons/                   Favicons and app icons (favicon.ico stays at root)
 ├── Gemfile                  Pins the same Jekyll version GitHub Pages runs
 └── _site/                   Local build output (git-ignored; do not edit)
 ```
