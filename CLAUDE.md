@@ -6,6 +6,21 @@ The human-facing docs are in [README.md](README.md); this file is the guardrail
 layer for anyone (including Claude) making changes. When in doubt, match what the
 repo already does rather than introducing something new.
 
+## Branching and merging — read this first
+
+`main` is protected: direct pushes are rejected, and every change reaches `main`
+through a reviewed pull request. **Never commit to `main`.** For any change:
+
+1. Create a branch — `git checkout -b short-description`.
+2. Commit your changes to that branch.
+3. Push it and open a pull request against `main` (`gh pr create`, or the GitHub
+   web UI).
+4. Wait for review. A PR needs approval from **someone other than its author**
+   before it can merge — you cannot approve or merge your own PR.
+
+If a push to `main` is rejected, that is this rule working as intended — make a
+branch and open a PR instead.
+
 ## Hard rules — do not break these
 
 1. **Never paste the header, nav, mobile menu, footer, or `<head>` into a page.**
