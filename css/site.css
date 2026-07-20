@@ -1029,7 +1029,8 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 }
 
 /* hero — site tokens, auto light/dark */
-.tmv-hero { background: var(--bg); text-align: center; padding: 64px 28px 48px; }
+/* top padding clears the fixed 68px nav (matches the other hero pages) */
+.tmv-hero { background: var(--bg); text-align: center; padding: 116px 28px 48px; }
 .tmv-hero-inner { max-width: 660px; margin: 0 auto; }
 .tmv-hero h1 { font-family: var(--font-serif); font-size: clamp(30px, 5vw, 44px); line-height: 1.14; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; margin: 0; text-wrap: pretty; }
 .tmv-hero .tmv-accent { color: var(--purple); }
@@ -1116,9 +1117,6 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-clegend { text-align: center; font-size: 11px; color: #4A4553; margin-bottom: 6px; font-family: var(--font-sans); }
 .tmv-cdot { display: inline-block; width: 9px; height: 9px; background: #D14D57; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
 .tmv-chart svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
-.tmv-tracetoggle { text-align: right; }
-.tmv-ttbtn { font-family: var(--font-mono); font-size: 11.5px; color: var(--tmv-app-purple); background: #F7F3FB; border: .5px solid #DCC9EA; border-radius: 7px; padding: 6px 13px; cursor: pointer; margin-bottom: 14px; }
-.tmv-ttbtn:hover { background: #F1E9F7; }
 .tmv-inputbar { border-top: .5px solid #ECE6F2; padding: 11px 16px; background: #FCFBFD; display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .tmv-ph { font-size: 13px; color: #8A7E99; flex: 1; font-family: var(--font-mono); }
 .tmv-askmini { background: var(--tmv-green); color: var(--tmv-green-ink); font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 7px; font-family: var(--font-sans); }
@@ -1173,7 +1171,7 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
   .tmv-compare { grid-template-columns: 1fr; }
   .tmv-scroll { max-height: none; }
   .tmv-convtitle { white-space: normal; }
-  .tmv-hero { padding: 48px 22px 36px; }
+  .tmv-hero { padding: 100px 22px 36px; }
   .tmv-demo, .tmv-proof { padding-left: 16px; padding-right: 16px; }
 }
 

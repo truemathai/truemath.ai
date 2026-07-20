@@ -10,7 +10,7 @@ name: "Residential Mortgage Broker"
 # Hero. `hero_line` is the vertical-specific noun; the rest is shared framing.
 hero_line: "Loan decisions"
 hero_rest: "at the speed of conversation."
-hero_accent: "With the receipts."
+hero_accent: "With receipts."
 hero_sub: "Ask in plain English. Get a number that stands up to scrutiny from anyone who matters."
 
 # Where every call-to-action points.
@@ -70,24 +70,6 @@ demos:
       - ["loan_term", "30 yr"]
       - ["calculate", "max_qualifying_purchase_price USD"]
     blocks:
-      - type: "kv"
-        h: "Maximum Qualifying PI Payment"
-        desc: "43% of income, less other debt, taxes, and insurance."
-        lines:
-          - ["Max PI payment", "$3,910.00"]
-      - type: "kv"
-        h: "Maximum Qualifying Loan Amount"
-        desc: "The loan that payment supports at 7.250% over 30 years."
-        lines:
-          - ["Max loan amount", "$573,165.63"]
-      - type: "pmi"
-        k: "✓ PMI check"
-        v: "LTV lands at 80.0%, right at the threshold, so no PMI applies."
-      - type: "kv"
-        h: "Maximum Qualifying Purchase Price"
-        desc: "Qualifying loan amount grossed up by the 20% down payment."
-        lines: []
-    full:
       - type: "kv"
         h: "Loan Term in Months"
         desc: "Converts the practitioner-facing loan term into a bare month count for downstream math. A value with no unit passes through unchanged (already months); a unit-bearing value (for example 30 yr) is normalized to months."

@@ -61,23 +61,6 @@
     })();
   }
 
-  /* ---------- full engine trace toggle ---------- */
-  document.querySelectorAll(".tmv-ttbtn").forEach(function (btn) {
-    var launcher = btn.closest(".tmv-launcher");
-    var steps = launcher.querySelector(".tmv-steps");
-    var full = launcher.querySelector(".tmv-full");
-    if (!full) return;
-    var count = btn.getAttribute("data-count") || full.children.length;
-    btn.addEventListener("click", function () {
-      var toFull = btn.dataset.mode !== "full";
-      btn.dataset.mode = toFull ? "full" : "condensed";
-      steps.hidden = toFull;
-      full.hidden = !toFull;
-      btn.innerHTML = toFull ? "− Condensed view" : "⊞ Full engine trace · " + count + " steps";
-      if (toFull) drawCharts(launcher); // full trace may contain its own chart
-    });
-  });
-
   /* ---------- charts ---------- */
   function drawCharts(scope) {
     scope.querySelectorAll(".tmv-chart").forEach(function (el) {

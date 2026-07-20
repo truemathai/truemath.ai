@@ -67,9 +67,7 @@ layout: default
                 <div class="tmv-rhead"><span class="tmv-ts">{{ d.date | default: "Jul 9, 2026" }} {{ d.ts }}</span><span class="tmv-tr tmv-first">Response</span></div>
                 <div class="tmv-scen">Creating <b>Scenario 1</b>.</div>
                 <div class="tmv-rule"></div>
-                {% if d.full %}<div class="tmv-tracetoggle"><button class="tmv-ttbtn" type="button" data-trace="{{ d.id }}" data-mode="condensed">&#8862; Full engine trace &middot; {{ d.full.size }} steps</button></div>{% endif %}
                 <div class="tmv-steps" id="steps_{{ d.id }}">{% include tmv-blocks.html blocks=d.blocks chart=d.chart %}</div>
-                {% if d.full %}<div class="tmv-full" id="full_{{ d.id }}" hidden>{% include tmv-blocks.html blocks=d.full chart=d.chart %}</div>{% endif %}
                 <div class="tmv-finalwrap"><div class="tmv-final"><div class="tmv-txt">{{ d.final }}</div></div></div>
               </div>
             </div>
@@ -89,7 +87,7 @@ layout: default
   <div class="tmv-democta">
     <div class="tmv-lead">Try it for yourself. For free. Forever.</div>
     <a class="btn-large" href="{{ page.cta_url | default: 'https://app.truemath.ai/signup' }}">Start free &rarr;</a>
-    <div class="tmv-fine">100 calcs/mo. Upgrades available for higher limits. No card required.</div>
+    <div class="tmv-fine">Free to start, with higher limits and more on paid plans. No card required.</div>
   </div>
 </section>
 
