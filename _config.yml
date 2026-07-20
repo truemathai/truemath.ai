@@ -12,9 +12,18 @@ og_image: /images/logos/truemath-logo-long-color.png
 # GitHub Pages otherwise defaults to jekyll-theme-primer, which we don't use.
 theme: null
 
+# Vertical landing pages. Each file in _verticals/ is one industry vertical and
+# becomes a page at /for/<filename>/. To add a vertical, copy an existing file
+# in _verticals/, rename it, and edit its content — no HTML or CSS to touch.
+collections:
+  verticals:
+    output: true
+    permalink: /for/:name/
+
 # Keep Jekyll from touching things it shouldn't, and copy static files through.
 exclude:
   - README.md
+  - CLAUDE.md
   - Gemfile
   - Gemfile.lock
   - vendor

@@ -1,3 +1,8 @@
+---
+# Front matter makes Jekyll render the Liquid below. Static pages are listed
+# explicitly; vertical landing pages are appended automatically from the
+# _verticals collection, so adding a vertical needs no sitemap edit.
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -42,4 +47,12 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+{%- for v in site.verticals %}
+  <url>
+    <loc>{{ v.url | absolute_url }}</loc>
+    <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+{%- endfor %}
 </urlset>

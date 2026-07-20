@@ -11,17 +11,22 @@ to `main` — there is no separate build step or CI to manage.
 /
 ├── _config.yml              Site-wide settings (URL, analytics ID, theme disabled)
 ├── _layouts/
-│   └── default.html         The ONE shared shell: <head>, nav, mobile menu, footer.
-│                            Edit this to change the header/footer on every page.
+│   ├── default.html         The ONE shared shell: <head>, nav, mobile menu, footer.
+│   │                        Edit this to change the header/footer on every page.
+│   └── vertical.html        Renders a vertical landing page from its front matter.
+├── _includes/
+│   └── tmv-blocks.html      Renders the demo result blocks (table / callout / chart).
+├── _verticals/              One file per industry vertical → /for/<name>/ (see below).
 ├── index.html, developers.html, teams.html, saas-fintech.html,
 │   faq.html, privacy.html, terms.html, 404.html
 │                            Each page is just front matter (title, description,
 │                            social tags) + its own body content. No more copy-
 │                            pasted headers and footers.
 ├── CNAME                    GitHub Pages custom domain (truemath.ai)
-├── robots.txt, sitemap.xml
+├── robots.txt, sitemap.xml  (sitemap auto-includes verticals)
 ├── css/site.css             Consolidated stylesheet (page-scoped via body class)
 ├── js/site.js               Consolidated behaviors (hamburger, carousel, FAQ search)
+├── js/vertical-demo.js      Interactive demo + auto-scaling chart for verticals
 ├── images/                  Photos + logos
 ├── icons/                   Favicons and app icons (favicon.ico stays at root)
 ├── Gemfile                  Pins the same Jekyll version GitHub Pages runs
@@ -55,6 +60,41 @@ automatically from the site URL, so they never drift.
 - **Change the words on a page:** edit that page's `.html` file below the front
   matter. This can be done entirely through the GitHub web UI (Edit → Commit),
   no local setup required.
+
+## Vertical landing pages
+
+Industry-specific demo pages (e.g. mortgage brokers) live in
+[`_verticals/`](_verticals/). Each file is one vertical and becomes a page at
+`/for/<filename>/`. They all share one design and one interactive demo — only
+the words and numbers differ — so **adding a vertical means copying one file and
+editing its content. No HTML, CSS, or JavaScript.**
+
+### To add a vertical
+
+1. In `_verticals/`, copy an existing file (e.g.
+   `residential-mortgage-broker.md`) and rename it — the new filename is the URL
+   (`_verticals/estate-planning.md` → `/for/estate-planning/`). This can be done
+   in the GitHub web UI (Add file → Create new file, then paste).
+2. Edit the front matter:
+   - `title` / `description` — SEO and the browser tab.
+   - `name` — the industry label shown on the pill inside each demo.
+   - `hero_line` — the vertical-specific noun (e.g. "Loan decisions").
+   - `demos` — the three prompts. Each has a `prompt`, a `parse` list (how the
+     engine reads it), and `blocks` (the results). A block is one of:
+     - `type: kv` — a heading, a description, and `lines` of label/value pairs.
+     - `type: pmi` — a one-line callout (`k` label + `v` text).
+     - `type: chart` — a bar chart. Put the numbers in the demo's `chart:` list;
+       the chart scales its own axes automatically.
+   - `proof` — the "raw LLM vs TrueMath" comparison.
+   - `resolve` — the closing headline and line.
+3. Commit. The page, and its entry in the sitemap, appear automatically.
+
+The existing file is thoroughly commented as a working example. Everything a
+visitor sees comes from that one file; the shared machinery lives in
+[`_layouts/vertical.html`](_layouts/vertical.html),
+[`_includes/tmv-blocks.html`](_includes/tmv-blocks.html),
+the `.tmv-*` styles in `css/site.css`, and `js/vertical-demo.js` — none of which
+need to change to add a vertical.
 
 ## Local preview
 
