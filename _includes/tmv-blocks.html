@@ -1,0 +1,23 @@
+{%- comment -%}
+Renders a list of calculation blocks for a vertical demo.
+Params: include.blocks (required), include.chart (optional array for chart blocks).
+Block types: kv (heading + description + key/value lines), pmi (inline callout),
+chart (heading + description + auto-scaling SVG placeholder filled by JS).
+{%- endcomment -%}
+{%- for b in include.blocks -%}
+  {%- if b.type == "pmi" -%}
+  <div class="tmv-pmi"><span class="tmv-k">{{ b.k }}</span><span class="tmv-v">{{ b.v }}</span></div>
+  {%- elsif b.type == "chart" -%}
+  <div class="tmv-blk">{% if b.h %}<h4>{{ b.h }}</h4>{% endif %}{% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}</div>
+  <div class="tmv-chartbox">
+    <div class="tmv-clegend"><span class="tmv-cdot"></span>{{ b.legend | default: "Cumulative" }}</div>
+    <div class="tmv-chart" data-values="{{ include.chart | jsonify | escape }}" data-label="{{ b.axis_label | default: 'Month' }}"></div>
+  </div>
+  {%- else -%}
+  <div class="tmv-blk">
+    {% if b.h %}<h4>{{ b.h }}</h4>{% endif %}
+    {% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}
+    {% if b.lines and b.lines.size > 0 %}<div class="tmv-lines">{% for l in b.lines %}&bull; {{ l[0] }}: <b>{{ l[1] }}</b>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
+  </div>
+  {%- endif -%}
+{%- endfor -%}

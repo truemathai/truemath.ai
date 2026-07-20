@@ -1,0 +1,137 @@
+---
+layout: default
+---
+{%- comment -%}
+  Vertical landing page. Inherits the site nav + footer from the default layout.
+  All content comes from the page's front matter (see _verticals/*.md), so adding
+  a vertical never requires touching this file.
+{%- endcomment -%}
+
+<!-- VERTICAL HERO -->
+<section class="tmv-hero">
+  <div class="tmv-hero-inner">
+    <h1><span class="tmv-accent-noun">{{ page.hero_line }}</span> {{ page.hero_rest }}<br><span class="tmv-accent">{{ page.hero_accent }}</span></h1>
+    {% if page.hero_sub %}<p>{{ page.hero_sub }}</p>{% endif %}
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="tmv-demo">
+  <div class="tmv-seclabel"><span class="tmv-secnum">01</span> The demo</div>
+  <div class="tmv-hook">
+    <span class="tmv-hook-main">Watch it run, right here.</span>
+    <span class="tmv-hook-sub">Tap a prompt, then hit Ask <span class="tmv-arr">&darr;</span></span>
+  </div>
+
+  <div class="tmv-launchers">
+    {%- for d in page.demos -%}
+    <div class="tmv-launcher" id="L_{{ d.id }}">
+      <div class="tmv-lhead" data-toggle="{{ d.id }}">
+        <span class="tmv-ltag">{{ d.label }}</span>
+        <span class="tmv-status" id="status_{{ d.id }}"></span>
+        <span class="tmv-cue">open</span>
+        <span class="tmv-chev">&#9662;</span>
+      </div>
+      <div class="tmv-lbody">
+        <div class="tmv-frame">
+          <div class="tmv-topbar">
+            <div class="tmv-logo"></div><div class="tmv-name">TrueMath</div>
+            <div class="tmv-pill">Public Library &#9662;</div><div class="tmv-dots">&middot;&middot;&middot;</div>
+          </div>
+          <div class="tmv-convhead">
+            <div class="tmv-convtitle">{{ d.convo_title }}</div>
+            <div class="tmv-convrow">
+              <span class="tmv-dompill">&#9636; {{ page.name }}</span>
+              <span class="tmv-sim">simulation</span>
+              <span class="tmv-qbtn tmv-left">&#9539; Scenarios</span><span class="tmv-qbtn">&#8599; Share</span>
+            </div>
+          </div>
+          <div class="tmv-scroll">
+            <div class="tmv-card">
+              <div class="tmv-chatlabel"><span>Chat &middot; Natural Language</span><span class="tmv-req">Request</span></div>
+              <div class="tmv-prompt">{{ d.prompt }}</div>
+              <div class="tmv-parsewrap">
+                <div class="tmv-parse">
+                  <div class="tmv-pl">ENGINE INPUT (LANGUAGE MODEL INTERPRETATION)</div>
+                  <div class="tmv-pc">{% for p in d.parse %}{{ p[0] }}: <span class="tmv-pv">{{ p[1] }}</span>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>
+                </div>
+              </div>
+              <div class="tmv-askrow">
+                <span class="tmv-hint">&uarr; This prompt is loaded and ready. Hit Ask to watch TrueMath work.</span>
+                <button class="tmv-ask" type="button" data-ask="{{ d.id }}">Ask &rarr;</button>
+              </div>
+            </div>
+
+            <div class="tmv-result">
+              <div class="tmv-card tmv-plain">
+                <div class="tmv-rhead"><span class="tmv-ts">{{ d.date | default: "Jul 9, 2026" }} {{ d.ts }}</span><span class="tmv-tr tmv-first">Response</span></div>
+                <div class="tmv-scen">Creating <b>Scenario 1</b>.</div>
+                <div class="tmv-rule"></div>
+                {% if d.full %}<div class="tmv-tracetoggle"><button class="tmv-ttbtn" type="button" data-trace="{{ d.id }}" data-mode="condensed">&#8862; Full engine trace &middot; {{ d.full.size }} steps</button></div>{% endif %}
+                <div class="tmv-steps" id="steps_{{ d.id }}">{% include tmv-blocks.html blocks=d.blocks chart=d.chart %}</div>
+                {% if d.full %}<div class="tmv-full" id="full_{{ d.id }}" hidden>{% include tmv-blocks.html blocks=d.full chart=d.chart %}</div>{% endif %}
+                <div class="tmv-finalwrap"><div class="tmv-final"><div class="tmv-txt">{{ d.final }}</div></div></div>
+              </div>
+            </div>
+          </div>
+          <a class="tmv-inputbar" href="{{ page.cta_url | default: 'https://app.truemath.ai/signup' }}">
+            <span class="tmv-ph">Want to run your own numbers? Start a free account &rarr;</span>
+            <span class="tmv-askmini">Start free</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="tmv-democap">Real TrueMath output, replayed here. Open a prompt, hit Ask, watch the work.</div>
+
+  <div class="tmv-democta">
+    <div class="tmv-lead">Try it for yourself. For free. Forever.</div>
+    <a class="btn-large" href="{{ page.cta_url | default: 'https://app.truemath.ai/signup' }}">Start free &rarr;</a>
+    <div class="tmv-fine">100 calcs/mo. Upgrades available for higher limits. No card required.</div>
+  </div>
+</section>
+
+{%- assign pf = page.proof -%}
+{%- if pf -%}
+<!-- COMPARISON / PROOF -->
+<section class="tmv-proof">
+  <div class="tmv-seclabel"><span class="tmv-secnum">02</span> The comparison</div>
+  <div class="tmv-proof-head">
+    <h2>{{ pf.headline }}</h2>
+    <div class="tmv-proof-sub">{{ pf.sub }}</div>
+  </div>
+  {% if pf.prompt %}<div class="tmv-proofprompt"><span class="tmv-plab">The prompt, sent to each</span>&ldquo;{{ pf.prompt }}&rdquo;</div>{% endif %}
+  {% if pf.exact_value %}<div class="tmv-exact">{{ pf.exact_label }}<br><b>{{ pf.exact_value }}</b></div>{% endif %}
+  <div class="tmv-compare">
+    <div class="tmv-col tmv-raw">
+      <div class="tmv-collab">&#9679; {{ pf.raw.label | default: "RAW LLM" }}</div>
+      <div class="tmv-big">{{ pf.raw.score }}<small>{{ pf.raw.score_unit }}</small></div>
+      <div class="tmv-rows">{% for r in pf.raw.rows %}<div class="tmv-r"><span>{{ r[0] }}</span><b>{{ r[1] }}{% if r[2] %}<i class="tmv-mult">{{ r[2] }}</i>{% endif %}</b></div>{% endfor %}</div>
+    </div>
+    <div class="tmv-col tmv-good">
+      <div class="tmv-collab">&#9679; {{ pf.good.label | default: "TRUEMATH" }}</div>
+      <div class="tmv-big">{{ pf.good.score }}<small>{{ pf.good.score_unit }}</small></div>
+      <div class="tmv-rows">{% for r in pf.good.rows %}<div class="tmv-r"><span>{{ r[0] }}</span><b>{{ r[1] }}{% if r[2] %}<i class="tmv-mult">{{ r[2] }}</i>{% endif %}</b></div>{% endfor %}</div>
+    </div>
+  </div>
+  {% if pf.methnote %}<div class="tmv-methnote">{{ pf.methnote }}</div>{% endif %}
+  {% if pf.caption %}<div class="tmv-proofcap">{{ pf.caption }}</div>{% endif %}
+  {% if pf.receipt %}<div class="tmv-receiptline">{{ pf.receipt }}</div>{% endif %}
+</section>
+{%- endif -%}
+
+{%- assign rs = page.resolve -%}
+{%- if rs -%}
+<!-- RESOLUTION (reuses the site's shared CTA section styling) -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2 class="cta-headline">{{ rs.headline }}</h2>
+    <p class="cta-subhead">{{ rs.text }}</p>
+    <a href="{{ page.cta_url | default: 'https://app.truemath.ai/signup' }}" class="btn-cta">{{ rs.cta_label | default: "Start free" }} &rarr;</a>
+  </div>
+</section>
+{%- endif -%}
+
+<script defer src="/js/vertical-demo.js"></script>
