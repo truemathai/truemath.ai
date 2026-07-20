@@ -23,6 +23,7 @@ collections:
 # Keep Jekyll from touching things it shouldn't, and copy static files through.
 exclude:
   - README.md
+  - CLAUDE.md
   - Gemfile
   - Gemfile.lock
   - vendor
