@@ -8,7 +8,7 @@ body_class: page-vertical
 name: "Residential Mortgage Broker"
 
 # Hero. `hero_line` is the vertical-specific noun; the rest is shared framing.
-hero_line: "Loan decisions"
+hero_line: "Loan analysis"
 hero_rest: "at the speed of conversation."
 hero_accent: "With receipts."
 hero_sub: "Ask in plain English. Get a number that stands up to scrutiny from anyone who matters."
