@@ -86,9 +86,57 @@
     return s + "$" + Math.round(a);
   }
 
+  /* Full-dollar label with thousands separators, e.g. $2,628,000. */
+  function fmtFull(v) {
+    return "$" + Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  /* Grouped two-series bar chart: each row is [seriesA, seriesB]. Reproduces
+     the TrueMath equity-payback chart — Cumulative Distributions (red) beside
+     Equity Invested (gold), full-dollar axis, one group per year. */
+  function buildGroupedChart(rows, axisLabel) {
+    var x0 = 64, x1 = 636, yTop = 12, yBot = 224, plotH = yBot - yTop;
+    var all = [0];
+    rows.forEach(function (r) { all.push(r[0], r[1]); });
+    var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+    var step = niceNum((hi - lo) / 10) || 1;
+    var vMin = Math.floor(lo / step) * step, vMax = Math.ceil(hi / step) * step;
+    if (vMax === vMin) vMax = vMin + step;
+    var span = vMax - vMin;
+    var y = function (v) { return yBot - ((v - vMin) / span) * plotH; };
+    var base = y(0);
+    var n = rows.length, gap = (x1 - x0) / n;
+    var barW = gap * 0.30, gapBetween = gap * 0.06;
+    var leftPad = (gap - (2 * barW + gapBetween)) / 2;
+
+    var grid = "";
+    for (var gv = vMin; gv <= vMax + step / 2; gv += step) {
+      var gy = y(gv);
+      grid += '<line x1="' + x0 + '" y1="' + gy.toFixed(1) + '" x2="' + x1 + '" y2="' + gy.toFixed(1) + '" stroke="#E7E1EE" stroke-width="1"/>' +
+        '<text x="' + (x0 - 6) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="8" fill="#8A7E99">' + fmtFull(gv) + "</text>";
+    }
+
+    var bars = "", ticks = "";
+    rows.forEach(function (r, i) {
+      var gx = x0 + gap * i + leftPad, gx2 = gx + barW + gapBetween;
+      var y1 = y(r[0]), y2 = y(r[1]);
+      bars += '<rect x="' + gx.toFixed(1) + '" y="' + Math.min(y1, base).toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + Math.max(Math.abs(base - y1), 0.6).toFixed(1) + '" rx=".5" fill="#D14D57"/>' +
+        '<rect x="' + gx2.toFixed(1) + '" y="' + Math.min(y2, base).toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + Math.max(Math.abs(base - y2), 0.6).toFixed(1) + '" rx=".5" fill="#E2C04A"/>';
+      ticks += '<text x="' + (x0 + gap * i + gap / 2).toFixed(1) + '" y="238" text-anchor="middle" font-size="9" fill="#8A7E99">' + (i + 1) + "</text>";
+    });
+
+    return '<svg viewBox="0 0 660 270" role="img">' + grid +
+      '<line x1="' + x0 + '" y1="' + yTop + '" x2="' + x0 + '" y2="' + yBot + '" stroke="#D8D2E0" stroke-width="1"/>' +
+      bars + ticks +
+      (axisLabel ? '<text x="' + ((x0 + x1) / 2).toFixed(0) + '" y="258" text-anchor="middle" font-size="10" fill="#8A7E99">' + axisLabel + "</text>" : "") +
+      "</svg>";
+  }
+
   /* Build an auto-scaled bar chart. `data` is any array of numbers; the axis
-     bounds, zero line, ticks and labels are all derived from the data. */
+     bounds, zero line, ticks and labels are all derived from the data. Rows of
+     [a, b] pairs render as a grouped two-series chart instead. */
   function buildChart(data, axisLabel) {
+    if (Array.isArray(data[0])) return buildGroupedChart(data, axisLabel);
     var x0 = 52, x1 = 636, yTop = 10, yBot = 228, plotH = yBot - yTop;
     var lo = Math.min(0, Math.min.apply(null, data));
     var hi = Math.max(0, Math.max.apply(null, data));
