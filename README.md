@@ -142,7 +142,8 @@ code into service, add `_go/<CODE>.md`:
 ```yaml
 ---
 permalink: /go/<CODE>/          # REQUIRED — must match the code's exact casing
-note: "Human label — where this code is being used"
+note: "Short label — where this code is being used"
+description: "Fuller internal detail for lead tagging (optional)"
 to: /for/residential-mortgage-broker/   # site-relative path or absolute URL
 utm_source: newsletter
 utm_medium: email
@@ -160,6 +161,19 @@ Notes:
 - `to:` accepts a site path (`/for/foo/`) or a full URL (e.g.
   `https://app.truemath.ai/signup`); UTM params are appended with the correct
   `?`/`&` separator either way.
+- `note` and `description` are **internal-only** documentation of what a code is
+  for — they never appear in the URL, the redirect, or GA. `note` is a short
+  label; `description` holds fuller detail for lead tagging.
+- **`utm_*` values are visible** — in GA reports, and briefly in the address bar
+  before it self-cleans. Keep them neutral: use the code (e.g.
+  `utm_campaign: HR67H3`) or a generic channel, **never a person's name or
+  anything sensitive**. Put the human-readable meaning in `note`/`description`
+  and map it back from the code.
+- **The landing URL self-cleans.** After the redirect lands and Google
+  Analytics records the visit, `js/site.js` strips the `utm_*` params from the
+  address bar (leaving a clean `truemath.ai/…`), so no long, campaign-revealing
+  query string lingers after a QR scan. Keep the UTM values human-readable —
+  they vanish from the bar but stay meaningful in GA reports.
 - `/go/` links are kept out of `sitemap.xml` and marked `noindex` automatically.
 - If you ever need true server-side 302s or case-insensitive codes, move this to
   a Cloudflare Worker on `truemath.ai/go/*` — the data model stays the same.

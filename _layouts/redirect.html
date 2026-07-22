@@ -12,7 +12,10 @@
 #   utm_campaign: e.g. mortgage-q3     (default: the code itself)
 #   utm_content:  optional
 #   utm_term:     optional
-#   note:         optional human label for whoever assigned the code
+#   note:         optional short human label for the assigned code
+#   description:  optional fuller internal detail for lead tagging
+# `note` and `description` are internal-only: they never appear in the URL, the
+# redirect, or GA — they document what a code is being used for.
 ---
 {%- comment -%} Resolve destination base (absolute pass-through, else site-absolute). {%- endcomment -%}
 {%- assign base = page.to | default: "/" -%}

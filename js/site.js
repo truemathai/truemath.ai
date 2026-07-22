@@ -324,4 +324,35 @@
     }
   })();
 
+  /* ---------- Clean campaign params from the address bar ----------
+     Campaign links (e.g. /go/<CODE>) forward to a URL carrying utm_* params so
+     Google Analytics can attribute the visit. Once GA has recorded them we
+     strip those params from the address bar, leaving a clean URL — no long,
+     campaign-revealing query string lingering after a QR scan.
+
+     The strip runs after `load`, by which point the async gtag.js has loaded
+     and sent its initial page view (page images take longer to fetch than the
+     analytics script), so attribution is preserved. Only known tracking params
+     are removed; any others are kept. */
+  (function initCleanCampaignParams() {
+    if (!window.history || !window.history.replaceState || !window.URLSearchParams) return;
+    if (window.location.search.indexOf('utm_') === -1) return;
+
+    function clean() {
+      const loc = window.location;
+      if (loc.search.indexOf('utm_') === -1) return;
+      const params = new URLSearchParams(loc.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'fbclid']
+        .forEach(function (k) { params.delete(k); });
+      const qs = params.toString();
+      window.history.replaceState(null, '', loc.pathname + (qs ? '?' + qs : '') + loc.hash);
+    }
+
+    if (document.readyState === 'complete') {
+      setTimeout(clean, 600);
+    } else {
+      window.addEventListener('load', function () { setTimeout(clean, 300); });
+    }
+  })();
+
 })();
