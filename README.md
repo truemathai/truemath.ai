@@ -125,3 +125,41 @@ the `CNAME` file). Nothing else to run.
 
 Google Analytics 4 (`G-J6QKEF8PLS`) is wired into every page via the shared
 layout (`gtag.js`).
+
+## Campaign redirect links (`/go/`)
+
+Inbound lead sources are tracked with short vanity links of the form
+`truemath.ai/go/<CODE>`, where `<CODE>` is one of the pre-generated six-character
+Crockford Base32 codes. Each link **302-style forwards** (client-side, since the
+site is static) to a destination with Google Analytics UTM parameters attached,
+so GA attributes the visit natively in Traffic Acquisition — the `/go` hop
+itself is invisible to GA (no analytics on the redirect page, `noindex`).
+
+Like verticals, these are **data, not pages.** Each assigned code is one file in
+`_go/` rendered by [`_layouts/redirect.html`](_layouts/redirect.html). To put a
+code into service, add `_go/<CODE>.md`:
+
+```yaml
+---
+permalink: /go/<CODE>/          # REQUIRED — must match the code's exact casing
+note: "Human label — where this code is being used"
+to: /for/residential-mortgage-broker/   # site-relative path or absolute URL
+utm_source: newsletter
+utm_medium: email
+utm_campaign: broker-spring
+# utm_content / utm_term are optional
+---
+```
+
+Notes:
+
+- **Casing matters.** Static URLs are case-sensitive, so the `permalink` must
+  match the casing of the code you actually distribute (we use canonical
+  uppercase). The explicit `permalink` is required because Jekyll would
+  otherwise lowercase the URL. Distribute the code exactly as written.
+- `to:` accepts a site path (`/for/foo/`) or a full URL (e.g.
+  `https://app.truemath.ai/signup`); UTM params are appended with the correct
+  `?`/`&` separator either way.
+- `/go/` links are kept out of `sitemap.xml` and marked `noindex` automatically.
+- If you ever need true server-side 302s or case-insensitive codes, move this to
+  a Cloudflare Worker on `truemath.ai/go/*` — the data model stays the same.

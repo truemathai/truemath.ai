@@ -19,6 +19,22 @@ collections:
   verticals:
     output: true
     permalink: /for/:name/
+  # Campaign redirect links. Each file in _go/ is one assigned tracking code and
+  # becomes a redirect at /go/<CODE>/ that forwards to `to:` with UTM params
+  # attached. See the "Campaign redirect links" section of README.md.
+  go:
+    output: true
+    permalink: /go/:name/
+
+# Every _go/ file is a redirect: give them the redirect layout by default (so a
+# code file only needs its data) and keep them out of the sitemap.
+defaults:
+  - scope:
+      path: ""
+      type: go
+    values:
+      layout: redirect
+      sitemap: false
 
 # Keep Jekyll from touching things it shouldn't, and copy static files through.
 exclude:

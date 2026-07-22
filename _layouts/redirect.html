@@ -1,0 +1,38 @@
+---
+# Minimal redirect layout for /go/ campaign links. Deliberately NOT the site
+# layout: no header/footer, no analytics. Static hosting can't issue a real 302,
+# so this forwards client-side (instant meta-refresh + JS). The destination
+# carries UTM params, so Google Analytics attributes the visit on arrival — this
+# hop stays invisible to GA (no gtag here, noindex so search engines skip it).
+#
+# Front matter each _go/<CODE>.md provides:
+#   to:           destination — site-relative ("/for/foo/") or absolute URL
+#   utm_source:   e.g. linkedin        (default: "go")
+#   utm_medium:   e.g. paid-social     (default: "referral")
+#   utm_campaign: e.g. mortgage-q3     (default: the code itself)
+#   utm_content:  optional
+#   utm_term:     optional
+#   note:         optional human label for whoever assigned the code
+---
+{%- comment -%} Resolve destination base (absolute pass-through, else site-absolute). {%- endcomment -%}
+{%- assign base = page.to | default: "/" -%}
+{%- unless base contains "://" -%}{%- assign base = base | absolute_url -%}{%- endunless -%}
+{%- if base contains "?" -%}{%- assign sep = "&" -%}{%- else -%}{%- assign sep = "?" -%}{%- endif -%}
+{%- assign code = page.path | split: "/" | last | split: "." | first -%}
+{%- capture query -%}utm_source={{ page.utm_source | default: "go" | cgi_escape }}&utm_medium={{ page.utm_medium | default: "referral" | cgi_escape }}&utm_campaign={{ page.utm_campaign | default: code | cgi_escape }}{%- if page.utm_content %}&utm_content={{ page.utm_content | cgi_escape }}{% endif %}{%- if page.utm_term %}&utm_term={{ page.utm_term | cgi_escape }}{% endif %}{%- endcapture -%}
+{%- assign dest = base | append: sep | append: query -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting&hellip;</title>
+  <link rel="canonical" href="{{ dest }}">
+  <meta http-equiv="refresh" content="0; url={{ dest | xml_escape }}">
+  <script>window.location.replace({{ dest | jsonify }});</script>
+</head>
+<body>
+  <p>Redirecting to <a href="{{ dest }}">{{ dest }}</a>&hellip;</p>
+</body>
+</html>
