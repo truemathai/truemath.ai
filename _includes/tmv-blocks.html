@@ -1,8 +1,13 @@
 {%- comment -%}
 Renders a list of calculation blocks for a vertical demo.
 Params: include.blocks (required), include.chart (optional array for chart blocks).
-Block types: kv (heading + description + key/value lines), pmi (inline callout),
-chart (heading + description + auto-scaling SVG placeholder filled by JS).
+Block types:
+  kv    heading + description + key/value lines
+  pmi   inline callout
+  table kv lines, then a #/value data table (table_col, table_start, table_rows)
+  chart heading + description + auto-scaling SVG filled by JS (a flat number
+        array is single-series; an array of [a,b] pairs is grouped two-series)
+A line value of "See table above" renders unbolded, matching TrueMath's output.
 {%- endcomment -%}
 {%- for b in include.blocks -%}
   {%- if b.type == "pmi" -%}
@@ -10,14 +15,22 @@ chart (heading + description + auto-scaling SVG placeholder filled by JS).
   {%- elsif b.type == "chart" -%}
   <div class="tmv-blk">{% if b.h %}<h4>{{ b.h }}</h4>{% endif %}{% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}</div>
   <div class="tmv-chartbox">
-    <div class="tmv-clegend"><span class="tmv-cdot"></span>{{ b.legend | default: "Cumulative" }}</div>
+    <div class="tmv-clegend"><span class="tmv-cdot"></span>{{ b.legend | default: "Cumulative" }}{% if b.legend2 %}<span class="tmv-cdot2"></span>{{ b.legend2 }}{% endif %}</div>
     <div class="tmv-chart" data-values="{{ include.chart | jsonify | escape }}" data-label="{{ b.axis_label | default: 'Month' }}"></div>
+  </div>
+  {%- elsif b.type == "table" -%}
+  <div class="tmv-blk">
+    {% if b.h %}<h4>{{ b.h }}</h4>{% endif %}
+    {% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}
+    {% if b.lines and b.lines.size > 0 %}<div class="tmv-lines">{% for l in b.lines %}&bull; {{ l[0] }}: {% if l[1] == "See table above" %}{{ l[1] }}{% else %}<b>{{ l[1] }}</b>{% endif %}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
+    {% if b.table_label %}<div class="tmv-lines">&bull; {{ b.table_label }}:</div>{% endif %}
+    <table class="tmv-table"><thead><tr><th>#</th><th>{{ b.table_col }}</th></tr></thead><tbody>{% for v in b.table_rows %}<tr><td>{{ forloop.index0 | plus: b.table_start }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
   </div>
   {%- else -%}
   <div class="tmv-blk">
     {% if b.h %}<h4>{{ b.h }}</h4>{% endif %}
     {% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}
-    {% if b.lines and b.lines.size > 0 %}<div class="tmv-lines">{% for l in b.lines %}&bull; {{ l[0] }}: <b>{{ l[1] }}</b>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
+    {% if b.lines and b.lines.size > 0 %}<div class="tmv-lines">{% for l in b.lines %}&bull; {{ l[0] }}: {% if l[1] == "See table above" %}{{ l[1] }}{% else %}<b>{{ l[1] }}</b>{% endif %}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
   </div>
   {%- endif -%}
 {%- endfor -%}

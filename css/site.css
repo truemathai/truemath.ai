@@ -1116,7 +1116,13 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-chartbox { border: .5px solid #F0EBF5; border-radius: 8px; padding: 12px 8px 6px; margin-bottom: 12px; }
 .tmv-clegend { text-align: center; font-size: 11px; color: #4A4553; margin-bottom: 6px; font-family: var(--font-sans); }
 .tmv-cdot { display: inline-block; width: 9px; height: 9px; background: #D14D57; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+.tmv-cdot2 { display: inline-block; width: 9px; height: 9px; background: #E2C04A; border-radius: 2px; vertical-align: middle; margin-left: 14px; margin-right: 5px; }
 .tmv-chart svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
+.tmv-table { width: 100%; border-collapse: collapse; margin: 5px 0 2px; font-family: var(--font-sans); font-size: 12px; }
+.tmv-table th, .tmv-table td { border: .5px solid #E7E1EE; padding: 5px 10px; color: #3D3B52; }
+.tmv-table th { background: #F7F4FB; font-weight: 600; color: #4A4553; text-align: left; }
+.tmv-table th:first-child, .tmv-table td:first-child { width: 34px; color: #8A7E99; text-align: left; }
+.tmv-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
 .tmv-inputbar { border-top: .5px solid #ECE6F2; padding: 11px 16px; background: #FCFBFD; display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .tmv-ph { font-size: 13px; color: #8A7E99; flex: 1; font-family: var(--font-mono); }
 .tmv-askmini { background: var(--tmv-green); color: var(--tmv-green-ink); font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 7px; font-family: var(--font-sans); }
