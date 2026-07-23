@@ -10,7 +10,7 @@ name: "Residential Mortgage Broker"
 # Hero. `hero_line` is the vertical-specific noun; the rest is shared framing.
 hero_line: "Loan analysis"
 hero_rest: "at the speed of conversation."
-hero_accent: "<em>With receipts.</em>"
+hero_accent: "With receipts."
 hero_sub: "Ask in plain English. Get a number that stands up to scrutiny from anyone who matters."
 
 # Where every call-to-action points.
