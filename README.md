@@ -169,11 +169,14 @@ Notes:
   `utm_campaign: HR67H3`) or a generic channel, **never a person's name or
   anything sensitive**. Put the human-readable meaning in `note`/`description`
   and map it back from the code.
-- **The landing URL self-cleans.** After the redirect lands and Google
-  Analytics records the visit, `js/site.js` strips the `utm_*` params from the
-  address bar (leaving a clean `truemath.ai/…`), so no long, campaign-revealing
-  query string lingers after a QR scan. Keep the UTM values human-readable —
-  they vanish from the bar but stay meaningful in GA reports.
+- **The landing URL self-cleans.** Once GA has recorded the visit, the `utm_*`
+  params are stripped from the address bar (leaving a clean `truemath.ai/…`), so
+  no long query string lingers after a QR scan. The strip fires from GA's
+  page-view `event_callback` (wired in [`_layouts/default.html`](_layouts/default.html)),
+  i.e. only after the analytics beacon has gone out — so it never races the
+  beacon and attribution is never lost. (If a visitor blocks GA entirely, the
+  callback never fires and the harmless opaque `?utm_...=<CODE>` simply stays;
+  there's no attribution to lose in that case.)
 - `/go/` links are kept out of `sitemap.xml` and marked `noindex` automatically.
 - If you ever need true server-side 302s or case-insensitive codes, move this to
   a Cloudflare Worker on `truemath.ai/go/*` — the data model stays the same.

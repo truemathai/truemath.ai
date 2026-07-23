@@ -43,7 +43,29 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '{{ site.google_analytics }}');
+
+    /* Campaign links (/go/<CODE>) land on a URL carrying utm_* params so GA can
+       attribute the visit. Once GA has recorded them, strip those params from
+       the address bar so no long, campaign-revealing query string lingers after
+       a QR scan. This is fired from the page-view event_callback, which runs
+       only AFTER GA's beacon (carrying page_location + the utm params) has gone
+       out — so we never race the beacon and attribution is never lost. gtag's
+       automatic page view is suppressed so we can attach the callback. Only
+       known tracking params are removed; any others are preserved. */
+    function tmStripCampaignParams() {
+      if (tmStripCampaignParams.done) return;
+      tmStripCampaignParams.done = true;
+      if (!window.history || !window.history.replaceState || !window.URLSearchParams) return;
+      if (window.location.search.indexOf('utm_') === -1) return;
+      var loc = window.location, params = new URLSearchParams(loc.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'fbclid']
+        .forEach(function (k) { params.delete(k); });
+      var qs = params.toString();
+      window.history.replaceState(null, '', loc.pathname + (qs ? '?' + qs : '') + loc.hash);
+    }
+
+    gtag('config', '{{ site.google_analytics }}', { send_page_view: false });
+    gtag('event', 'page_view', { event_callback: tmStripCampaignParams });
   </script>
 </head>
 <body class="{{ page.body_class }}">
