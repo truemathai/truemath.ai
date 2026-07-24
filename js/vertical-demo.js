@@ -32,31 +32,46 @@
         if (status) status.innerHTML = '<span style="color:#12B886;font-weight:700">✓ run</span>';
         revealSteps(launcher);
         drawCharts(launcher);
-      }, reduce ? 0 : 850);
+      }, reduce ? 0 : 450);
     });
   });
 
-  /* fade the result's steps in one at a time, then the final answer */
+  /* Reveal the result one step at a time, growing the box as each appears.
+     Steps start collapsed (display:none), so the scrollable content grows step
+     by step — the scrollbar tracks real content instead of pre-claiming full
+     height. The view follows each new step to the bottom edge as it lands. */
   function revealSteps(launcher) {
     var scroll = launcher.querySelector(".tmv-scroll");
     var steps = launcher.querySelector(".tmv-steps");
     var items = steps ? Array.prototype.slice.call(steps.children) : [];
     var finalEl = launcher.querySelector(".tmv-finalwrap");
-    if (reduce) { if (scroll) scroll.scrollTop = scroll.scrollHeight; return; }
 
-    items.forEach(function (el) { el.style.opacity = "0"; el.style.transition = "opacity .28s ease"; });
-    if (finalEl) { finalEl.style.opacity = "0"; finalEl.style.transition = "opacity .28s ease"; }
+    items.forEach(function (el) { el.style.display = "none"; });
+    if (finalEl) finalEl.style.display = "none";
+
+    if (reduce) {
+      items.forEach(function (el) { el.style.display = ""; });
+      if (finalEl) finalEl.style.display = "";
+      if (scroll) scroll.scrollTop = 0;
+      return;
+    }
+
+    function show(el) {
+      el.style.display = "";
+      el.style.opacity = "0";
+      el.style.transition = "opacity .18s ease";
+      requestAnimationFrame(function () { el.style.opacity = "1"; });
+      if (scroll) scroll.scrollTop = scroll.scrollHeight;
+    }
 
     var i = 0;
     (function next() {
       if (i < items.length) {
-        items[i].style.opacity = "1";
-        if (scroll) scroll.scrollTop = scroll.scrollHeight;
+        show(items[i]);
         i++;
-        setTimeout(next, 460);
+        setTimeout(next, 230);
       } else if (finalEl) {
-        finalEl.style.opacity = "1";
-        if (scroll) scroll.scrollTop = scroll.scrollHeight;
+        show(finalEl);
       }
     })();
   }
