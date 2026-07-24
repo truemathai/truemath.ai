@@ -1033,7 +1033,7 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-hero { background: var(--bg); text-align: center; padding: 116px 28px 48px; }
 .tmv-hero-inner { max-width: 660px; margin: 0 auto; }
 .tmv-hero h1 { font-family: var(--font-serif); font-size: clamp(30px, 5vw, 44px); line-height: 1.14; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; margin: 0; text-wrap: pretty; }
-.tmv-hero .tmv-accent { color: var(--purple); }
+.tmv-hero .tmv-accent { color: var(--purple); font-style: italic; }
 .tmv-hero p { font-family: var(--font-sans); font-size: clamp(16px, 2.2vw, 18px); line-height: 1.55; color: var(--ink-mid); max-width: 520px; margin: 18px auto 0; }
 
 /* demo section — dark spotlight */
