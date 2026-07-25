@@ -324,4 +324,118 @@
     }
   })();
 
+  /* ---------- Video playlist ----------
+     Progressive enhancement for the .tmp-player widget (see
+     _includes/video-player.html). Without JS/SDK the Stream iframe still plays
+     the first clip and the rail links to each clip's watch page. When Cloudflare's
+     player SDK is present we drive it: click a clip to play it, "Play all" runs
+     the set in order, "Shuffle" runs a random order, and each clip auto-advances
+     to the next via the Stream player's `ended` event. Supports multiple players
+     on one page. */
+  (function initVideoPlaylists() {
+    if (typeof window.Stream !== 'function') return;   // Cloudflare Stream SDK required
+    const players = document.querySelectorAll('[data-video-playlist]');
+    if (!players.length) return;
+    document.body.classList.add('tmp-js');
+    Array.prototype.forEach.call(players, setupPlayer);
+
+    function setupPlayer(player) {
+      const frame = player.querySelector('.tmp-frame iframe');
+      const now = player.querySelector('.tmp-now');
+      const links = Array.prototype.slice.call(player.querySelectorAll('.tmp-link'));
+      if (!frame || !links.length) return;
+
+      const customer = player.getAttribute('data-stream-customer');
+      const items = links.map(function (a) {
+        return { uid: a.getAttribute('data-uid'), title: a.getAttribute('data-title') || '', link: a };
+      });
+
+      let order = [];        // indices still to play in the running sequence
+      let advancing = false; // guards against a doubled 'ended' after re-wiring
+      let ctrl = null;       // current Stream controller (recreated on each load)
+      const btnAll = player.querySelector('[data-action="playall"]');
+      const btnShuffle = player.querySelector('[data-action="shuffle"]');
+
+      function setMode(btn) {
+        [btnAll, btnShuffle].forEach(function (b) { if (b) b.classList.toggle('is-active', b === btn); });
+      }
+
+      function highlight(i) {
+        items.forEach(function (it, idx) {
+          if (idx === i) { it.link.setAttribute('aria-current', 'true'); }
+          else { it.link.removeAttribute('aria-current'); }
+        });
+        if (now) {
+          now.innerHTML = i >= 0
+            ? '<span class="tmp-now-idx">' + (i + 1) + '/' + items.length + '</span> · ' + items[i].title
+            : '';
+        }
+      }
+
+      function embedUrl(uid, autoplay) {
+        return 'https://' + customer + '.cloudflarestream.com/' + uid +
+               '/iframe?preload=metadata' + (autoplay ? '&autoplay=true' : '');
+      }
+
+      function onEnded() {
+        if (advancing) return;         // one advance per clip end
+        advancing = true;
+        if (order.length) load(order.shift(), true);
+        else { setMode(null); highlight(-1); }
+      }
+
+      // (Re)bind a Stream controller to the (reloaded) iframe so `ended` keeps
+      // firing for auto-advance. The old controller is destroyed first so we
+      // don't stack duplicate listeners.
+      function bind() {
+        if (ctrl && ctrl.destroy) { try { ctrl.destroy(); } catch (e) {} }
+        ctrl = window.Stream(frame);
+        ctrl.addEventListener('ended', onEnded);
+      }
+
+      // Swap the clip by pointing the iframe at a fresh Stream embed URL — the
+      // reliable way to change videos (the SDK's in-place src setter is flaky).
+      function load(i, autoplay) {
+        const it = items[i];
+        if (!it) return;
+        advancing = false;
+        frame.src = embedUrl(it.uid, autoplay);
+        highlight(i);
+        bind();
+      }
+
+      // Click a clip: play just that one, cancel any running sequence.
+      links.forEach(function (a, i) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          order = [];
+          setMode(null);
+          load(i, true);
+        });
+      });
+
+      function playSequence(seq, btn) {
+        order = seq;
+        setMode(btn);
+        const next = order.shift();
+        if (next != null) load(next, true);
+      }
+
+      if (btnAll) btnAll.addEventListener('click', function () {
+        playSequence(items.map(function (_, i) { return i; }), btnAll);
+      });
+
+      if (btnShuffle) btnShuffle.addEventListener('click', function () {
+        const idx = items.map(function (_, i) { return i; });
+        for (let j = idx.length - 1; j > 0; j--) {           // Fisher–Yates
+          const k = Math.floor(Math.random() * (j + 1));
+          const t = idx[j]; idx[j] = idx[k]; idx[k] = t;
+        }
+        playSequence(idx, btnShuffle);
+      });
+
+      bind();   // wire the initially-loaded first clip for auto-advance
+    }
+  })();
+
 })();
