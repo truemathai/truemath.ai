@@ -1117,6 +1117,7 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-clegend { text-align: center; font-size: 11px; color: #4A4553; margin-bottom: 6px; font-family: var(--font-sans); }
 .tmv-cdot { display: inline-block; width: 9px; height: 9px; background: #D14D57; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
 .tmv-cdot2 { display: inline-block; width: 9px; height: 9px; background: #E2C04A; border-radius: 2px; vertical-align: middle; margin-left: 14px; margin-right: 5px; }
+.tmv-cdot3 { display: inline-block; width: 9px; height: 9px; background: #3EAF66; border-radius: 2px; vertical-align: middle; margin-left: 14px; margin-right: 5px; }
 .tmv-chart svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); }
 .tmv-table { width: 100%; border-collapse: collapse; margin: 5px 0 2px; font-family: var(--font-sans); font-size: 12px; }
 .tmv-table th, .tmv-table td { border: .5px solid #E7E1EE; padding: 5px 10px; color: #3D3B52; }
