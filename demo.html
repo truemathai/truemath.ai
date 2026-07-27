@@ -1,0 +1,80 @@
+---
+layout: default
+title: "TrueMath — Live Demo (Beta)"
+description: "Pick a TrueMath domain, choose a question, and watch the answer compute step by step. An early preview of the multi-domain demo viewer."
+noindex: true
+body_class: page-demo-viewer
+---
+{%- comment -%}
+  Beta multi-domain demo viewer. Reuses the vertical demo frame
+  (_includes/tmv-demo.html) and engine (js/vertical-demo.js) unchanged; a domain
+  dropdown + prompt chips (js/demo-viewer.js) pick which frame is shown. Every
+  demo across every vertical is rendered server-side, so the page works with no
+  JS (all frames visible) — the picker is progressive enhancement.
+{%- endcomment -%}
+{%- assign verticals = site.verticals | sort: 'name' -%}
+
+<section class="section">
+  <span class="section-label">Beta</span>
+  <h1 class="section-headline">See TrueMath run</h1>
+  <p class="section-body">
+    Pick a domain, choose a question, and watch TrueMath work the numbers step
+    by step — the same deterministic, auditable math behind every TrueMath
+    answer. This is an early preview; more domains and prompts are on the way.
+  </p>
+</section>
+
+<section class="tmv-demo">
+  <div class="tmv-hook">
+    <span class="tmv-hook-main">Choose a domain, then a question.</span>
+    <span class="tmv-hook-sub">Then hit Ask <span class="tmv-arr">&darr;</span></span>
+  </div>
+
+  <div class="tmv-picker">
+    <div class="tmv-picker-field">
+      <label class="tmv-picker-lab" for="tmvDomain">Domain</label>
+      <div class="tmv-select-wrap">
+        <select id="tmvDomain" class="tmv-select">
+          {%- for v in verticals -%}
+          <option value="{{ v.name | slugify }}">{{ v.name }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+    <div class="tmv-picker-field">
+      <span class="tmv-picker-lab">Question</span>
+      <div class="tmv-chipwrap">
+        {%- for v in verticals -%}
+        {%- assign dk = v.name | slugify -%}
+        <div class="tmv-chipgroup" data-domain="{{ dk }}">
+          {%- for d in v.demos -%}
+          <button type="button" class="tmv-chip" data-domain="{{ dk }}" data-demo="{{ d.id }}">{{ d.label }}</button>
+          {%- endfor -%}
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="tmv-launchers tmv-viewer">
+    {%- for v in verticals -%}
+    {%- assign dk = v.name | slugify -%}
+    {%- for d in v.demos -%}
+    <div class="tmv-vframe" data-domain="{{ dk }}" data-demo="{{ d.id }}">
+      {% include tmv-demo.html demo=d name=v.name cta_url=v.cta_url %}
+    </div>
+    {%- endfor -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="tmv-democap">Real TrueMath output, replayed here. Pick a question, hit Ask, watch the work.</div>
+
+  <div class="tmv-democta">
+    <div class="tmv-lead">Run your own numbers. For free.</div>
+    <a class="btn-large" href="https://app.truemath.ai/signup">Start free &rarr;</a>
+    <div class="tmv-fine">Free to start, with higher limits on paid plans. No card required.</div>
+  </div>
+</section>
+
+<script defer src="/js/vertical-demo.js"></script>
+<script defer src="/js/demo-viewer.js"></script>
