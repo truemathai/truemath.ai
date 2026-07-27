@@ -342,31 +342,34 @@
     function setupPlayer(player) {
       const frame = player.querySelector('.tmp-frame iframe');
       const now = player.querySelector('.tmp-now');
-      const links = Array.prototype.slice.call(player.querySelectorAll('.tmp-link'));
-      if (!frame || !links.length) return;
+      const rails = Array.prototype.slice.call(player.querySelectorAll('.tmp-list'));
+      if (!frame || !rails.length) return;
 
       const customer = player.getAttribute('data-stream-customer');
-      const items = links.map(function (a) {
-        return { uid: a.getAttribute('data-uid'), title: a.getAttribute('data-title') || '', link: a };
-      });
+      const tabs = Array.prototype.slice.call(player.querySelectorAll('.tmp-tab'));
+      const btnAll = player.querySelector('[data-action="playall"]');
+      const btnShuffle = player.querySelector('[data-action="shuffle"]');
 
+      let items = [];        // the active group's clips (rebuilt on each tab switch)
       let order = [];        // indices still to play in the running sequence
       let advancing = false; // guards against a doubled 'ended' after re-wiring
       let ctrl = null;       // current Stream controller (recreated on each load)
-      const btnAll = player.querySelector('[data-action="playall"]');
-      const btnShuffle = player.querySelector('[data-action="shuffle"]');
+
+      function buildItems(rail) {
+        return Array.prototype.slice.call(rail.querySelectorAll('.tmp-link')).map(function (a) {
+          return { uid: a.getAttribute('data-uid'), title: a.getAttribute('data-title') || '', link: a };
+        });
+      }
 
       function setMode(btn) {
         [btnAll, btnShuffle].forEach(function (b) { if (b) b.classList.toggle('is-active', b === btn); });
       }
 
       function highlight(i) {
-        items.forEach(function (it, idx) {
-          if (idx === i) { it.link.setAttribute('aria-current', 'true'); }
-          else { it.link.removeAttribute('aria-current'); }
-        });
+        player.querySelectorAll('.tmp-link').forEach(function (a) { a.removeAttribute('aria-current'); });
+        if (i >= 0 && items[i]) items[i].link.setAttribute('aria-current', 'true');
         if (now) {
-          now.innerHTML = i >= 0
+          now.innerHTML = i >= 0 && items[i]
             ? '<span class="tmp-now-idx">' + (i + 1) + '/' + items.length + '</span> · ' + items[i].title
             : '';
         }
@@ -404,22 +407,44 @@
         bind();
       }
 
-      // Click a clip: play just that one, cancel any running sequence.
-      links.forEach(function (a, i) {
-        a.addEventListener('click', function (e) {
-          e.preventDefault();
-          order = [];
-          setMode(null);
-          load(i, true);
-        });
-      });
-
       function playSequence(seq, btn) {
         order = seq;
         setMode(btn);
         const next = order.shift();
         if (next != null) load(next, true);
       }
+
+      // Switch the active tab/group: reveal its rail, rebuild `items`, cancel any
+      // running sequence. On init we keep the server-rendered iframe; on a user
+      // tab click we swap the stage to that group's first clip (paused).
+      function activateGroup(gi, opts) {
+        opts = opts || {};
+        rails.forEach(function (r, ri) { r.hidden = ri !== gi; });
+        tabs.forEach(function (t, ti) {
+          const on = ti === gi;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        items = buildItems(rails[gi]);
+        order = [];
+        setMode(null);
+        if (opts.init) { if (tabs.length) highlight(0); bind(); }
+        else load(0, false);
+      }
+
+      // Clicks are delegated so they keep working after the active rail swaps.
+      player.addEventListener('click', function (e) {
+        const link = e.target.closest ? e.target.closest('.tmp-link') : null;
+        if (!link || !player.contains(link)) return;
+        e.preventDefault();
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].link === link) { order = []; setMode(null); load(i, true); break; }
+        }
+      });
+
+      tabs.forEach(function (t, ti) {
+        t.addEventListener('click', function () { activateGroup(ti, {}); });
+      });
 
       if (btnAll) btnAll.addEventListener('click', function () {
         playSequence(items.map(function (_, i) { return i; }), btnAll);
@@ -434,7 +459,7 @@
         playSequence(idx, btnShuffle);
       });
 
-      bind();   // wire the initially-loaded first clip for auto-advance
+      activateGroup(0, { init: true });   // first group active, server iframe kept
     }
   })();
 

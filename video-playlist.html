@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Video Playlist (prototype)"
+title: "TrueMath Videos"
 description: "Internal prototype of a sequential video player."
 noindex: true
 body_class: page-video-demo
@@ -8,14 +8,15 @@ body_class: page-video-demo
 
 <section class="section">
   <span class="section-label">Prototype</span>
-  <h1 class="section-headline">Sequential video player</h1>
+  <h1 class="section-headline">TrueMath Videos</h1>
   <p class="section-body">
-    Play the whole set in order with one click, or shuffle it. Pick any clip to
-    jump straight to it. Streaming from Cloudflare Stream, so quality adapts to
-    the connection and every view is counted.
+    Switch between the TrueMath overview and the public-library domains, then
+    play the set in order with one click, or shuffle it. Pick any clip to jump
+    straight to it. Streaming from Cloudflare Stream, so quality adapts to the
+    connection and every view is counted.
   </p>
 
   {% include video-player.html
-       videos=site.data.video_playlists.intro
+       groups=site.data.video_playlists.library_tabs
        customer=site.stream_customer %}
 </section>

@@ -1,15 +1,17 @@
 {%- comment -%}
 Reusable Cloudflare Stream video player + playlist rail.
 
-Params:
-  include.videos    — list of { title, uid } (required)
+Params (one of the first two is required):
+  include.videos    — a flat list of { title, uid } (single rail, no tabs)
+  include.groups    — a list of { label, videos:[{title,uid}] } (type-switcher tabs)
   include.customer  — Stream account subdomain, e.g. "customer-xxxx" (required)
 
 Behavior is in js/site.js (initVideoPlaylists); styles are the .tmp-* block in
 css/site.css. Without JS/SDK the iframe still plays the first clip and the rail
 links to each clip's Stream watch page. Multiple players per page are fine.
 {%- endcomment -%}
-{%- assign first = include.videos | first -%}
+{%- assign groups = include.groups -%}
+{%- if groups -%}{%- assign first = groups.first.videos | first -%}{%- else -%}{%- assign first = include.videos | first -%}{%- endif -%}
 <div class="tmp-player" data-video-playlist data-stream-customer="{{ include.customer }}">
   <div class="tmp-stage">
     <div class="tmp-frame">
@@ -23,6 +25,14 @@ links to each clip's Stream watch page. Multiple players per page are fine.
   </div>
 
   <div class="tmp-sidebar">
+    {%- if groups %}
+    <div class="tmp-tabs" role="tablist">
+      {% for g in groups %}
+      <button type="button" class="tmp-tab{% if forloop.first %} is-active{% endif %}" data-tab="{{ forloop.index0 }}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ g.label }}</button>
+      {% endfor %}
+    </div>
+    {%- endif %}
+
     <div class="tmp-controls">
       <button type="button" class="tmp-btn tmp-btn-primary" data-action="playall">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M3 2.5l7 4-7 4v-8z" fill="currentColor"/></svg>
@@ -34,19 +44,31 @@ links to each clip's Stream watch page. Multiple players per page are fine.
       </button>
     </div>
 
-    <ol class="tmp-list">
-      {% for v in include.videos %}
+    {%- if groups %}
+    {% for g in groups %}
+    <ol class="tmp-list" data-group="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+      {% for v in g.videos %}
       <li class="tmp-item">
-        <a class="tmp-link"
-           href="https://{{ include.customer }}.cloudflarestream.com/{{ v.uid }}/watch"
-           data-uid="{{ v.uid }}"
-           data-title="{{ v.title | escape }}">
+        <a class="tmp-link" href="https://{{ include.customer }}.cloudflarestream.com/{{ v.uid }}/watch" data-uid="{{ v.uid }}" data-title="{{ v.title | escape }}">
           <span class="tmp-num">{{ forloop.index }}</span>
           <span class="tmp-title">{{ v.title }}</span>
         </a>
       </li>
       {% endfor %}
     </ol>
+    {% endfor %}
+    {%- else %}
+    <ol class="tmp-list">
+      {% for v in include.videos %}
+      <li class="tmp-item">
+        <a class="tmp-link" href="https://{{ include.customer }}.cloudflarestream.com/{{ v.uid }}/watch" data-uid="{{ v.uid }}" data-title="{{ v.title | escape }}">
+          <span class="tmp-num">{{ forloop.index }}</span>
+          <span class="tmp-title">{{ v.title }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+    {%- endif %}
   </div>
 </div>
 
