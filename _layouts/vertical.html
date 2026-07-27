@@ -25,60 +25,7 @@ layout: default
 
   <div class="tmv-launchers">
     {%- for d in page.demos -%}
-    <div class="tmv-launcher" id="L_{{ d.id }}">
-      <div class="tmv-lhead" data-toggle="{{ d.id }}">
-        <span class="tmv-ltag">{{ d.label }}</span>
-        <span class="tmv-status" id="status_{{ d.id }}"></span>
-        <span class="tmv-cue">open</span>
-        <span class="tmv-chev">&#9662;</span>
-      </div>
-      <div class="tmv-lbody">
-        <div class="tmv-frame">
-          <div class="tmv-topbar">
-            <div class="tmv-logo"></div><div class="tmv-name">TrueMath</div>
-            <div class="tmv-pill">Public Library &#9662;</div><div class="tmv-dots">&middot;&middot;&middot;</div>
-          </div>
-          <div class="tmv-convhead">
-            <div class="tmv-convtitle">{{ d.convo_title }}</div>
-            <div class="tmv-convrow">
-              <span class="tmv-dompill">&#9636; {{ page.name }}</span>
-              <span class="tmv-sim">simulation</span>
-              <span class="tmv-qbtn tmv-left">&#9539; Scenarios</span><span class="tmv-qbtn">&#8599; Share</span>
-            </div>
-          </div>
-          <div class="tmv-scroll">
-            <div class="tmv-card">
-              <div class="tmv-chatlabel"><span>Chat &middot; Natural Language</span><span class="tmv-req">Request</span></div>
-              <div class="tmv-prompt">{{ d.prompt }}</div>
-              <div class="tmv-parsewrap">
-                <div class="tmv-parse">
-                  <div class="tmv-pl">ENGINE INPUT (LANGUAGE MODEL INTERPRETATION)</div>
-                  <div class="tmv-pc">{% for p in d.parse %}{{ p[0] }}: <span class="tmv-pv">{{ p[1] }}</span>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>
-                </div>
-              </div>
-              <div class="tmv-askrow">
-                <span class="tmv-hint">&uarr; This prompt is loaded and ready. Hit Ask to watch TrueMath work.</span>
-                <button class="tmv-ask" type="button" data-ask="{{ d.id }}">Ask &rarr;</button>
-              </div>
-            </div>
-
-            <div class="tmv-result">
-              <div class="tmv-card tmv-plain">
-                <div class="tmv-rhead"><span class="tmv-ts">{{ d.date | default: "Jul 9, 2026" }} {{ d.ts }}</span><span class="tmv-tr tmv-first">Response</span></div>
-                <div class="tmv-scen">Creating <b>Scenario 1</b>.</div>
-                <div class="tmv-rule"></div>
-                <div class="tmv-steps" id="steps_{{ d.id }}">{% include tmv-blocks.html blocks=d.blocks chart=d.chart %}</div>
-                <div class="tmv-finalwrap"><div class="tmv-final"><div class="tmv-txt">{{ d.final }}</div></div></div>
-              </div>
-            </div>
-          </div>
-          <a class="tmv-inputbar" href="{{ page.cta_url | default: 'https://app.truemath.ai/signup' }}">
-            <span class="tmv-ph">Want to run your own numbers? Start a free account &rarr;</span>
-            <span class="tmv-askmini">Start free</span>
-          </a>
-        </div>
-      </div>
-    </div>
+    {% include tmv-demo.html demo=d name=page.name cta_url=page.cta_url %}
     {%- endfor -%}
   </div>
 
