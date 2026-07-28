@@ -1022,7 +1022,7 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
    All demo classes are namespaced .tmv-* to avoid clashing with the
    marketing styles above.
    ============================================================ */
-.page-vertical {
+.page-vertical, .page-demo-viewer {
   --tmv-app-purple:#6B2C91; --tmv-green:#12B886; --tmv-green-ink:#04342C;
   --tmv-amber:#E8A33D; --tmv-lav:#7E5A9B; --tmv-lav-lt:#C9B6DC;
   --tmv-ink:#17121E; --tmv-panel:#241C2E; --tmv-line-dk:#3A2E47; --tmv-paper:#FAF8FC;
@@ -1172,6 +1172,38 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-js .tmv-launcher:not(.spent) .tmv-askrow { display: flex; }
 .tmv-js .tmv-result { display: none; }
 .tmv-js .tmv-launcher.spent .tmv-result { display: block; }
+
+/* ============================================================
+   MULTI-DOMAIN DEMO VIEWER  (body.page-demo-viewer, beta)
+   Reuses the demo frame + engine above; adds a domain dropdown and
+   prompt chips that pick which single frame is shown. The dark demo
+   tokens (--tmv-*) are shared with .page-vertical. All classes .tmv-*.
+   Without JS every frame is visible; .tmv-js (added by the engine)
+   collapses the page to the one selected frame — see js/demo-viewer.js.
+   ============================================================ */
+.tmv-picker { max-width: 640px; margin: 0 auto 22px; display: flex; flex-direction: column; gap: 16px; }
+.tmv-picker-field { display: flex; flex-direction: column; gap: 8px; }
+.tmv-picker-lab { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--tmv-lav-lt); }
+.tmv-select-wrap { position: relative; }
+.tmv-select-wrap::after { content: "\25BE"; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--tmv-lav-lt); pointer-events: none; font-size: 12px; }
+.tmv-select { -webkit-appearance: none; appearance: none; width: 100%; background: var(--tmv-panel); color: var(--tmv-paper); border: .5px solid var(--tmv-line-dk); border-radius: 10px; padding: 13px 40px 13px 15px; font-family: var(--font-sans); font-size: 15px; cursor: pointer; }
+.tmv-select:focus-visible { outline: 2px solid var(--tmv-lav); outline-offset: 2px; }
+.tmv-chipwrap { display: flex; flex-wrap: wrap; gap: 8px; }
+.tmv-chipgroup { display: contents; }
+.tmv-chip { font-family: var(--font-mono); font-size: 12.5px; color: #D6CCE2; background: var(--tmv-panel); border: .5px solid var(--tmv-line-dk); border-radius: 20px; padding: 8px 15px; cursor: pointer; transition: border-color .15s, color .15s, background .15s; }
+.tmv-chip:hover { border-color: var(--tmv-lav); color: var(--tmv-paper); }
+.tmv-chip.is-active { background: var(--tmv-app-purple); border-color: var(--tmv-app-purple); color: #fff; }
+
+.tmv-viewer { max-width: 640px; margin: 0 auto; }
+.tmv-vframe { margin-bottom: 10px; }
+/* the chips replace the per-frame accordion tab on this page */
+.page-demo-viewer .tmv-lhead { display: none; }
+.page-demo-viewer .tmv-lbody { padding-top: 4px; }
+/* JS present: show only the selected question's frame + chip group */
+.page-demo-viewer.tmv-js .tmv-vframe { display: none; }
+.page-demo-viewer.tmv-js .tmv-vframe.is-active { display: block; }
+.page-demo-viewer.tmv-js .tmv-chipgroup { display: none; }
+.page-demo-viewer.tmv-js .tmv-chipgroup.is-active { display: contents; }
 
 /* responsive */
 @media (max-width: 560px) {
