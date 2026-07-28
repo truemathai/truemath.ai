@@ -361,6 +361,22 @@
         });
       }
 
+      // Deep link: ?v=<uid> in the URL (e.g. from a /go/ link) → find that clip's
+      // group + index so we can open its tab and play it on load. Returns null
+      // if there's no `v` param or no matching clip.
+      function pickDeepLink() {
+        if (!window.URLSearchParams) return null;
+        const want = new URLSearchParams(window.location.search).get('v');
+        if (!want) return null;
+        for (let gi = 0; gi < rails.length; gi++) {
+          const groupItems = buildItems(rails[gi]);
+          for (let ii = 0; ii < groupItems.length; ii++) {
+            if (groupItems[ii].uid === want) return { gi: gi, ii: ii };
+          }
+        }
+        return null;
+      }
+
       function setMode(btn) {
         [btnAll, btnShuffle].forEach(function (b) { if (b) b.classList.toggle('is-active', b === btn); });
       }
@@ -429,6 +445,7 @@
         order = [];
         setMode(null);
         if (opts.init) { if (tabs.length) highlight(0); bind(); }
+        else if (opts.skipLoad) { /* caller will load() the target clip */ }
         else load(0, false);
       }
 
@@ -459,7 +476,11 @@
         playSequence(idx, btnShuffle);
       });
 
-      activateGroup(0, { init: true });   // first group active, server iframe kept
+      // Deep link (?v=<uid>) opens that clip's tab and plays it; otherwise the
+      // first group is active and the server-rendered iframe is kept.
+      const deep = pickDeepLink();
+      if (deep) { activateGroup(deep.gi, { skipLoad: true }); load(deep.ii, true); }
+      else { activateGroup(0, { init: true }); }
     }
   })();
 
