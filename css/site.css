@@ -1185,3 +1185,53 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 @media (prefers-reduced-motion: reduce) {
   .tmv-arr, .tmv-ask, .tmv-spin { animation: none !important; }
 }
+
+/* ==========================================================================
+   Video playlist prototype
+   Namespaced .tmp-* so it can't collide with the marketing styles. Cloudflare
+   Stream player stage beside a scrollable list of clips. js/site.js drives the
+   Stream player SDK for Play-all / Shuffle / click-to-play; without JS/SDK the
+   <stream> element still plays the first clip and the rail links to each clip's
+   Stream watch page. Colors come from the tokens, so light/dark is automatic.
+   ========================================================================== */
+.tmp-player { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(240px, 1fr); gap: 24px; margin-top: 32px; align-items: start; }
+.tmp-stage { min-width: 0; }
+.tmp-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.tmp-frame stream, .tmp-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.tmp-now { font-family: var(--font-mono); font-size: 13px; color: var(--ink-muted); margin: 12px 2px 0; }
+.tmp-now .tmp-now-idx { color: var(--purple); }
+
+.tmp-sidebar { min-width: 0; }
+.tmp-tabs { display: flex; gap: 3px; margin-bottom: 14px; padding: 3px; background: var(--bg-tint); border: 1px solid var(--border); border-radius: 10px; }
+.tmp-tab { flex: 1; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--ink-muted); background: none; border: none; border-radius: 7px; padding: 8px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.tmp-tab:hover { color: var(--ink); }
+.tmp-tab.is-active { color: var(--ink); background: var(--bg-white); box-shadow: 0 1px 3px rgba(26, 24, 48, 0.10); }
+.tmp-list[hidden] { display: none; }
+.tmp-controls { display: flex; gap: 10px; margin-bottom: 14px; }
+.tmp-btn { font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink); background: var(--bg-white); border: 1px solid var(--border-purple); border-radius: 9px; padding: 9px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; }
+.tmp-btn:hover { color: var(--purple); border-color: var(--purple); transform: translateY(-1px); }
+.tmp-btn svg { flex-shrink: 0; }
+.tmp-btn-primary { color: #fff; background: var(--purple); border-color: var(--purple); }
+.tmp-btn-primary:hover { color: #fff; background: var(--purple-bright); border-color: var(--purple-bright); }
+.tmp-btn.is-active { border-color: var(--purple); box-shadow: 0 0 0 2px var(--purple-tint); }
+
+.tmp-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.tmp-item + .tmp-item { border-top: 1px solid var(--border); }
+.tmp-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; text-decoration: none; color: var(--ink); transition: background 0.15s; }
+.tmp-link:hover { background: var(--bg-tint); }
+.tmp-num { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); width: 16px; text-align: right; flex-shrink: 0; }
+.tmp-thumb { width: 72px; height: 41px; object-fit: cover; border-radius: 6px; background: var(--bg-tint); flex-shrink: 0; }
+.tmp-title { font-family: var(--font-sans); font-size: 14px; line-height: 1.3; color: var(--ink); }
+
+/* Playing state (JS sets aria-current on the active item) */
+.tmp-link[aria-current="true"] { background: var(--purple-tint); box-shadow: inset 3px 0 0 var(--purple); }
+.tmp-link[aria-current="true"] .tmp-title { color: var(--purple); font-weight: 600; }
+.tmp-link[aria-current="true"] .tmp-num { color: var(--purple); }
+
+/* When JS is active the list becomes a scroll rail capped to the stage height */
+.tmp-js .tmp-list { max-height: 62vh; overflow-y: auto; }
+
+@media (max-width: 760px) {
+  .tmp-player { grid-template-columns: 1fr; }
+  .tmp-js .tmp-list { max-height: none; }
+}

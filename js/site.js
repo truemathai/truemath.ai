@@ -324,4 +324,164 @@
     }
   })();
 
+  /* ---------- Video playlist ----------
+     Progressive enhancement for the .tmp-player widget (see
+     _includes/video-player.html). Without JS/SDK the Stream iframe still plays
+     the first clip and the rail links to each clip's watch page. When Cloudflare's
+     player SDK is present we drive it: click a clip to play it, "Play all" runs
+     the set in order, "Shuffle" runs a random order, and each clip auto-advances
+     to the next via the Stream player's `ended` event. Supports multiple players
+     on one page. */
+  (function initVideoPlaylists() {
+    if (typeof window.Stream !== 'function') return;   // Cloudflare Stream SDK required
+    const players = document.querySelectorAll('[data-video-playlist]');
+    if (!players.length) return;
+    document.body.classList.add('tmp-js');
+    Array.prototype.forEach.call(players, setupPlayer);
+
+    function setupPlayer(player) {
+      const frame = player.querySelector('.tmp-frame iframe');
+      const now = player.querySelector('.tmp-now');
+      const rails = Array.prototype.slice.call(player.querySelectorAll('.tmp-list'));
+      if (!frame || !rails.length) return;
+
+      const customer = player.getAttribute('data-stream-customer');
+      const tabs = Array.prototype.slice.call(player.querySelectorAll('.tmp-tab'));
+      const btnAll = player.querySelector('[data-action="playall"]');
+      const btnShuffle = player.querySelector('[data-action="shuffle"]');
+
+      let items = [];        // the active group's clips (rebuilt on each tab switch)
+      let order = [];        // indices still to play in the running sequence
+      let advancing = false; // guards against a doubled 'ended' after re-wiring
+      let ctrl = null;       // current Stream controller (recreated on each load)
+
+      function buildItems(rail) {
+        return Array.prototype.slice.call(rail.querySelectorAll('.tmp-link')).map(function (a) {
+          return { uid: a.getAttribute('data-uid'), title: a.getAttribute('data-title') || '', link: a };
+        });
+      }
+
+      // Deep link: ?v=<uid> in the URL (e.g. from a /go/ link) → find that clip's
+      // group + index so we can open its tab and play it on load. Returns null
+      // if there's no `v` param or no matching clip.
+      function pickDeepLink() {
+        if (!window.URLSearchParams) return null;
+        const want = new URLSearchParams(window.location.search).get('v');
+        if (!want) return null;
+        for (let gi = 0; gi < rails.length; gi++) {
+          const groupItems = buildItems(rails[gi]);
+          for (let ii = 0; ii < groupItems.length; ii++) {
+            if (groupItems[ii].uid === want) return { gi: gi, ii: ii };
+          }
+        }
+        return null;
+      }
+
+      function setMode(btn) {
+        [btnAll, btnShuffle].forEach(function (b) { if (b) b.classList.toggle('is-active', b === btn); });
+      }
+
+      function highlight(i) {
+        player.querySelectorAll('.tmp-link').forEach(function (a) { a.removeAttribute('aria-current'); });
+        if (i >= 0 && items[i]) items[i].link.setAttribute('aria-current', 'true');
+        if (now) {
+          now.innerHTML = i >= 0 && items[i]
+            ? '<span class="tmp-now-idx">' + (i + 1) + '/' + items.length + '</span> · ' + items[i].title
+            : '';
+        }
+      }
+
+      function embedUrl(uid, autoplay) {
+        return 'https://' + customer + '.cloudflarestream.com/' + uid +
+               '/iframe?preload=metadata' + (autoplay ? '&autoplay=true' : '');
+      }
+
+      function onEnded() {
+        if (advancing) return;         // one advance per clip end
+        advancing = true;
+        if (order.length) load(order.shift(), true);
+        else { setMode(null); highlight(-1); }
+      }
+
+      // (Re)bind a Stream controller to the (reloaded) iframe so `ended` keeps
+      // firing for auto-advance. The old controller is destroyed first so we
+      // don't stack duplicate listeners.
+      function bind() {
+        if (ctrl && ctrl.destroy) { try { ctrl.destroy(); } catch (e) {} }
+        ctrl = window.Stream(frame);
+        ctrl.addEventListener('ended', onEnded);
+      }
+
+      // Swap the clip by pointing the iframe at a fresh Stream embed URL — the
+      // reliable way to change videos (the SDK's in-place src setter is flaky).
+      function load(i, autoplay) {
+        const it = items[i];
+        if (!it) return;
+        advancing = false;
+        frame.src = embedUrl(it.uid, autoplay);
+        highlight(i);
+        bind();
+      }
+
+      function playSequence(seq, btn) {
+        order = seq;
+        setMode(btn);
+        const next = order.shift();
+        if (next != null) load(next, true);
+      }
+
+      // Switch the active tab/group: reveal its rail, rebuild `items`, cancel any
+      // running sequence. On init we keep the server-rendered iframe; on a user
+      // tab click we swap the stage to that group's first clip (paused).
+      function activateGroup(gi, opts) {
+        opts = opts || {};
+        rails.forEach(function (r, ri) { r.hidden = ri !== gi; });
+        tabs.forEach(function (t, ti) {
+          const on = ti === gi;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        items = buildItems(rails[gi]);
+        order = [];
+        setMode(null);
+        if (opts.init) { if (tabs.length) highlight(0); bind(); }
+        else if (opts.skipLoad) { /* caller will load() the target clip */ }
+        else load(0, false);
+      }
+
+      // Clicks are delegated so they keep working after the active rail swaps.
+      player.addEventListener('click', function (e) {
+        const link = e.target.closest ? e.target.closest('.tmp-link') : null;
+        if (!link || !player.contains(link)) return;
+        e.preventDefault();
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].link === link) { order = []; setMode(null); load(i, true); break; }
+        }
+      });
+
+      tabs.forEach(function (t, ti) {
+        t.addEventListener('click', function () { activateGroup(ti, {}); });
+      });
+
+      if (btnAll) btnAll.addEventListener('click', function () {
+        playSequence(items.map(function (_, i) { return i; }), btnAll);
+      });
+
+      if (btnShuffle) btnShuffle.addEventListener('click', function () {
+        const idx = items.map(function (_, i) { return i; });
+        for (let j = idx.length - 1; j > 0; j--) {           // Fisher–Yates
+          const k = Math.floor(Math.random() * (j + 1));
+          const t = idx[j]; idx[j] = idx[k]; idx[k] = t;
+        }
+        playSequence(idx, btnShuffle);
+      });
+
+      // Deep link (?v=<uid>) opens that clip's tab and plays it; otherwise the
+      // first group is active and the server-rendered iframe is kept.
+      const deep = pickDeepLink();
+      if (deep) { activateGroup(deep.gi, { skipLoad: true }); load(deep.ii, true); }
+      else { activateGroup(0, { init: true }); }
+    }
+  })();
+
 })();
