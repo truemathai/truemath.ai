@@ -1238,7 +1238,7 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmp-tabs { display: flex; gap: 3px; margin-bottom: 14px; padding: 3px; background: var(--bg-tint); border: 1px solid var(--border); border-radius: 10px; }
 .tmp-tab { flex: 1; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--ink-muted); background: none; border: none; border-radius: 7px; padding: 8px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
 .tmp-tab:hover { color: var(--ink); }
-.tmp-tab.is-active { color: var(--ink); background: var(--bg-white); box-shadow: 0 1px 3px rgba(26, 24, 48, 0.10); }
+.tmp-tab.is-active { color: var(--purple); background: var(--purple-tint); box-shadow: none; }
 .tmp-list[hidden] { display: none; }
 .tmp-controls { display: flex; gap: 10px; margin-bottom: 14px; }
 .tmp-btn { font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink); background: var(--bg-white); border: 1px solid var(--border-purple); border-radius: 9px; padding: 9px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; }

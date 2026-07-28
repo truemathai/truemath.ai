@@ -11,8 +11,8 @@
 
 # Product demos / instructional clips.
 demos: &demos
-  - title: "Levered IRR from a prompt"
-    uid: "543af6a513fe834c62cc4dfaa4f75149"
+  - title: "The TrueMath Difference"
+    uid: "acd9d2e820a319d74d565762c8980392"
   - title: "TrueMath platform overview"
     uid: "af844bf223c5212869871468bc766ed5"
   - title: "Anatomy of a Conversation"
