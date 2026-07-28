@@ -83,7 +83,10 @@
       var data;
       try { data = JSON.parse(el.getAttribute("data-values")); } catch (e) { return; }
       if (!data || !data.length) return;
-      el.innerHTML = buildChart(data, el.getAttribute("data-label") || "");
+      var label = el.getAttribute("data-label") || "";
+      el.innerHTML = el.dataset.chartType === "stacked-pct"
+        ? buildStackedPctChart(data, label)
+        : buildChart(data, label);
       el.dataset.drawn = "1";
     });
   }
@@ -143,6 +146,39 @@
     return '<svg viewBox="0 0 660 270" role="img">' + grid +
       '<line x1="' + x0 + '" y1="' + yTop + '" x2="' + x0 + '" y2="' + yBot + '" stroke="#D8D2E0" stroke-width="1"/>' +
       bars + ticks +
+      (axisLabel ? '<text x="' + ((x0 + x1) / 2).toFixed(0) + '" y="258" text-anchor="middle" font-size="10" fill="#8A7E99">' + axisLabel + "</text>" : "") +
+      "</svg>";
+  }
+
+  /* Single stacked bar on a percent axis: `data` is a flat array of fractions
+     (e.g. [0.525, 0.3, 0.12]) drawn bottom-to-top in the fixed loss/commission/
+     expense palette. Reproduces the TrueMath combined-ratio waterfall — one
+     column split into its components, 0–100%+ axis. */
+  function buildStackedPctChart(vals, axisLabel) {
+    var colors = ["#D14D57", "#E2C04A", "#3EAF66"];
+    var x0 = 64, x1 = 636, yTop = 12, yBot = 224, plotH = yBot - yTop;
+    var total = 0; vals.forEach(function (v) { total += v; });
+    var top = Math.max(1, Math.ceil(total * 10) / 10);   // at least 100%
+    var y = function (v) { return yBot - (v / top) * plotH; };
+
+    var grid = "";
+    for (var gi = 0; gi <= 10; gi++) {
+      var gv = (top / 10) * gi, gy = y(gv);
+      grid += '<line x1="' + x0 + '" y1="' + gy.toFixed(1) + '" x2="' + x1 + '" y2="' + gy.toFixed(1) + '" stroke="#E7E1EE" stroke-width="1"/>' +
+        '<text x="' + (x0 - 6) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="8" fill="#8A7E99">' + (gv * 100).toFixed(3) + '%</text>';
+    }
+
+    var barW = 300, bx = (x0 + x1) / 2 - barW / 2, cum = 0, bars = "";
+    vals.forEach(function (v, i) {
+      var yb = y(cum), yt = y(cum + v);
+      bars += '<rect x="' + bx.toFixed(1) + '" y="' + yt.toFixed(1) + '" width="' + barW + '" height="' + Math.max(yb - yt, 0.6).toFixed(1) + '" fill="' + colors[i % colors.length] + '"/>';
+      cum += v;
+    });
+
+    return '<svg viewBox="0 0 660 270" role="img">' + grid +
+      '<line x1="' + x0 + '" y1="' + yTop + '" x2="' + x0 + '" y2="' + yBot + '" stroke="#D8D2E0" stroke-width="1"/>' +
+      bars +
+      '<text x="' + ((x0 + x1) / 2).toFixed(1) + '" y="238" text-anchor="middle" font-size="9" fill="#8A7E99">0</text>' +
       (axisLabel ? '<text x="' + ((x0 + x1) / 2).toFixed(0) + '" y="258" text-anchor="middle" font-size="10" fill="#8A7E99">' + axisLabel + "</text>" : "") +
       "</svg>";
   }
