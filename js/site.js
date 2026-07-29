@@ -421,6 +421,13 @@
         frame.src = embedUrl(it.uid, autoplay);
         highlight(i);
         bind();
+        // Keep the address bar naming the current clip, so copying the URL is a
+        // working deep link and any stale ?v= (or campaign params) clears. This
+        // composes with the utm stripper in default.html — it bails when no
+        // utm_ is present, so the two replaceState calls don't fight.
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', '?v=' + it.uid + window.location.hash);
+        }
       }
 
       function playSequence(seq, btn) {
@@ -474,6 +481,15 @@
           const t = idx[j]; idx[j] = idx[k]; idx[k] = t;
         }
         playSequence(idx, btnShuffle);
+      });
+
+      // With JS active, repoint each rail link at its own deep link (?v=<uid>)
+      // so right-click → Copy Link (or open-in-new-tab) yields a shareable URL.
+      // The server-rendered Cloudflare watch URL stays as the no-JS fallback.
+      rails.forEach(function (rail) {
+        Array.prototype.forEach.call(rail.querySelectorAll('.tmp-link'), function (a) {
+          a.setAttribute('href', '?v=' + a.getAttribute('data-uid'));
+        });
       });
 
       // Deep link (?v=<uid>) opens that clip's tab and plays it; otherwise the

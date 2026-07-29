@@ -2,31 +2,32 @@
 # Each clip is a { title, uid } (the UID comes from the Stream dashboard).
 #
 # Two ways to feed the player (_includes/video-player.html):
-#   • a flat list  → videos=site.data.video_playlists.intro       (no tabs)
+#   • a flat list  → videos=site.data.video_playlists.demos       (no tabs)
 #   • grouped tabs → groups=site.data.video_playlists.library_tabs (type switcher)
 #
 # To add a clip: upload it in the Stream dashboard, then add its title + uid to
 # the right list below. `demos` and `walkthroughs` are the single source of
-# truth; `intro` and `library_tabs` reference them via YAML anchors.
+# truth; `library_tabs` references them via YAML anchors.
 
 # Product demos / instructional clips.
 demos: &demos
-  - title: "Levered IRR from a prompt"
-    uid: "543af6a513fe834c62cc4dfaa4f75149"
+  - title: "The TrueMath Difference"
+    uid: "acd9d2e820a319d74d565762c8980392"
   - title: "TrueMath platform overview"
     uid: "af844bf223c5212869871468bc766ed5"
   - title: "Anatomy of a Conversation"
     uid: "ce4dcb050516231f5c76ae8e8c25cdbd"
   - title: "Asking questions in TrueMath"
     uid: "7140d3f360a03ded4ab78f9c146ef8a2"
+  - title: "Scenario Management"
+    uid: "6813656484e6c5c7e67ce5772a6fedd9"
 
 # Public-library domain walkthroughs — one clip per domain, added as uploaded.
 walkthroughs: &walkthroughs
   - title: "Financial Advisor"
     uid: "86358cfbfbf38b02338ddc9cc2c9ece8"
-
-# Flat-list alias for pages that pass a single playlist (introduction.html).
-intro: *demos
+  - title: "Residential Mortgage Broker"
+    uid: "d857445fbe5cf99353d608c9205bf81e"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
