@@ -1236,9 +1236,15 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 
 .tmp-sidebar { min-width: 0; }
 .tmp-tabs { display: flex; gap: 3px; margin-bottom: 14px; padding: 3px; background: var(--bg-tint); border: 1px solid var(--border); border-radius: 10px; }
-.tmp-tab { flex: 1; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--ink-muted); background: none; border: none; border-radius: 7px; padding: 8px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.tmp-tab { flex: 1; font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--ink-mid); background: none; border: none; border-radius: 7px; padding: 8px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
 .tmp-tab:hover { color: var(--ink); }
-.tmp-tab.is-active { color: var(--purple); background: var(--purple-tint); box-shadow: none; }
+/* The active pill sits on a --bg-tint track, so it must not be filled with a
+   tint of its own — --bg-white and --purple-tint both land within ~1.03:1 of
+   the track and vanish. A solid --purple fill with --bg (the inverse-of-ink
+   token) for the label reads in both themes: 9.5:1 pill-vs-track in light,
+   5.3:1 in dark. The rail row below can use --purple-tint because it sits on
+   --bg-white and carries an inset accent bar; this control has neither. */
+.tmp-tab.is-active { color: var(--bg); background: var(--purple); box-shadow: none; font-weight: 600; }
 .tmp-list[hidden] { display: none; }
 .tmp-controls { display: flex; gap: 10px; margin-bottom: 14px; }
 .tmp-btn { font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink); background: var(--bg-white); border: 1px solid var(--border-purple); border-radius: 9px; padding: 9px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; }
