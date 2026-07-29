@@ -1124,6 +1124,11 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .tmv-table th { background: #F7F4FB; font-weight: 600; color: #4A4553; text-align: left; }
 .tmv-table th:first-child, .tmv-table td:first-child { width: 34px; color: #8A7E99; text-align: left; }
 .tmv-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+/* Named-row tables (table_row_names) hold labels, not row numbers, in the first
+   column — the narrow 34px "#" width squeezes them one word per line. Let the
+   label column take the remaining width and shrink the value column to fit. */
+.tmv-table-named th:first-child, .tmv-table-named td:first-child { width: auto; color: #3D3B52; white-space: normal; }
+.tmv-table-named th:last-child, .tmv-table-named td:last-child { width: 1%; white-space: nowrap; }
 .tmv-inputbar { border-top: .5px solid #ECE6F2; padding: 11px 16px; background: #FCFBFD; display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .tmv-ph { font-size: 13px; color: #8A7E99; flex: 1; font-family: var(--font-mono); }
 .tmv-askmini { background: var(--tmv-green); color: var(--tmv-green-ink); font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 7px; font-family: var(--font-sans); }

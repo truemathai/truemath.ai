@@ -24,7 +24,7 @@ A line value of "See table above" renders unbolded, matching TrueMath's output.
     {% if b.desc %}<div class="tmv-desc">{{ b.desc }}</div>{% endif %}
     {% if b.lines and b.lines.size > 0 %}<div class="tmv-lines">{% for l in b.lines %}&bull; {{ l[0] }}: {% if l[1] == "See table above" %}{{ l[1] }}{% else %}<b>{{ l[1] }}</b>{% endif %}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
     {% if b.table_label %}<div class="tmv-lines">&bull; {{ b.table_label }}:</div>{% endif %}
-    <table class="tmv-table"><thead><tr><th>#</th><th>{{ b.table_col }}</th></tr></thead><tbody>{% for v in b.table_rows %}<tr><td>{% if b.table_row_names %}{{ b.table_row_names[forloop.index0] }}{% else %}{{ forloop.index0 | plus: b.table_start }}{% endif %}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
+    <table class="tmv-table{% if b.table_row_names %} tmv-table-named{% endif %}"><thead><tr><th>{% unless b.table_row_names %}#{% endunless %}</th><th>{{ b.table_col }}</th></tr></thead><tbody>{% for v in b.table_rows %}<tr><td>{% if b.table_row_names %}{{ b.table_row_names[forloop.index0] }}{% else %}{{ forloop.index0 | plus: b.table_start }}{% endif %}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
     {% if b.lines_after and b.lines_after.size > 0 %}<div class="tmv-lines">{% for l in b.lines_after %}&bull; {{ l[0] }}: {% if l[1] == "See table above" %}{{ l[1] }}{% else %}<b>{{ l[1] }}</b>{% endif %}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>{% endif %}
   </div>
   {%- else -%}
