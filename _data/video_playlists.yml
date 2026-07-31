@@ -32,6 +32,8 @@ walkthroughs: &walkthroughs
     uid: "ac2411bde96de51853b508e9559fc5e3"
   - title: "Business Valuation Analyst"
     uid: "01f7fb611e5ce7c99cc77545f5025422"
+  - title: "Reinsurance Treaty Analyst"
+    uid: "71529399584b62fbe8d8a37d87113746"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
