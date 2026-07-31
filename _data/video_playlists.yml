@@ -28,6 +28,8 @@ walkthroughs: &walkthroughs
     uid: "86358cfbfbf38b02338ddc9cc2c9ece8"
   - title: "Residential Mortgage Broker"
     uid: "d857445fbe5cf99353d608c9205bf81e"
+  - title: "CRE Acquisitions Analyst"
+    uid: "ac2411bde96de51853b508e9559fc5e3"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
