@@ -34,6 +34,8 @@ walkthroughs: &walkthroughs
     uid: "01f7fb611e5ce7c99cc77545f5025422"
   - title: "Reinsurance Treaty Analyst"
     uid: "71529399584b62fbe8d8a37d87113746"
+  - title: "Real Estate Investor"
+    uid: "118e9729dff7a43ac2f7b5a1369a75fa"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
