@@ -30,6 +30,8 @@ walkthroughs: &walkthroughs
     uid: "d857445fbe5cf99353d608c9205bf81e"
   - title: "CRE Acquisitions Analyst"
     uid: "ac2411bde96de51853b508e9559fc5e3"
+  - title: "Business Valuation Analyst"
+    uid: "01f7fb611e5ce7c99cc77545f5025422"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
