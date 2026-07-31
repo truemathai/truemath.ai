@@ -24,18 +24,18 @@ demos: &demos
 
 # Public-library domain walkthroughs — one clip per domain, added as uploaded.
 walkthroughs: &walkthroughs
-  - title: "Financial Advisor"
-    uid: "86358cfbfbf38b02338ddc9cc2c9ece8"
-  - title: "Residential Mortgage Broker"
-    uid: "d857445fbe5cf99353d608c9205bf81e"
-  - title: "CRE Acquisitions Analyst"
-    uid: "ac2411bde96de51853b508e9559fc5e3"
   - title: "Business Valuation Analyst"
     uid: "01f7fb611e5ce7c99cc77545f5025422"
-  - title: "Reinsurance Treaty Analyst"
-    uid: "71529399584b62fbe8d8a37d87113746"
+  - title: "CRE Acquisitions Analyst"
+    uid: "ac2411bde96de51853b508e9559fc5e3"
+  - title: "Financial Advisor"
+    uid: "86358cfbfbf38b02338ddc9cc2c9ece8"
   - title: "Real Estate Investor"
     uid: "118e9729dff7a43ac2f7b5a1369a75fa"
+  - title: "Reinsurance Treaty Analyst"
+    uid: "71529399584b62fbe8d8a37d87113746"
+  - title: "Residential Mortgage Broker"
+    uid: "d857445fbe5cf99353d608c9205bf81e"
 
 # Tab groups for the type-switcher player. Each entry is one tab: label + clips.
 library_tabs:
