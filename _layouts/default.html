@@ -74,7 +74,10 @@
   <!-- NAV -->
   <nav>
     <a href="/" class="nav-logo">
-      <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+      <picture>
+        <source srcset="/images/logos/truemath-logo-long-white.png" media="(prefers-color-scheme: dark)">
+        <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
+      </picture>
     </a>
     <ul class="nav-links">
       <li><a href="/#why">Why TrueMath</a></li>
@@ -142,7 +145,10 @@
           <img src="/images/logos/truemath-logo-long-color.png" alt="TrueMath">
         </picture>
       </a>
-      <span class="footer-copy">&copy; 2026 TrueMath, Inc.</span>
+      <div class="footer-legal">
+        <span class="footer-copy">&copy; 2026 TrueMath, Inc.</span>
+        <span class="footer-trademark">TrueMath&trade; and the TrueMath logo are trademarks of TrueMath, Inc.</span>
+      </div>
     </div>
     <ul class="footer-links">
       <li><a href="/faq.html">FAQ</a></li>
