@@ -1,0 +1,38 @@
+{%- comment -%}
+  The "raw LLM vs TrueMath" comparison block — one prompt, ten runs each, with
+  the measured accuracy, speed, and energy figures.
+
+  Params:
+    include.proof (required) a page's `proof` mapping (see _verticals/*.md)
+    include.num   (optional) the section number shown in the label; default "02"
+    include.label (optional) the section label text; default "The comparison"
+
+  Extracted verbatim from the vertical layout — same reasoning as
+  _includes/tmv-demo.html — so the same block can be reused outside the
+  vertical pages without duplicating markup. Renders fully without JS.
+{%- endcomment -%}
+{%- assign pf = include.proof -%}
+<section class="tmv-proof">
+  <div class="tmv-seclabel"><span class="tmv-secnum">{{ include.num | default: "02" }}</span> {{ include.label | default: "The comparison" }}</div>
+  <div class="tmv-proof-head">
+    <h2>{{ pf.headline }}</h2>
+    <div class="tmv-proof-sub">{{ pf.sub }}</div>
+  </div>
+  {% if pf.prompt %}<div class="tmv-proofprompt"><span class="tmv-plab">The prompt, sent to each</span>&ldquo;{{ pf.prompt }}&rdquo;</div>{% endif %}
+  {% if pf.exact_value %}<div class="tmv-exact">{{ pf.exact_label }}<br><b>{{ pf.exact_value }}</b></div>{% endif %}
+  <div class="tmv-compare">
+    <div class="tmv-col tmv-raw">
+      <div class="tmv-collab">&#9679; {{ pf.raw.label | default: "RAW LLM" }}</div>
+      <div class="tmv-big">{{ pf.raw.score }}<small>{{ pf.raw.score_unit }}</small></div>
+      <div class="tmv-rows">{% for r in pf.raw.rows %}<div class="tmv-r"><span>{{ r[0] }}</span><b>{{ r[1] }}{% if r[2] %}<i class="tmv-mult">{{ r[2] }}</i>{% endif %}</b></div>{% endfor %}</div>
+    </div>
+    <div class="tmv-col tmv-good">
+      <div class="tmv-collab">&#9679; {{ pf.good.label | default: "TRUEMATH" }}</div>
+      <div class="tmv-big">{{ pf.good.score }}<small>{{ pf.good.score_unit }}</small></div>
+      <div class="tmv-rows">{% for r in pf.good.rows %}<div class="tmv-r"><span>{{ r[0] }}</span><b>{{ r[1] }}{% if r[2] %}<i class="tmv-mult">{{ r[2] }}</i>{% endif %}</b></div>{% endfor %}</div>
+    </div>
+  </div>
+  {% if pf.methnote %}<div class="tmv-methnote">{{ pf.methnote }}</div>{% endif %}
+  {% if pf.caption %}<div class="tmv-proofcap">{{ pf.caption }}</div>{% endif %}
+  {% if pf.receipt %}<div class="tmv-receiptline">{{ pf.receipt }}</div>{% endif %}
+</section>
