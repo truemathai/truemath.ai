@@ -1022,9 +1022,10 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
    The demo + comparison are intentional dark "spotlight" surfaces in
    BOTH themes, with a light app-like frame — they mirror the product UI.
    All demo classes are namespaced .tmv-* to avoid clashing with the
-   marketing styles above.
+   marketing styles above. The demo-viewer and lending pages reuse these
+   same --tmv-* tokens, so they are scoped in alongside .page-vertical.
    ============================================================ */
-.page-vertical, .page-demo-viewer {
+.page-vertical, .page-demo-viewer, .page-lending {
   --tmv-app-purple:#6B2C91; --tmv-green:#12B886; --tmv-green-ink:#04342C;
   --tmv-amber:#E8A33D; --tmv-lav:#7E5A9B; --tmv-lav-lt:#C9B6DC;
   --tmv-ink:#17121E; --tmv-panel:#241C2E; --tmv-line-dk:#3A2E47; --tmv-paper:#FAF8FC;
@@ -1280,4 +1281,40 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 @media (max-width: 760px) {
   .tmp-player { grid-template-columns: 1fr; }
   .tmp-js .tmp-list { max-height: none; }
+}
+
+/* ============================================================
+   LENDING LANDING PAGE  (body.page-lending)
+   A single-purpose partner pitch page. It reuses the shared
+   marketing sections, the .tmv-* demo frame, and the .tmv-proof
+   comparison; the only bespoke pieces are the two-column
+   contrast lists and the per-domain question lists below, all
+   namespaced .lnd-* so they can't collide with anything else.
+   Styled entirely with the site tokens, so dark mode is free.
+   ============================================================ */
+
+.lnd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 72px; max-width: 940px; margin: 8px auto 0; text-align: left; }
+.lnd-head { font-family: var(--font-serif); font-size: clamp(20px, 2.4vw, 25px); font-weight: 500; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 6px; }
+.lnd-head em { font-style: italic; color: var(--purple); }
+.lnd-sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 18px; }
+
+.lnd-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+.lnd-list li { position: relative; padding-left: 26px; font-size: 16px; line-height: 1.6; color: var(--ink-mid); }
+.lnd-list li strong { color: var(--ink); font-weight: 600; }
+
+/* the "what you get today" column: a flat dash, deliberately unremarkable */
+.lnd-list--flat li::before { content: ''; position: absolute; left: 2px; top: 12px; width: 11px; height: 2px; border-radius: 1px; background: var(--ink-muted); }
+/* the TrueMath column: the site's checkmark */
+.lnd-list--check li::before { content: ''; position: absolute; left: 3px; top: 4px; width: 6px; height: 11px; border: solid var(--purple); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+
+/* per-domain lists of the questions one domain already answers */
+.lnd-qs { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.lnd-qs li { position: relative; padding-left: 20px; font-size: 15.5px; line-height: 1.55; color: var(--ink-mid); }
+.lnd-qs li::before { content: '\201C'; position: absolute; left: 0; top: 5px; font-family: var(--font-serif); font-size: 19px; line-height: 1; color: var(--purple-light); }
+
+.lnd-aside { max-width: 700px; margin: 52px auto 0; text-align: center; font-size: 15px; line-height: 1.7; color: var(--ink-muted); font-style: italic; }
+.lnd-aside strong { color: var(--ink-mid); font-weight: 600; font-style: normal; }
+
+@media (max-width: 860px) {
+  .lnd-grid { grid-template-columns: 1fr; gap: 36px; }
 }
