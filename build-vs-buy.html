@@ -1,0 +1,207 @@
+---
+layout: default
+title: "TrueMath: Build vs. Buy Calculator"
+description: "Compare the total cost of ownership of building a calculation layer in-house against buying TrueMath. Set your volume and horizon and see where each option wins — the model is deliberately conservative."
+og_title: "Build vs. Buy: the calculation-layer TCO calculator"
+og_description: "Set your volume and horizon, describe an in-house build, and compare total cost of ownership against TrueMath."
+body_class: page-build-vs-buy
+noindex: true
+---
+{%- comment -%}
+  Build vs. Buy TCO calculator. Translated from a self-contained prototype into
+  the repo's design system: chrome/head/fonts come from the layout, styling is
+  the .bvb-* block in css/site.css (design tokens, so light/dark flip for free),
+  and the model + chart live in js/build-vs-buy.js as progressive enhancement.
+
+  Model notes: TrueMath = brand purple (hero line), in-house build = slate.
+  Defaults reproduce build ~$1.13M / TrueMath $270K at 100k/mo over 36 months.
+  Two additions over the prototype: an optional build-risk section (off by
+  default) and maintenance that scales with volume. Both calibrated so the
+  baseline (vol = baseline volume, risk off) matches the validated figures.
+  No em-dashes in the copy, per the tool's house rule.
+{%- endcomment -%}
+
+<section class="section">
+  <span class="section-label">Interactive</span>
+  <h1 class="section-headline">Build it yourself, or <em>buy the calculation layer.</em></h1>
+  <p class="section-body bvb-intro">Set your volume and horizon, describe an in-house build, and compare total cost of ownership against TrueMath. The model is deliberately conservative and will show you where building wins.</p>
+
+  <div class="bvb-grid">
+
+    <!-- INPUTS -->
+    <div class="bvb-panel">
+      <div class="bvb-panel-title">Inputs</div>
+
+      <div class="bvb-grp">Scale</div>
+      <div class="bvb-field">
+        <label for="bvb-vol">Calculations per month</label>
+        <input id="bvb-vol" type="number" value="100000" min="0" step="1000">
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-horizon">Time horizon (months)</label>
+        <input id="bvb-horizon" type="number" value="36" min="1" step="1">
+      </div>
+
+      <div class="bvb-grp">Build in-house</div>
+      <div class="bvb-field">
+        <label for="bvb-approach">Build approach</label>
+        <select id="bvb-approach">
+          <option value="scratch" selected>From scratch</option>
+          <option value="agent">With an AI coding agent</option>
+        </select>
+      </div>
+      <div class="bvb-field" id="bvb-speedupField" hidden>
+        <label for="bvb-speedup">Authoring speedup from the agent (%)</label>
+        <input id="bvb-speedup" type="number" value="60" min="0" max="95" step="5">
+        <div class="bvb-hint" id="bvb-speedupHint">Shortens authoring only. The surfaces and governance below are unchanged.</div>
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-eng">Engineers on the build</label>
+        <input id="bvb-eng" type="number" value="3" min="0" step="1">
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-loaded">Loaded cost per engineer / year</label>
+        <input id="bvb-loaded" type="number" value="208000" min="0" step="1000">
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-buildMonths">Build time before launch (months)</label>
+        <input id="bvb-buildMonths" type="number" value="6" min="0" step="1">
+        <div class="bvb-hint">Nothing serves traffic during this window.</div>
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-maintFTE">Maintenance engineers (ongoing)</label>
+        <input id="bvb-maintFTE" type="number" value="1" min="0" step="0.5">
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-infra">Infrastructure / month</label>
+        <input id="bvb-infra" type="number" value="10000" min="0" step="500">
+      </div>
+
+      <div class="bvb-grp">How maintenance scales</div>
+      <div class="bvb-field">
+        <label for="bvb-baseVol">Baseline volume for the figures above</label>
+        <input id="bvb-baseVol" type="number" value="100000" min="1" step="1000">
+        <div class="bvb-hint">The volume at which the maintenance and infra above hold.</div>
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-maintScale">Scaling with volume</label>
+        <select id="bvb-maintScale">
+          <option value="sqrt" selected>Sub-linear (square root)</option>
+          <option value="linear">Linear with volume</option>
+          <option value="flat">Flat (does not scale)</option>
+        </select>
+        <div class="bvb-hint">Maintenance engineers and infrastructure both scale with volume by this rule.</div>
+      </div>
+
+      <div class="bvb-risk">
+        <label class="bvb-toggle" for="bvb-riskOn">
+          <input id="bvb-riskOn" type="checkbox">
+          <span>Add build-risk costs</span>
+        </label>
+        <div class="bvb-hint">Off by default. Recruiting, ramp, security review, and defect costs, all of which favor buying.</div>
+        <div class="bvb-risk-body" id="bvb-riskBody" hidden>
+          <div class="bvb-field">
+            <label for="bvb-recruit">Recruiting &amp; hiring per engineer (one-time)</label>
+            <input id="bvb-recruit" type="number" value="30000" min="0" step="1000">
+          </div>
+          <div class="bvb-field">
+            <label for="bvb-ramp">Ramp-up at 50% productivity (months)</label>
+            <input id="bvb-ramp" type="number" value="3" min="0" step="1">
+          </div>
+          <div class="bvb-field">
+            <label for="bvb-security">Security review (one-time)</label>
+            <input id="bvb-security" type="number" value="40000" min="0" step="1000">
+          </div>
+          <div class="bvb-field">
+            <label for="bvb-defect">Defect remediation / month</label>
+            <input id="bvb-defect" type="number" value="4000" min="0" step="500">
+          </div>
+        </div>
+      </div>
+
+      <div class="bvb-grp">TrueMath</div>
+      <div class="bvb-field">
+        <div class="bvb-range-row">
+          <label for="bvb-tmPrice">Price per calculation</label>
+          <span class="bvb-range-val" id="bvb-tmPriceVal">$0.075</span>
+        </div>
+        <input id="bvb-tmPrice" class="bvb-range" type="range" min="0.025" max="0.125" step="0.005" value="0.075">
+        <div class="bvb-range-ends"><span>$0.025</span><span>$0.125</span></div>
+      </div>
+      <div class="bvb-field">
+        <label for="bvb-tmPlatform">Platform fee / month ($)</label>
+        <input id="bvb-tmPlatform" type="number" value="0" min="0" step="100">
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div>
+      <!-- Gate: results stay hidden until the first calculation runs on
+           TrueMath, so the first answer is a TrueMath answer. -->
+      <div class="bvb-gate" id="bvb-gate">
+        <span class="bvb-gate-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4.5" y="3" width="17" height="20" rx="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 8h10M8 12h4.5M14 12h4M8 16h4.5M14 16h4M8 19.5h4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+        <p class="bvb-gate-lead">Set your inputs, then see the total cost of ownership computed live by TrueMath.</p>
+        <button type="button" class="bvb-verify-btn bvb-gate-btn" id="bvb-calcBtn">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 8l3 3 7-8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Calculate with TrueMath</span>
+        </button>
+        <p class="bvb-gate-note">The first answer comes straight from TrueMath's deterministic engine, the same product being priced. After that, turn any dial for instant estimates and recalculate with TrueMath whenever you like.</p>
+      </div>
+
+      <!-- Results: revealed after the first calculation. -->
+      <div class="bvb-results" id="bvb-results" hidden>
+        <div class="bvb-stamp" id="bvb-stamp">
+          <span class="bvb-stamp-label" id="bvb-stampLabel"></span>
+          <button type="button" class="bvb-stamp-btn" id="bvb-recalcBtn">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M11.5 6.5a5 5 0 1 1-1.4-3.5M11.5 1.5v3.2h-3.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Recalculate with TrueMath</span>
+          </button>
+        </div>
+
+        <div class="bvb-cards">
+        <div class="bvb-tco" id="bvb-cardBuild">
+          <div class="bvb-tco-k">Build in-house (TCO)</div>
+          <div class="bvb-tco-v" id="bvb-buildTCO">$0</div>
+          <div class="bvb-tco-cpc" id="bvb-buildCPC">&nbsp;</div>
+        </div>
+        <div class="bvb-tco" id="bvb-cardTM">
+          <div class="bvb-tco-k">TrueMath (TCO)</div>
+          <div class="bvb-tco-v" id="bvb-tmTCO">$0</div>
+          <div class="bvb-tco-cpc" id="bvb-tmCPC">&nbsp;</div>
+        </div>
+      </div>
+
+        <div class="bvb-banner" id="bvb-banner">&nbsp;</div>
+
+        <div class="bvb-ttv" id="bvb-ttv">&nbsp;</div>
+
+      <div class="bvb-chartwrap">
+        <h2>Cumulative cost over the horizon</h2>
+        <svg id="bvb-chart" class="bvb-chart" viewBox="0 0 640 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cumulative cost of building in-house versus buying TrueMath over the time horizon"></svg>
+        <div class="bvb-legend">
+          <span><span class="bvb-swatch tm"></span>TrueMath</span>
+          <span><span class="bvb-swatch build"></span>Build in-house</span>
+          <span><span class="bvb-swatch ships"></span>Build ships</span>
+        </div>
+        <div class="bvb-breakdown" id="bvb-breakdown"></div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bvb-caps">
+    <h2 class="bvb-caps-title">What building it yourself doesn't include</h2>
+    <p class="bvb-caps-lead">A coding agent can write your formulas. It does not run your math deterministically, govern it, or serve it to your people, your apps, and your agents from one source of truth. Check what you would actually need to build and operate. TrueMath includes all of it, plus the domain assistant, MCP server, and CLI.</p>
+    <div class="bvb-caps-head" aria-hidden="true">
+      <span>Capability</span><span>Build once</span><span>Run / mo</span><span>TrueMath</span>
+    </div>
+    <div id="bvb-capList"></div>
+  </div>
+
+  <p class="bvb-caveat">Conservative by design. With build-risk off and no capabilities checked, the model excludes recruiting, ramp time, security review, correctness defects, and the surfaces and governance above, all of which favor buying. Effective cost per calculation divides total build spend only across the months the build is actually serving traffic, which surfaces the cost of the delay. Maintenance scales from a baseline you set. Adjust any input to match a specific prospect.</p>
+</section>
+
+<script defer src="/js/build-vs-buy.js"></script>
