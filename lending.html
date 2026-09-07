@@ -23,11 +23,17 @@ contact_url: "https://app.truemath.ai/contact"
 # carry their prompts and are waiting on their capture (see the TODOs).
 demos:
   # ── 1. Residential Mortgage Broker ── REAL CAPTURED OUTPUT ────────────
+  # The parse map, activity chain and result are the captured output, reused
+  # from _verticals/residential-mortgage-broker.md. The prompt is that capture's
+  # prompt moved from third person to first, because this page speaks to the
+  # bank's own visitor rather than to a broker describing a client. Person does
+  # not touch the parse or the math: the same eight inputs, the same target, the
+  # same $716,457.04. Re-capture in first person if you want it exact.
   - id: "mortgage"
     domain: "Residential Mortgage Broker"
-    label: "Mortgage: how much house does she qualify for?"
-    convo_title: "Sarah Chen makes 12k a month, wants to keep total DTI…"
-    prompt: "Sarah Chen makes 12k a month, wants to keep total DTI at 43%, has 650 in other debt, taxes 450 ins 150, 20% down, 7.25% for 30 yrs. how much house can she get?"
+    label: "Mortgage: how much house do I qualify for?"
+    convo_title: "I make 12k a month, want to keep total DTI at 43%…"
+    prompt: "I make 12k a month, want to keep total DTI at 43%, have 650 in other debt, taxes 450 ins 150, 20% down, 7.25% for 30 yrs. how much house can I get?"
     ts: "7:38 PM"
     parse:
       - ["gross_monthly_income", "12000 USD"]
