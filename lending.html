@@ -104,21 +104,50 @@ demos:
           - ["Down Payment Percent", "20.000%"]
     final: "Requested result for <b>Maximum Qualifying Purchase Price</b> is <b>$716,457.04</b>."
 
-  # ── 2. Auto Loan ── TODO: run this prompt in the Auto Loan domain and
-  # replace `parse`, `blocks` and `final` with the captured output. Do not
-  # estimate the numbers; the placeholder block below says so on the page.
+  # ── 2. Auto Loan ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Auto Loan domain via natural language.
+  # conversation 126e286f-2f99-4344-9eee-3b70499c0bcc, domain 4d7bfbe2-d199-401a-8eea-ad4657ff8a97.
+  # Three-activity chain: trade-in equity, amount financed, monthly payment.
   - id: "auto"
     domain: "Auto Loan"
     label: 'Auto: "what happens to my payment with the trade-in?"'
-    convo_title: "$38,500 SUV, $6,000 down, trade worth $9,500 with $4,200 still owed…"
+    convo_title: "I'm looking at a $38,500 SUV. I've got $6,000 cash and…"
     prompt: "I'm looking at a $38,500 SUV. I've got $6,000 cash and a trade-in worth $9,500 that I still owe $4,200 on. 72 months at 7.4%. What's my monthly payment?"
-    ts: "4:12 PM"
-    parse: []
+    date: "Sep 7, 2026"
+    ts: "2:02 PM"
+    parse:
+      - ["vehicle_price", "38500 USD"]
+      - ["down_payment", "6000 USD"]
+      - ["trade_in_value", "9500 USD"]
+      - ["trade_in_payoff", "4200 USD"]
+      - ["loan_term", "72 mo"]
+      - ["annual_interest_rate", "7.4%"]
+      - ["calculate", "monthly_payment"]
     blocks:
       - type: "kv"
-        h: "Awaiting captured output"
-        desc: "This frame is wired and ready. The replayed steps drop in as soon as the prompt above is run in the Auto Loan domain and its output captured — the real activity chain and the real values, same as the mortgage frame. Nothing on this page is estimated."
-    final: "Pending capture."
+        h: "Trade-In Equity"
+        desc: "Calculates the net credit a trade-in contributes after the loan still owed on it is paid off. A trade worth less than its payoff yields a negative credit."
+        lines:
+          - ["Trade-In Equity", "$5,300.00"]
+          - ["Trade-In Value", "$9,500.00"]
+          - ["Trade-In Payoff", "$4,200.00"]
+      - type: "kv"
+        h: "Amount Financed"
+        desc: "Calculates the amount financed from the vehicle price, the down payment, and the trade-in equity. Also solves for the vehicle price a buyer can reach, or the down payment required, from the other figures."
+        lines:
+          - ["Loan Amount", "$27,200.00"]
+          - ["Vehicle Price", "$38,500.00"]
+          - ["Down Payment", "$6,000.00"]
+          - ["Trade-In Equity", "$5,300.00"]
+      - type: "kv"
+        h: "Monthly Payment"
+        desc: "Calculates the fixed monthly principal-and-interest payment from the loan amount, rate, and term. Also solves for the loan amount that fits a target monthly payment."
+        lines:
+          - ["Monthly Payment", "$468.98"]
+          - ["Loan Amount", "$27,200.00"]
+          - ["Annual Interest Rate", "7.400%"]
+          - ["Loan Term", "72 mo"]
+    final: "Requested result for <b>Monthly Payment</b> is <b>$468.98</b>."
 
   # ── 3. Savings & CD Growth ── TODO: this domain does not exist yet. Build
   # it from the design spec, publish it, run the prompt, then replace
