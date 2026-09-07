@@ -1323,3 +1323,16 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .lnd-nextlab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin: 20px 0 11px; padding-top: 15px; border-top: 1px solid var(--border); }
 .lnd-qs--next li { color: var(--ink-muted); }
 .lnd-qs--next li::before { color: var(--border-purple); }
+
+/* section 05's mode cards: the same component serves the input modes and the
+   post-answer affordances, so it is defined once and used twice */
+.lnd-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1000px; margin: 8px auto 0; text-align: left; }
+.lnd-mode { border: 1px solid var(--border); border-radius: 12px; padding: 20px 20px 22px; background: var(--bg-white); }
+.lnd-mode-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 11px; }
+.lnd-mode h4 { font-family: var(--font-serif); font-size: 19px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 9px; line-height: 1.25; text-wrap: pretty; }
+.lnd-mode p { font-size: 15px; line-height: 1.62; color: var(--ink-mid); }
+.lnd-rowlab { max-width: 1000px; margin: 40px auto 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+
+@media (max-width: 860px) {
+  .lnd-modes { grid-template-columns: 1fr; }
+}

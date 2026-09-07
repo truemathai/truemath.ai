@@ -186,7 +186,7 @@ demos:
           - ["Compounding Periods Per Year", "12"]
     final: "Requested result for <b>Value at Maturity</b> is <b>$31,139.39</b>."
 
-# ── The comparison ("05 The comparison") ───────────────────────────────
+# ── The comparison ("06 The comparison") ───────────────────────────────
 # Real measured data, reused verbatim from the verticals. Ten runs of one
 # prompt against a raw LLM and against TrueMath.
 proof:
@@ -387,9 +387,9 @@ proof:
         <div class="lnd-sub">Your stack, your brand</div>
         <ul class="lnd-list lnd-list--check">
           <li>The interface, in your design system and your CMS. Nothing to theme around.</li>
-          <li>As conversational or as form-like as you want — the engine takes plain English or structured input.</li>
           <li>One integration for every calculator on the site, present and future.</li>
-          <li>A front end that can grow: what-ifs, comparisons, saved scenarios, a shareable result.</li>
+          <li>The call from your server, so the API key never reaches a visitor's browser.</li>
+          <li>Answers arrive as data, so you choose what to show: the number alone, or every step behind it.</li>
         </ul>
       </div>
       <div>
@@ -407,8 +407,86 @@ proof:
   </div>
 </section>
 
-<!-- 05 THE COMPARISON (why not just point an LLM at it) -->
-{% include tmv-proof.html proof=page.proof num="05" label="The comparison" %}
+<!-- 05 THE EXPERIENCE -->
+<section class="section">
+  <span class="section-label">05 &nbsp;The experience</span>
+  <h2 class="section-headline">A form, a conversation, or both. <em>Then let them keep going.</em></h2>
+  <p class="section-body">
+    The domain does not care how the values reach it. The same logic that
+    answered the three questions above answers a nine-field form, a typed
+    sentence, or a form the visitor finishes by asking a follow-up. Every
+    calculation on this page was tested both ways before it shipped.
+  </p>
+
+  <div class="lnd-modes">
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Structured input</div>
+      <h4>A form</h4>
+      <p>
+        Fields, dropdowns, a slider for the term. The page collects values and
+        hands the domain a set of keys. Familiar to any visitor who has used a
+        calculator on a bank site, except this one shows its work.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Natural language</div>
+      <h4>A conversation</h4>
+      <p>
+        The visitor describes their situation in a sentence and the engine maps
+        it onto the same keys. Every demo above ran this way, and each frame
+        shows you exactly what the parser understood.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Either, turn by turn</div>
+      <h4>Both</h4>
+      <p>
+        Collect the obvious figures in a form, then let them ask "what if I put
+        ten percent down?" in words. Or read a sentence and show the parsed
+        values back as fields they can correct.
+      </p>
+    </div>
+  </div>
+
+  <div class="lnd-rowlab">And once a visitor has an answer</div>
+
+  <div class="lnd-modes">
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Scenarios</div>
+      <h4>Ask again without losing the first answer</h4>
+      <p>
+        Every calculation opens a scenario. Change the down payment and ask
+        again, and the new numbers arrive as a second scenario instead of
+        overwriting the first.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Comparison</div>
+      <h4>See them next to each other</h4>
+      <p>
+        Scenarios compare side by side, which is how a visitor works out
+        whether the shorter term or the bigger down payment is the better
+        trade for them.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Sharing</div>
+      <h4>Send the work, not a screenshot</h4>
+      <p>
+        A result can be shared as the whole worked answer, so the person on the
+        other end sees the same steps and the same assumptions.
+      </p>
+    </div>
+  </div>
+
+  <p class="lnd-aside">
+    The <strong>Scenarios</strong> and <strong>Share</strong> controls in the
+    demo frames above are not decoration. That is the product.
+  </p>
+</section>
+
+<!-- 06 THE COMPARISON (why not just point an LLM at it) -->
+{% include tmv-proof.html proof=page.proof num="06" label="The comparison" %}
 
 <!-- CLOSING CTA -->
 <section class="cta-section">
