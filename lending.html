@@ -149,21 +149,36 @@ demos:
           - ["Loan Term", "72 mo"]
     final: "Requested result for <b>Monthly Payment</b> is <b>$468.98</b>."
 
-  # ── 3. Savings & CD Growth ── TODO: this domain does not exist yet. Build
-  # it from the design spec, publish it, run the prompt, then replace
-  # `parse`, `blocks` and `final` with the captured output.
+  # ── 3. Savings & CD Growth ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Savings & CD Growth domain via natural language.
+  # conversation 20a11c1b-5231-4b4e-9821-8dcdd34dd6bc, domain c8871ccb-b047-47c0-854d-a9e9d7d3d690.
+  # Single-activity chain. Upgrade this frame to the term-comparison prompt once
+  # the early-withdrawal and comparison layers are built; the comparison is the
+  # richer trail and the better pitch, but it needs activities that do not exist yet.
   - id: "savings"
     domain: "Savings & CD Growth"
-    label: 'Savings & CD: "which term actually earns me more?"'
-    convo_title: "$25,000 into a CD, 18 months at 4.15% or 60 months at 4.40%…"
-    prompt: "I have $25,000 to put into a CD but I'll probably need it in about two years. Is the 18-month at 4.15% or the 60-month at 4.40% worth more to me, after the early-withdrawal penalty on the long one?"
-    ts: "11:04 AM"
-    parse: []
+    label: 'Savings & CD: "what will my CD be worth?"'
+    convo_title: "What will $25,000 be worth in a five-year CD at 4.40%…"
+    prompt: "What will $25,000 be worth in a five-year CD at 4.40% compounded monthly?"
+    date: "Sep 7, 2026"
+    ts: "2:02 PM"
+    parse:
+      - ["cd_principal", "25000 USD"]
+      - ["cd_term", "5 yr"]
+      - ["cd_nominal_rate", "4.40%"]
+      - ["compounds_per_year", "12"]
+      - ["calculate", "cd_value_at_maturity"]
     blocks:
       - type: "kv"
-        h: "Awaiting captured output"
-        desc: "This frame is wired and ready. The Savings & CD Growth domain is being built to the design spec; once it is published, this prompt is run and its real activity chain and values replace this placeholder. Nothing on this page is estimated."
-    final: "Pending capture."
+        h: "Value at Maturity"
+        desc: "Calculates what the deposit is worth when the term ends, from the deposit, the rate, the term, and how often interest compounds."
+        lines:
+          - ["Value at Maturity", "$31,139.39"]
+          - ["Deposit Amount", "$25,000.00"]
+          - ["Interest Rate", "4.400%"]
+          - ["Term", "5 yr"]
+          - ["Compounding Periods Per Year", "12"]
+    final: "Requested result for <b>Value at Maturity</b> is <b>$31,139.39</b>."
 
 # ── The comparison ("05 The comparison") ───────────────────────────────
 # Real measured data, reused verbatim from the verticals. Ten runs of one
@@ -306,7 +321,7 @@ proof:
     </div>
     <div>
       <h3 class="lnd-head">Savings &amp; CD Growth</h3>
-      <div class="lnd-sub">Domain 3 &middot; in design</div>
+      <div class="lnd-sub">Domain 3 &middot; available now</div>
       <ul class="lnd-qs">
         <li>What will $25,000 be worth in a five-year CD?</li>
         <li>What's the APY on that rate compounded monthly?</li>
