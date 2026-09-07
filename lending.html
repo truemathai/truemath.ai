@@ -293,13 +293,15 @@ proof:
   <p class="section-body">
     Nothing below is a separate calculator to build, buy, or maintain. A domain
     holds the variables, the units, and the relationships between them, so it
-    answers in whatever direction the question is pointed.
+    answers in whatever direction the question is pointed. The second list in a
+    column is what that same domain answers next &mdash; and adding it changes the
+    domain, not the page. Your front end never learns about it.
   </p>
 
   <div class="lnd-grid">
     <div>
       <h3 class="lnd-head">Residential Mortgage</h3>
-      <div class="lnd-sub">Domain 1 &middot; available now</div>
+      <div class="lnd-sub">Answering today</div>
       <ul class="lnd-qs">
         <li>How much house can I afford on my income?</li>
         <li>What's the payment with taxes, insurance and PMI in it?</li>
@@ -310,21 +312,32 @@ proof:
     </div>
     <div>
       <h3 class="lnd-head">Auto Loan</h3>
-      <div class="lnd-sub">Domain 2 &middot; available now</div>
+      <div class="lnd-sub">Answering today</div>
       <ul class="lnd-qs">
         <li>What's my payment on this car at this term?</li>
         <li>How much car fits a $525 monthly payment?</li>
         <li>What does my trade-in do once the payoff comes out of it?</li>
-        <li>The 0.9% promo or the cash rebate — which one wins?</li>
+        <li>How much do I need to put down to hit that payment?</li>
+        <li>What's the total interest over the life of the loan?</li>
+      </ul>
+      <div class="lnd-nextlab">Next, same domain</div>
+      <ul class="lnd-qs lnd-qs--next">
+        <li>The 0.9% promo or the cash rebate &mdash; which one wins?</li>
         <li>What does stretching 60 months to 72 actually cost me?</li>
       </ul>
     </div>
     <div>
       <h3 class="lnd-head">Savings &amp; CD Growth</h3>
-      <div class="lnd-sub">Domain 3 &middot; available now</div>
+      <div class="lnd-sub">Answering today</div>
       <ul class="lnd-qs">
         <li>What will $25,000 be worth in a five-year CD?</li>
+        <li>How much interest does that earn me?</li>
         <li>What's the APY on that rate compounded monthly?</li>
+        <li>The ad says 4.50% APY &mdash; what's the actual rate?</li>
+        <li>How much do I deposit to have $30,000 by then?</li>
+      </ul>
+      <div class="lnd-nextlab">Next, same domain</div>
+      <ul class="lnd-qs lnd-qs--next">
         <li>How much do I set aside monthly to reach $50,000?</li>
         <li>Which term earns more if I need the money in two years?</li>
         <li>What does the early-withdrawal penalty really cost?</li>
@@ -332,7 +345,7 @@ proof:
     </div>
     <div>
       <h3 class="lnd-head">And the products <em>only you</em> sell</h3>
-      <div class="lnd-sub">Your domain &middot; built in your account</div>
+      <div class="lnd-sub">Built in your account</div>
       <ul class="lnd-qs">
         <li>What does my relationship tier take off the rate?</li>
         <li>How much can I draw on the HELOC at your CLTV cap?</li>
