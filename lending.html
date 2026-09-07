@@ -417,6 +417,35 @@ demos:
     </div>
   </div>
 
+  {%- comment -%}
+    SCREENSHOT SLOT. A shot of the product's form-input mode belongs here,
+    directly under the three input-mode cards, because it is the evidence for
+    the first one. Waiting on real screenshots from Brent, who built the
+    form-based UI; the grab this section's copy was written against is a
+    placeholder and is not in the repo.
+
+    When the images land:
+      1. Put the file in images/ (not icons/), and prefer a light-mode capture:
+         the page chrome around it flips with prefers-color-scheme but the
+         image will not, so a light shot on the light section reads correctly
+         and a dark shot will not.
+      2. Add the figure here as:
+           <figure class="lnd-shot">
+             <img src="/images/<name>.png" alt="..." width="..." height="...">
+             <figcaption>...</figcaption>
+           </figure>
+         Give width and height so the layout does not shift while it loads.
+      3. Add .lnd-shot to the .lnd-* block in css/site.css: max-width to match
+         .lnd-modes (1000px), a 1px var(--border) frame, 12px radius to match
+         .lnd-mode, and img { display:block; width:100%; height:auto }.
+      4. Crop to the left "how this was solved" panel plus one right-hand field
+         group. The full window is too wide to read at this column width.
+      5. Use a build whose activity titles match the captures in the demo
+         frames above. The placeholder grab showed the older names, including
+         "PMI-Aware Final" and a "PI Budget (Rate-Free)" step that appears in
+         no capture, which would contradict the mortgage frame on this page.
+  {%- endcomment -%}
+
   <div class="lnd-rowlab">And once a visitor has an answer</div>
 
   <div class="lnd-modes lnd-modes--four">
