@@ -253,7 +253,7 @@ demos:
           <li><strong>Any direction.</strong> One domain solves for price, payment, down payment, or rate. Same logic, every question.</li>
           <li><strong>One engine behind all of it.</strong> Mortgage, auto, savings and CDs on one integration.</li>
           <li><strong>Your rules.</strong> Your rate sheet, your LTV thresholds, your PMI table, your CD terms — in a domain you own and version.</li>
-          <li><strong>The whole worked answer.</strong> Every intermediate step labeled and explained, with the lineage behind each number.</li>
+          <li><strong>The whole worked answer.</strong> Every intermediate step labeled and explained, the lineage behind each number, and a count of the values it had to assume.</li>
           <li><strong>A conversation.</strong> Follow-ups and what-ifs run as scenarios against the numbers already on the screen.</li>
         </ul>
       </div>
@@ -392,9 +392,9 @@ demos:
       <div class="lnd-mode-tag">Structured input</div>
       <h4>A form</h4>
       <p>
-        Fields, dropdowns, a slider for the term. The page collects values and
-        hands the domain a set of keys. Familiar to any visitor who has used a
-        calculator on a bank site, except this one shows its work.
+        Numeric fields carrying their own units, grouped under the step that
+        consumes them, each one editable in place. Familiar to any visitor who
+        has used a calculator on a bank site, except this one shows its work.
       </p>
     </div>
     <div class="lnd-mode">
@@ -419,18 +419,18 @@ demos:
 
   <div class="lnd-rowlab">And once a visitor has an answer</div>
 
-  <div class="lnd-modes">
+  <div class="lnd-modes lnd-modes--four">
     <div class="lnd-mode">
       <div class="lnd-mode-tag">Scenarios</div>
-      <h4>Ask again without losing the first answer</h4>
+      <h4>Ask again, keep the first answer</h4>
       <p>
         Every calculation opens a scenario. Change the down payment and ask
-        again, and the new numbers arrive as a second scenario instead of
-        overwriting the first.
+        again, and the new numbers arrive alongside the old ones instead of
+        overwriting them.
       </p>
     </div>
     <div class="lnd-mode">
-      <div class="lnd-mode-tag">Comparison</div>
+      <div class="lnd-mode-tag">Compare</div>
       <h4>See them next to each other</h4>
       <p>
         Scenarios compare side by side, which is how a visitor works out
@@ -439,18 +439,28 @@ demos:
       </p>
     </div>
     <div class="lnd-mode">
-      <div class="lnd-mode-tag">Sharing</div>
+      <div class="lnd-mode-tag">Assumptions</div>
+      <h4>Every assumed value, disclosed</h4>
+      <p>
+        When the math needs a figure the visitor never gave, the answer says so
+        and counts them. Nothing is quietly filled in behind a number your
+        customer is about to act on.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Share</div>
       <h4>Send the work, not a screenshot</h4>
       <p>
-        A result can be shared as the whole worked answer, so the person on the
-        other end sees the same steps and the same assumptions.
+        A result shares as the whole worked answer, so the person on the other
+        end sees the same steps and the same assumptions.
       </p>
     </div>
   </div>
 
   <p class="lnd-aside">
-    The <strong>Scenarios</strong> and <strong>Share</strong> controls in the
-    demo frames above are not decoration. That is the product.
+    None of this is a mockup. The <strong>Scenarios</strong> and
+    <strong>Share</strong> controls in the demo frames above are the real ones,
+    and so is everything on this row. That is the product.
   </p>
 </section>
 
