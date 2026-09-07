@@ -183,34 +183,6 @@ demos:
           - ["Compounding Periods Per Year", "12"]
     final: "Requested result for <b>Value at Maturity</b> is <b>$31,139.39</b>."
 
-# ── The comparison ("06 The comparison") ───────────────────────────────
-# Real measured data, reused verbatim from the verticals. Ten runs of one
-# prompt against a raw LLM and against TrueMath.
-proof:
-  headline: "Watch how LLMs really work."
-  sub: "One prompt. Ten runs each. Nothing staged."
-  prompt: "A 7,000,000 deal: NOI 450,000 growing 3%, 5-year hold, 65% LTV at 7% on 30-year am, closing 1.5%, exit cap 6.5%, selling costs 2%. What's my levered IRR?"
-  exact_label: "The exact answer · 5-year levered IRR"
-  exact_value: "10.8463781499708%"
-  raw:
-    label: "RAW LLM"
-    score: "0"
-    score_unit: "/10 exact"
-    rows:
-      - ["methods", "10 distinct"]
-      - ["avg time", "29.7 s"]
-      - ["energy / call", "~1.5 Wh"]
-  good:
-    label: "TRUEMATH"
-    score: "10"
-    score_unit: "/10 exact"
-    rows:
-      - ["method", "1, auditable"]
-      - ["avg time", "3.1 s", "9.6× faster"]
-      - ["energy / call", "~0.003 Wh", "~500× less"]
-  methnote: "Claude Opus 4.8 vs TrueMath via natural language, 10 runs each. Energy is inference-only; datacenter cooling widens the gap."
-  caption: "TrueMath was 9.6x faster, 500x more energy efficient, and delivered 10 identically precise answers using one fixed auditable method."
-  receipt: "That's the receipt."
 ---
 
 <!-- HERO -->
@@ -481,9 +453,6 @@ proof:
     demo frames above are not decoration. That is the product.
   </p>
 </section>
-
-<!-- 06 THE COMPARISON (why not just point an LLM at it) -->
-{% include tmv-proof.html proof=page.proof num="06" label="The comparison" %}
 
 <!-- CLOSING CTA -->
 <section class="cta-section">
