@@ -22,19 +22,22 @@ contact_url: "https://app.truemath.ai/contact"
 # _verticals/residential-mortgage-broker.md. The auto and savings frames
 # carry their prompts and are waiting on their capture (see the TODOs).
 demos:
-  # ── 1. Residential Mortgage Broker ── REAL CAPTURED OUTPUT ────────────
-  # The parse map, activity chain and result are the captured output, reused
-  # from _verticals/residential-mortgage-broker.md. The prompt is that capture's
-  # prompt moved from third person to first, because this page speaks to the
-  # bank's own visitor rather than to a broker describing a client. Person does
-  # not touch the parse or the math: the same eight inputs, the same target, the
-  # same $716,457.04. Re-capture in first person if you want it exact.
+  # ── 1. Residential Mortgage Broker ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Residential Mortgage Broker domain via natural
+  # language, in the first person the page needs.
+  # conversation 02434a48-9ca6-4367-a30e-d13ba9b238f7, domain 4522000d-ac0e-4464-b76d-f2ae21cab45c.
+  # Seven-activity chain. NOTE: this supersedes the chain reused from
+  # _verticals/residential-mortgage-broker.md, which replays an older build of
+  # the domain (it carried a "Loan Term in Months" stripping step that no longer
+  # exists, and the PMI-Aware Final / Pass 1 activity titles have since been
+  # renamed). The vertical is now stale and wants the same re-capture.
   - id: "mortgage"
     domain: "Residential Mortgage Broker"
     label: "Mortgage: how much house do I qualify for?"
     convo_title: "I make 12k a month, want to keep total DTI at 43%…"
     prompt: "I make 12k a month, want to keep total DTI at 43%, have 650 in other debt, taxes 450 ins 150, 20% down, 7.25% for 30 yrs. how much house can I get?"
-    ts: "7:38 PM"
+    date: "Sep 7, 2026"
+    ts: "2:21 PM"
     parse:
       - ["gross_monthly_income", "12000 USD"]
       - ["target_dti", "43%"]
@@ -44,17 +47,11 @@ demos:
       - ["down_payment_pct", "20%"]
       - ["note_rate", "7.25%"]
       - ["loan_term", "30 yr"]
-      - ["calculate", "max_qualifying_purchase_price USD"]
+      - ["calculate", "max_qualifying_purchase_price"]
     blocks:
       - type: "kv"
-        h: "Loan Term in Months"
-        desc: "Converts the practitioner-facing loan term into a bare month count for downstream math. A value with no unit passes through unchanged (already months); a unit-bearing value (for example 30 yr) is normalized to months."
-        lines:
-          - ["Loan Term (Months)", "360"]
-          - ["Loan Term", "30 yr"]
-      - type: "kv"
-        h: "Maximum Qualifying PI Payment (PMI-Aware Final)"
-        desc: "Calculates the borrower's maximum qualifying PI payment, with PMI folded in when it applies."
+        h: "Maximum Qualifying PI Payment"
+        desc: "Calculates the highest monthly principal and interest payment the borrower's income can support after other debts and non-PI housing costs, before any mortgage insurance is applied."
         lines:
           - ["Maximum Qualifying PI Payment", "$3,910.00"]
           - ["Target DTI", "43.000%"]
@@ -64,13 +61,13 @@ demos:
           - ["Monthly Homeowner's Insurance", "$150.00"]
           - ["Monthly HOA Dues", "0.00"]
       - type: "kv"
-        h: "Maximum Qualifying Loan Amount Pass 1 (No PMI)"
-        desc: "Calculates the loan amount that the first-pass qualifying PI payment can support."
+        h: "Maximum Qualifying Loan Amount Before Mortgage Insurance"
+        desc: "Calculates the loan amount the borrower's qualifying payment supports before mortgage insurance is taken into account."
         lines:
-          - ["Maximum Qualifying Loan Amount (Pass 1, No PMI)", "$573,165.63"]
+          - ["Maximum Qualifying Loan Amount Before Mortgage Insurance", "$573,165.63"]
           - ["Maximum Qualifying PI Payment", "$3,910.00"]
           - ["Note Rate", "7.250%"]
-          - ["Loan Term (Months)", "360"]
+          - ["Loan Term", "30 yr"]
       - type: "kv"
         h: "Effective LTV at Qualifying"
         desc: "Calculates what the LTV would be at the borrower's maximum qualifying home price."
@@ -90,20 +87,20 @@ demos:
         lines:
           - ["Estimated PMI at Qualifying", "$0.00"]
           - ["PMI Required at Qualifying", "0"]
-          - ["Maximum Qualifying Loan Amount (Pass 1, No PMI)", "$573,165.63"]
+          - ["Maximum Qualifying Loan Amount Before Mortgage Insurance", "$573,165.63"]
           - ["Annual PMI Rate (Estimate)", "0.5500%"]
       - type: "kv"
-        h: "Maximum Qualifying Loan Amount (PMI-Aware Final)"
+        h: "Maximum Qualifying Loan Amount"
         desc: "Calculates the borrower's maximum qualifying loan amount, with PMI folded in when it applies."
         lines:
           - ["Maximum Qualifying Loan Amount", "$573,165.63"]
           - ["Maximum Qualifying PI Payment", "$3,910.00"]
           - ["Estimated PMI at Qualifying", "$0.00"]
           - ["Note Rate", "7.250%"]
-          - ["Loan Term (Months)", "360"]
+          - ["Loan Term", "30 yr"]
       - type: "kv"
-        h: "Maximum Qualifying Purchase Price (PMI-Aware Final, From Percent Down)"
-        desc: "Calculates the PMI-aware final qualifying purchase price when the practitioner states down payment as a percent of price instead of a dollar amount. Algebraically derives the price directly from the qualifying loan amount and the down payment percent without requiring a dollar down payment input."
+        h: "Maximum Qualifying Purchase Price"
+        desc: "Calculates the most expensive home the borrower can qualify for when the down payment is given as a percent of the price rather than a dollar amount, with mortgage insurance folded in where it applies."
         lines:
           - ["Maximum Qualifying Purchase Price", "$716,457.04"]
           - ["Maximum Qualifying Loan Amount", "$573,165.63"]
