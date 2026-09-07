@@ -1324,6 +1324,9 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .lnd-qs--next li { color: var(--ink-muted); }
 .lnd-qs--next li::before { color: var(--border-purple); }
 
+/* a dimmed note where a column has no second list to show */
+.lnd-note { font-size: 15px; line-height: 1.62; color: var(--ink-muted); }
+
 /* section 05's mode cards: the same component serves the input modes and the
    post-answer affordances, so it is defined once and used twice */
 .lnd-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1000px; margin: 8px auto 0; text-align: left; }
