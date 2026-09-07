@@ -408,33 +408,27 @@ demos:
   </div>
 
   {%- comment -%}
-    SCREENSHOT SLOT. A shot of the product's form-input mode belongs here,
-    directly under the three input-mode cards, because it is the evidence for
-    the first one. Waiting on real screenshots from Brent, who built the
-    form-based UI; the grab this section's copy was written against is a
-    placeholder and is not in the repo.
-
-    When the images land:
-      1. Put the file in images/ (not icons/), and prefer a light-mode capture:
-         the page chrome around it flips with prefers-color-scheme but the
-         image will not, so a light shot on the light section reads correctly
-         and a dark shot will not.
-      2. Add the figure here as:
-           <figure class="lnd-shot">
-             <img src="/images/<name>.png" alt="..." width="..." height="...">
-             <figcaption>...</figcaption>
-           </figure>
-         Give width and height so the layout does not shift while it loads.
-      3. Add .lnd-shot to the .lnd-* block in css/site.css: max-width to match
-         .lnd-modes (1000px), a 1px var(--border) frame, 12px radius to match
-         .lnd-mode, and img { display:block; width:100%; height:auto }.
-      4. Crop to the left "how this was solved" panel plus one right-hand field
-         group. The full window is too wide to read at this column width.
-      5. Use a build whose activity titles match the captures in the demo
-         frames above. The placeholder grab showed the older names, including
-         "PMI-Aware Final" and a "PI Budget (Rate-Free)" step that appears in
-         no capture, which would contradict the mortgage frame on this page.
+    The shot is from the older domain build, so its right-hand activity titles
+    read "PMI-Aware Final" and "Rate-Free" where the demo frames above show the
+    renamed ones. Same calculation and same $716,457.04 either way. Swap in a
+    current-build capture when there is one; keep the Ask box, the expanded
+    assumed-values panel and the scenario strip in frame.
   {%- endcomment -%}
+  <figure class="lnd-shot">
+    <img src="/images/lending-form-screenshot.png"
+         width="1884" height="1604" loading="lazy" decoding="async"
+         alt="A TrueMath calculation screen. Down the right, editable fields for
+              loan amount, down payment percent, note rate and loan term, each
+              grouped under a description of the step that uses it. On the left, a
+              maximum qualifying purchase price of $716,457.04, an open panel
+              itemising the three values the calculation assumed, a collapsed
+              panel for how it was solved, and a box for asking a follow-up
+              question in words.">
+    <figcaption>
+      One screen: fields on the right, the values it assumed spelled out on the
+      left, and a box for the follow-up question.
+    </figcaption>
+  </figure>
 
   <div class="lnd-rowlab">And once a visitor has an answer</div>
 

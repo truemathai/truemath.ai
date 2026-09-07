@@ -1325,6 +1325,13 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .page-lending .tmv-hero p { max-width: 600px; text-wrap: pretty; }
 .lnd-triad { display: block; margin-top: 10px; color: var(--ink); font-weight: 500; }
 
+/* the product screenshot under the input-mode cards. The shot is a light UI and
+   stays light in dark mode, which is normal for a product capture; only the
+   frame and caption flip with the tokens. */
+.lnd-shot { max-width: 1000px; margin: 28px auto 0; }
+.lnd-shot img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 12px; }
+.lnd-shot figcaption { margin-top: 13px; text-align: center; font-size: 14px; line-height: 1.6; color: var(--ink-muted); }
+
 /* section 05's mode cards: the same component serves the input modes and the
    post-answer affordances, so it is defined once and used twice */
 .lnd-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1000px; margin: 8px auto 0; text-align: left; }
