@@ -1,0 +1,488 @@
+---
+layout: default
+title: "TrueMath for Lending: Calculators That Show Their Work"
+description: "Mortgage, auto, and savings calculators that take a form or plain English, show every step, and explain each one in your own words. One engine behind all of them."
+og_title: "TrueMath for Lending"
+og_description: "A visitor fills in a form or just asks. Your site hands back the whole worked solution, explained in words you wrote."
+noindex: true
+body_class: page-lending
+
+# Where this page's own calls-to-action point. The demo frames keep the signup
+# link (their input bar reads "Start a free account"), so this is set per-CTA
+# in the body rather than page-wide.
+contact_url: "https://app.truemath.ai/contact"
+
+# ── The three demo frames ──────────────────────────────────────────────
+# One per domain. `domain` is the library name on the pill inside the frame,
+# so each frame can name its own domain (the verticals all share one).
+#
+# IMPORTANT: `prompt`, `parse`, `blocks` and `final` must be REAL captured
+# TrueMath output — the actual activity chain and values, never estimated.
+# All three frames replay output captured 2026-09-07; each frame's own
+# comment below records its conversation and domain ids, and any follow-up
+# still wanted for that frame.
+demos:
+  # ── 1. Residential Mortgage Broker ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Residential Mortgage Broker domain via natural
+  # language, in the first person the page needs.
+  # conversation 02434a48-9ca6-4367-a30e-d13ba9b238f7, domain 4522000d-ac0e-4464-b76d-f2ae21cab45c.
+  # Seven-activity chain. NOTE: this supersedes the chain reused from
+  # _verticals/residential-mortgage-broker.md, which replays an older build of
+  # the domain (it carried a "Loan Term in Months" stripping step that no longer
+  # exists, and the PMI-Aware Final / Pass 1 activity titles have since been
+  # renamed). The vertical is now stale and wants the same re-capture.
+  - id: "mortgage"
+    domain: "Residential Mortgage Broker"
+    label: "Mortgage: how much house do I qualify for?"
+    convo_title: "I make 12k a month, want to keep total DTI at 43%…"
+    prompt: "I make 12k a month, want to keep total DTI at 43%, have 650 in other debt, taxes 450 ins 150, 20% down, 7.25% for 30 yrs. how much house can I get?"
+    date: "Sep 7, 2026"
+    ts: "2:21 PM"
+    parse:
+      - ["gross_monthly_income", "12000 USD"]
+      - ["target_dti", "43%"]
+      - ["monthly_other_debt", "650 USD"]
+      - ["monthly_property_tax", "450 USD"]
+      - ["monthly_homeowners_insurance", "150 USD"]
+      - ["down_payment_pct", "20%"]
+      - ["note_rate", "7.25%"]
+      - ["loan_term", "30 yr"]
+      - ["calculate", "max_qualifying_purchase_price"]
+    blocks:
+      - type: "kv"
+        h: "Maximum Qualifying PI Payment"
+        desc: "Calculates the highest monthly principal and interest payment the borrower's income can support after other debts and non-PI housing costs, before any mortgage insurance is applied."
+        lines:
+          - ["Maximum Qualifying PI Payment", "$3,910.00"]
+          - ["Target DTI", "43.000%"]
+          - ["Gross Monthly Income", "$12,000.00"]
+          - ["Monthly Other Debt Obligations", "$650.00"]
+          - ["Monthly Property Tax", "$450.00"]
+          - ["Monthly Homeowner's Insurance", "$150.00"]
+          - ["Monthly HOA Dues", "0.00"]
+      - type: "kv"
+        h: "Maximum Qualifying Loan Amount Before Mortgage Insurance"
+        desc: "Calculates the loan amount the borrower's qualifying payment supports before mortgage insurance is taken into account."
+        lines:
+          - ["Maximum Qualifying Loan Amount Before Mortgage Insurance", "$573,165.63"]
+          - ["Maximum Qualifying PI Payment", "$3,910.00"]
+          - ["Note Rate", "7.250%"]
+          - ["Loan Term", "30 yr"]
+      - type: "kv"
+        h: "Effective LTV at Qualifying"
+        desc: "Calculates what the LTV would be at the borrower's maximum qualifying home price."
+        lines:
+          - ["Effective LTV at Qualifying", "80.000%"]
+          - ["Down Payment Percent", "20.000%"]
+      - type: "kv"
+        h: "PMI Required at Qualifying"
+        desc: "Determines whether PMI applies at the borrower's maximum qualifying home price."
+        lines:
+          - ["PMI Required at Qualifying", "0"]
+          - ["Effective LTV at Qualifying", "80.000%"]
+          - ["PMI LTV Threshold", "80.000%"]
+      - type: "kv"
+        h: "Estimated PMI at Qualifying"
+        desc: "Estimates the monthly PMI the borrower will need to pay if they buy at the top of their qualifying range."
+        lines:
+          - ["Estimated PMI at Qualifying", "$0.00"]
+          - ["PMI Required at Qualifying", "0"]
+          - ["Maximum Qualifying Loan Amount Before Mortgage Insurance", "$573,165.63"]
+          - ["Annual PMI Rate (Estimate)", "0.5500%"]
+      - type: "kv"
+        h: "Maximum Qualifying Loan Amount"
+        desc: "Calculates the borrower's maximum qualifying loan amount, with PMI folded in when it applies."
+        lines:
+          - ["Maximum Qualifying Loan Amount", "$573,165.63"]
+          - ["Maximum Qualifying PI Payment", "$3,910.00"]
+          - ["Estimated PMI at Qualifying", "$0.00"]
+          - ["Note Rate", "7.250%"]
+          - ["Loan Term", "30 yr"]
+      - type: "kv"
+        h: "Maximum Qualifying Purchase Price"
+        desc: "Calculates the most expensive home the borrower can qualify for when the down payment is given as a percent of the price rather than a dollar amount, with mortgage insurance folded in where it applies."
+        lines:
+          - ["Maximum Qualifying Purchase Price", "$716,457.04"]
+          - ["Maximum Qualifying Loan Amount", "$573,165.63"]
+          - ["Down Payment Percent", "20.000%"]
+    final: "Requested result for <b>Maximum Qualifying Purchase Price</b> is <b>$716,457.04</b>."
+
+  # ── 2. Auto Loan ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Auto Loan domain via natural language.
+  # conversation 126e286f-2f99-4344-9eee-3b70499c0bcc, domain 4d7bfbe2-d199-401a-8eea-ad4657ff8a97.
+  # Three-activity chain: trade-in equity, amount financed, monthly payment.
+  - id: "auto"
+    domain: "Auto Loan"
+    label: 'Auto: “what happens to my payment with the trade-in?”'
+    convo_title: "I'm looking at a $38,500 SUV. I've got $6,000 cash and…"
+    prompt: "I'm looking at a $38,500 SUV. I've got $6,000 cash and a trade-in worth $9,500 that I still owe $4,200 on. 72 months at 7.4%. What's my monthly payment?"
+    date: "Sep 7, 2026"
+    ts: "2:02 PM"
+    parse:
+      - ["vehicle_price", "38500 USD"]
+      - ["down_payment", "6000 USD"]
+      - ["trade_in_value", "9500 USD"]
+      - ["trade_in_payoff", "4200 USD"]
+      - ["loan_term", "72 mo"]
+      - ["annual_interest_rate", "7.4%"]
+      - ["calculate", "monthly_payment"]
+    blocks:
+      - type: "kv"
+        h: "Trade-In Equity"
+        desc: "Calculates the net credit a trade-in contributes after the loan still owed on it is paid off. A trade worth less than its payoff yields a negative credit."
+        lines:
+          - ["Trade-In Equity", "$5,300.00"]
+          - ["Trade-In Value", "$9,500.00"]
+          - ["Trade-In Payoff", "$4,200.00"]
+      - type: "kv"
+        h: "Amount Financed"
+        desc: "Calculates the amount financed from the vehicle price, the down payment, and the trade-in equity. Also solves for the vehicle price a buyer can reach, or the down payment required, from the other figures."
+        lines:
+          - ["Loan Amount", "$27,200.00"]
+          - ["Vehicle Price", "$38,500.00"]
+          - ["Down Payment", "$6,000.00"]
+          - ["Trade-In Equity", "$5,300.00"]
+      - type: "kv"
+        h: "Monthly Payment"
+        desc: "Calculates the fixed monthly principal-and-interest payment from the loan amount, rate, and term. Also solves for the loan amount that fits a target monthly payment."
+        lines:
+          - ["Monthly Payment", "$468.98"]
+          - ["Loan Amount", "$27,200.00"]
+          - ["Annual Interest Rate", "7.400%"]
+          - ["Loan Term", "72 mo"]
+    final: "Requested result for <b>Monthly Payment</b> is <b>$468.98</b>."
+
+  # ── 3. Savings & CD Growth ── REAL CAPTURED OUTPUT
+  # Captured 2026-09-07 from the Savings & CD Growth domain via natural language.
+  # conversation 20a11c1b-5231-4b4e-9821-8dcdd34dd6bc, domain c8871ccb-b047-47c0-854d-a9e9d7d3d690.
+  # Single-activity chain. Upgrade this frame to the term-comparison prompt once
+  # the early-withdrawal and comparison layers are built; the comparison is the
+  # richer trail and the better pitch, but it needs activities that do not exist yet.
+  - id: "savings"
+    domain: "Savings & CD Growth"
+    label: 'Savings & CD: “what will my CD be worth?”'
+    convo_title: "What will $25,000 be worth in a five-year CD at 4.40%…"
+    prompt: "What will $25,000 be worth in a five-year CD at 4.40% compounded monthly?"
+    date: "Sep 7, 2026"
+    ts: "2:02 PM"
+    parse:
+      - ["cd_principal", "25000 USD"]
+      - ["cd_term", "5 yr"]
+      - ["cd_nominal_rate", "4.40%"]
+      - ["compounds_per_year", "12"]
+      - ["calculate", "cd_value_at_maturity"]
+    blocks:
+      - type: "kv"
+        h: "Value at Maturity"
+        desc: "Calculates what the deposit is worth when the term ends, from the deposit, the rate, the term, and how often interest compounds."
+        lines:
+          - ["Value at Maturity", "$31,139.39"]
+          - ["Deposit Amount", "$25,000.00"]
+          - ["Interest Rate", "4.400%"]
+          - ["Term", "5 yr"]
+          - ["Compounding Periods Per Year", "12"]
+    final: "Requested result for <b>Value at Maturity</b> is <b>$31,139.39</b>."
+
+---
+
+<!-- HERO -->
+<section class="tmv-hero">
+  <div class="tmv-hero-inner">
+    <h1><span class="tmv-accent-noun">Lending math</span> your website can explain.<br><span class="tmv-accent">With receipts.</span></h1>
+    <p>
+      A visitor has a question. Let them fill in a form or just ask in plain
+      English, then hand back more than a number: the whole worked solution,
+      step by step, explained in words you wrote.
+      <span class="lnd-triad">Your products, your methods, your language.</span>
+    </p>
+  </div>
+</section>
+
+<!-- 01 THE DEMO -->
+<section class="tmv-demo">
+  <div class="tmv-seclabel"><span class="tmv-secnum">01</span> The demo</div>
+  <div class="tmv-hook">
+    <span class="tmv-hook-main">Three calculators. One engine.</span>
+    <span class="tmv-hook-sub">Open one, then hit Ask <span class="tmv-arr">&darr;</span></span>
+  </div>
+
+  <div class="tmv-launchers">
+    {%- for d in page.demos -%}
+    {% include tmv-demo.html demo=d name=d.domain cta_url="https://app.truemath.ai/signup" %}
+    {%- endfor -%}
+  </div>
+
+  <div class="tmv-democap">Real TrueMath output, replayed here. Open a prompt, hit Ask, watch the work.</div>
+
+  <div class="tmv-democta">
+    <div class="tmv-lead">See it answer with your products and your rates.</div>
+    <a class="btn-large" href="{{ page.contact_url }}">Talk to us &rarr;</a>
+    <div class="tmv-fine">A working demo on your own numbers, not a slide deck.</div>
+  </div>
+</section>
+
+<!-- 02 WHAT A PLUG-IN CAN'T DO -->
+<section class="section-divider">
+  <div class="section">
+    <span class="section-label">02 &nbsp;The difference</span>
+    <h2 class="section-headline">A calculator plug-in answers the question it was built for. <em>Your customer asks a different one.</em></h2>
+    <p class="section-body">
+      The mortgage widget on a bank site is a form: nine fields, all required,
+      one direction, one product. It is fine at the question it was built for
+      and helpless at every neighboring question — which is usually the one
+      the visitor actually came to ask.
+    </p>
+
+    <div class="lnd-grid">
+      <div>
+        <h3 class="lnd-head">A standard plug-in</h3>
+        <div class="lnd-sub">What you can ship today</div>
+        <ul class="lnd-list lnd-list--flat">
+          <li><strong>A fixed form.</strong> Every field required, including the ones your visitor doesn’t know yet.</li>
+          <li><strong>One direction.</strong> It solves for the payment. “What price fits $2,400 a month?” is a different widget.</li>
+          <li><strong>One product per vendor.</strong> A mortgage plug-in, an auto plug-in, a savings plug-in: three integrations, three looks.</li>
+          <li><strong>Somebody else’s assumptions.</strong> A generic PMI rate, a guessed tax figure, and no idea what your rate sheet says.</li>
+          <li><strong>A number, with no work shown.</strong> Nothing for the visitor to understand and nothing for compliance to review.</li>
+          <li><strong>No follow-up.</strong> “What if I put ten percent down?” means filling the form out again.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="lnd-head">The same page on <em>TrueMath</em></h3>
+        <div class="lnd-sub">What this page is demonstrating</div>
+        <ul class="lnd-list lnd-list--check">
+          <li><strong>Plain English in.</strong> “I make $12k a month, I’ve got $650 in other payments and twenty percent down.” No form to learn.</li>
+          <li><strong>Any direction.</strong> One domain solves for price, payment, down payment, or rate. Same logic, every question.</li>
+          <li><strong>One engine behind all of it.</strong> Mortgage, auto, savings and CDs on one integration.</li>
+          <li><strong>Your rules.</strong> Your rate sheet, your LTV thresholds, your PMI table, your CD terms — in a domain you own and version.</li>
+          <li><strong>The whole worked answer.</strong> Every intermediate step labeled and explained, the lineage behind each number, and a count of the values it had to assume.</li>
+          <li><strong>A conversation.</strong> Follow-ups and what-ifs run as scenarios against the numbers already on the screen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 ONE DOMAIN, MANY QUESTIONS -->
+<section class="section">
+  <span class="section-label">03 &nbsp;The range</span>
+  <h2 class="section-headline">Each of these is <em>one</em> domain. Look at what one domain answers.</h2>
+  <p class="section-body">
+    Nothing below is a separate calculator to build, buy, or maintain. A domain
+    holds the variables, the units, and the relationships between them, so it
+    answers in whatever direction the question is pointed. Adding a question to
+    a domain changes the domain and not the page, so your front end never has
+    to learn about it.
+  </p>
+
+  <div class="lnd-grid">
+    <div>
+      <h3 class="lnd-head">Residential Mortgage</h3>
+      <div class="lnd-sub">Answering today</div>
+      <ul class="lnd-qs">
+        <li>How much house can I afford on my income?</li>
+        <li>What’s the payment with taxes, insurance and PMI in it?</li>
+        <li>How much do I need down to skip PMI entirely?</li>
+        <li>What would refinancing save me if I stay seven years?</li>
+        <li>What does a 2-1 buydown cost the seller to fund?</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="lnd-head">Auto Loan</h3>
+      <div class="lnd-sub">Answering today</div>
+      <ul class="lnd-qs">
+        <li>What’s my payment on this car at this term?</li>
+        <li>How much car fits a $525 monthly payment?</li>
+        <li>What does my trade-in do once the payoff comes out of it?</li>
+        <li>How much do I need to put down to hit that payment?</li>
+        <li>What’s the total interest over the life of the loan?</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="lnd-head">Savings &amp; CD Growth</h3>
+      <div class="lnd-sub">Answering today</div>
+      <ul class="lnd-qs">
+        <li>What will $25,000 be worth in a five-year CD?</li>
+        <li>How much interest does that earn me?</li>
+        <li>What’s the APY on that rate compounded monthly?</li>
+        <li>The ad says 4.50% APY &mdash; what’s the actual rate?</li>
+        <li>How much do I deposit to have $30,000 by then?</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="lnd-head">And the products <em>only you</em> sell</h3>
+      <div class="lnd-sub">Built in your account</div>
+      <ul class="lnd-qs">
+        <li>What does my relationship tier take off the rate?</li>
+        <li>How much can I draw on the HELOC at your CLTV cap?</li>
+        <li>What does your first-time-buyer program change?</li>
+        <li>How does the promotional CD ladder compare to one term?</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="lnd-aside">
+    Any product with rules can be a domain.<br>
+    <strong>If your team can explain it, it can be computed the same way every
+    time.</strong>
+  </p>
+</section>
+
+<!-- 04 THE LOGIC IS YOURS -->
+<section class="section-divider">
+  <div class="section">
+    <span class="section-label">04 &nbsp;How it fits</span>
+    <h2 class="section-headline">The math is a service. The front end is <em>yours</em>.</h2>
+    <p class="section-body">
+      TrueMath is not a widget you drop on a page. A domain is where the logic
+      lives — variables, units, rules, versions, and an audit trail on every
+      change — and it answers over an API. Your web team builds the interface
+      in your design system, and the same reviewed logic serves the website,
+      the mobile app, the call-center screen, and your loan officers' own tools.
+      One review, one source of truth, every surface.
+    </p>
+
+    <div class="lnd-grid">
+      <div>
+        <h3 class="lnd-head">What your team builds</h3>
+        <div class="lnd-sub">Your stack, your brand</div>
+        <ul class="lnd-list lnd-list--check">
+          <li>The interface, in your design system and your CMS. Nothing to theme around.</li>
+          <li>One integration for every calculator on the site, present and future.</li>
+          <li>The call from your server, so the API key never reaches a visitor’s browser and <strong>you choose what crosses the wire</strong>. The engine needs the numbers, not the name.</li>
+          <li>Answers arrive as data, so you choose what to show: the number alone, or every step behind it.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="lnd-head">What TrueMath handles</h3>
+        <div class="lnd-sub">The part nobody wants to maintain</div>
+        <ul class="lnd-list lnd-list--check">
+          <li>Deterministic math: the same inputs return the same answer, every time, to the last decimal.</li>
+          <li>The worked steps and the lineage behind every number, ready for a compliance read.</li>
+          <li>A unit system, so a term in years and a term in months are never confused again.</li>
+          <li>Versioning, so a rate-sheet change is a dated revision and not a silent edit.</li>
+          <li>Domains stored with multi-tenant isolation in AWS. TrueMath is SOC 2 ready.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 THE EXPERIENCE -->
+<section class="section">
+  <span class="section-label">05 &nbsp;The experience</span>
+  <h2 class="section-headline">A form, a conversation, or both. <em>Then let them keep going.</em></h2>
+  <p class="section-body">
+    The domain does not care how the values reach it. The same logic that
+    answered the three questions above answers a nine-field form, a typed
+    sentence, or a form the visitor finishes by asking a follow-up.
+  </p>
+
+  <div class="lnd-modes">
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Structured input</div>
+      <h4>A form</h4>
+      <p>
+        Numeric fields carrying their own units, grouped under the step that
+        consumes them, each one editable in place. Familiar to any visitor who
+        has used a calculator on a bank site, except this one shows its work.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Natural language</div>
+      <h4>A conversation</h4>
+      <p>
+        The visitor describes their situation in a sentence and the engine maps
+        it onto the same keys. Every demo above ran this way, and each frame
+        shows you exactly what the parser understood.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Either, turn by turn</div>
+      <h4>Both</h4>
+      <p>
+        Collect the obvious figures in a form, then let them ask “what if I put
+        ten percent down?” in words. Or read a sentence and show the parsed
+        values back as fields they can correct.
+      </p>
+    </div>
+  </div>
+
+  {%- comment -%}
+    The shot is from the older domain build, so its right-hand activity titles
+    read "PMI-Aware Final" and "Rate-Free" where the demo frames above show the
+    renamed ones. Same calculation and same $716,457.04 either way. Swap in a
+    current-build capture when there is one; keep the Ask box, the expanded
+    assumed-values panel and the scenario strip in frame.
+  {%- endcomment -%}
+  <figure class="lnd-shot">
+    <img src="/images/lending-form-screenshot.png"
+         width="1884" height="1604" loading="lazy" decoding="async"
+         alt="A TrueMath calculation screen. Down the right, editable fields for
+              loan amount, down payment percent, note rate and loan term, each
+              grouped under a description of the step that uses it. On the left, a
+              maximum qualifying purchase price of $716,457.04, an open panel
+              itemising the three values the calculation assumed, a collapsed
+              panel for how it was solved, and a box for asking a follow-up
+              question in words.">
+    <figcaption>
+      One screen: fields on the right, the values it assumed spelled out on the
+      left, and a box for the follow-up question.
+    </figcaption>
+  </figure>
+
+  <div class="lnd-rowlab">And once a visitor has an answer</div>
+
+  <div class="lnd-modes lnd-modes--four">
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Scenarios</div>
+      <h4>Ask again, keep the first answer</h4>
+      <p>
+        Every calculation opens a scenario. Change the down payment and ask
+        again, and the new numbers arrive alongside the old ones instead of
+        overwriting them.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Compare</div>
+      <h4>See them next to each other</h4>
+      <p>
+        Scenarios compare side by side, which is how a visitor works out
+        whether the shorter term or the bigger down payment is the better
+        trade for them.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Assumptions</div>
+      <h4>Every assumed value, disclosed</h4>
+      <p>
+        When the math needs a figure the visitor never gave, the answer says so
+        and counts them. Nothing is quietly filled in behind a number your
+        customer is about to act on.
+      </p>
+    </div>
+    <div class="lnd-mode">
+      <div class="lnd-mode-tag">Share</div>
+      <h4>Send the work, not a screenshot</h4>
+      <p>
+        A result shares as the whole worked answer, so the person on the other
+        end sees the same steps and the same assumptions.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CLOSING CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2 class="cta-headline">Let’s put this on your site.</h2>
+    <p class="cta-subhead">
+      Bring one product and the rules behind it. We’ll show you the domain that
+      answers every question your customers ask about it — and what it looks
+      like running on your own page.
+    </p>
+    <a href="{{ page.contact_url }}" class="btn-cta">Talk to us &rarr;</a>
+  </div>
+</section>
+
+<script defer src="/js/vertical-demo.js"></script>
