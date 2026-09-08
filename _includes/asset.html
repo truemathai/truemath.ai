@@ -1,0 +1,32 @@
+{%- comment -%}
+  Cache-busting asset URL. Appends a build-stable version token to a local
+  CSS/JS path so a deploy never serves a stale copy from the CDN.
+
+  Params:
+    include.path (required) the site-absolute asset path, e.g. "/css/site.css"
+
+  Usage:
+    <link rel="stylesheet" href="{% include asset.html path='/css/site.css' %}">
+    <script defer src="{% include asset.html path='/js/site.js' %}"></script>
+
+  Why this exists: /css/site.css and the /js/* files are unversioned filenames
+  sitting behind a 4-hour Cloudflare edge cache. A deploy that changes one of
+  them leaves the edge serving the previous copy against the new HTML, which
+  renders the site unstyled until someone purges the cache by hand. Adding a
+  token that changes each deploy makes every build request a URL the edge has
+  never seen, so there is nothing stale to serve.
+
+  The token is the commit SHA on GitHub Pages, via jekyll-github-metadata
+  (bundled with the github-pages gem, so no custom plugin). Local builds have
+  no build_revision, so they fall back to the build timestamp — different every
+  `jekyll serve` rebuild, which is what you want while developing.
+
+  Only CSS and JS are versioned. The favicons are deliberately left alone:
+  browsers probe /favicon.ico at a fixed path, and a query string on the icon
+  links would not help that probe anyway.
+{%- endcomment -%}
+{%- if site.github.build_revision -%}
+{{ include.path }}?v={{ site.github.build_revision | slice: 0, 8 }}
+{%- else -%}
+{{ include.path }}?v={{ site.time | date: "%s" }}
+{%- endif -%}
