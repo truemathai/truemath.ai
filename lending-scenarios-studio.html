@@ -1,0 +1,377 @@
+---
+layout: default
+title: "Lending Scenarios Studio: The Loan Types Your Scenario Tool Doesn't Cover"
+description: "Reverse, DSCR, construction and renovation scenarios, not just conventional. Send your client a link, they fill it out on their phone, the scenarios come back to you. Early access."
+og_title: "The loan types your scenario tool doesn't cover"
+og_description: "Conventional, reverse, DSCR, construction, renovation. Your client does the data entry on their own phone. Every number shows how it was derived."
+body_class: page-lss
+
+# NOINDEX while the page still carries [BRACKETED] placeholders. Traffic comes
+# from /go/ campaign links, email and social, which noindex does not affect.
+# Flip this off once the brackets below are filled in, and add the page to
+# sitemap.xml at the same time.
+noindex: true
+
+# ── Where this page's calls-to-action point ─────────────────────────────
+# One primary conversion (the early access list) and two distinguishable
+# secondary ones. Site convention: signup-style CTAs go to /signup,
+# contact-style CTAs go to /contact.
+#
+# The ?interest= parameter is attribution only. It rides along so a signup
+# record can say which pitch produced it; the app ignores parameters it does
+# not know, so dropping it breaks nothing. Click measurement does not depend
+# on it either, that is the data-tm-event attributes further down.
+early_access_url: "https://app.truemath.ai/signup?interest=lending-scenarios-studio"
+widget_url:       "https://app.truemath.ai/signup?interest=intake-widget"
+expert_url:       "https://app.truemath.ai/contact?interest=domain-review"
+---
+
+{%- comment -%}
+  MEASUREMENT
+  Every CTA on this page carries data-tm-event, which js/site.js turns into a
+  GA4 event on click. Each message gets its OWN EVENT NAME, not a shared name
+  with a parameter, so the four pitches show up separately in GA's stock event
+  report with no custom-dimension setup:
+
+    early_access_hero           the coverage headline, above the fold
+    early_access_coverage       after the five-domain list
+    early_access_client_intake  after "they do the typing"
+    early_access_derivation     after "show how it got there"
+    early_access_closing        the final CTA, message-neutral
+    widget_interest             the fake-door intake widget
+    expert_panel_apply          the subject matter expert block
+
+  data-tm-section is sent as a parameter for readability in BigQuery/explore.
+{%- endcomment -%}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      Early access &middot; For loan officers
+    </div>
+
+    <h1 class="hero-headline">
+      The loan types your scenario tool<br><em>doesn’t cover.</em>
+    </h1>
+
+    <p class="hero-subhead">
+      Lending Scenarios Studio runs reverse, DSCR, construction and renovation.
+      Conventional too. You pick the calculations, send your client the link,
+      and they fill it out on their own phone.
+    </p>
+
+    <div class="vertical-pills">
+      <span class="vertical-pill">Conventional</span>
+      <span class="vertical-pill">Reverse</span>
+      <span class="vertical-pill">DSCR</span>
+      <span class="vertical-pill">Construction</span>
+      <span class="vertical-pill">Renovation</span>
+    </div>
+
+    <div class="lss-herocta">
+      <a class="btn-large" href="{{ page.early_access_url }}"
+         data-tm-event="early_access_hero" data-tm-section="hero">Join the early access list</a>
+      <div class="lss-fine">An email address, nothing else. No card, no demo to sit through.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 01 COVERAGE -->
+<section class="section">
+  <span class="section-label">01 &nbsp;Coverage</span>
+  <h2 class="section-headline">Five domains are live. <em>Most tools give you the first one.</em></h2>
+  <p class="section-body">
+    A scenario tool that only does conventional is fine right up until the call
+    is about a reverse, a rental, a build, or a rehab. Those are the calls that
+    take the most explaining. They are the ones your tool sits out.
+  </p>
+
+  {%- comment -%}
+    PLACEHOLDER: the one-line description of what each domain computes is
+    Bill's to supply. Do not write lending math here. Getting a reverse or
+    DSCR detail wrong on this page is worse than shipping it with the bracket
+    still in it.
+  {%- endcomment -%}
+  <div class="lss-coverage">
+
+    <div class="lss-dom">
+      <div class="lss-dom-id">
+        <h3>Conventional</h3>
+        <div class="lss-dom-tags">
+          <span class="lss-tag is-live">Live</span>
+          <span class="lss-tag is-quiet">Table stakes</span>
+        </div>
+      </div>
+      <p class="lss-dom-desc"><span class="lss-tbd">[ONE LINE: what the conventional domain computes]</span></p>
+    </div>
+
+    <div class="lss-dom">
+      <div class="lss-dom-id">
+        <h3>Reverse</h3>
+        <div class="lss-dom-tags">
+          <span class="lss-tag is-live">Live</span>
+          <span class="lss-tag">Rarely covered</span>
+        </div>
+      </div>
+      <p class="lss-dom-desc"><span class="lss-tbd">[ONE LINE: what the reverse domain computes]</span></p>
+    </div>
+
+    <div class="lss-dom">
+      <div class="lss-dom-id">
+        <h3>DSCR</h3>
+        <div class="lss-dom-tags">
+          <span class="lss-tag is-live">Live</span>
+          <span class="lss-tag">Rarely covered</span>
+        </div>
+      </div>
+      <p class="lss-dom-desc"><span class="lss-tbd">[ONE LINE: what the DSCR domain computes]</span></p>
+    </div>
+
+    <div class="lss-dom">
+      <div class="lss-dom-id">
+        <h3>Construction</h3>
+        <div class="lss-dom-tags">
+          <span class="lss-tag is-live">Live</span>
+          <span class="lss-tag">Rarely covered</span>
+        </div>
+      </div>
+      <p class="lss-dom-desc"><span class="lss-tbd">[ONE LINE: what the construction domain computes]</span></p>
+    </div>
+
+    <div class="lss-dom">
+      <div class="lss-dom-id">
+        <h3>Renovation</h3>
+        <div class="lss-dom-tags">
+          <span class="lss-tag is-live">Live</span>
+          <span class="lss-tag">Rarely covered</span>
+        </div>
+      </div>
+      <p class="lss-dom-desc"><span class="lss-tbd">[ONE LINE: what the renovation domain computes]</span></p>
+    </div>
+
+  </div>
+
+  <div class="lss-cta">
+    <div class="lss-cta-line">Four of these are the reason to switch.</div>
+    <a class="btn-large" href="{{ page.early_access_url }}"
+       data-tm-event="early_access_coverage" data-tm-section="coverage">Get early access</a>
+    <div class="lss-fine">Tell us which one you write the most of.</div>
+  </div>
+</section>
+
+<!-- 02 THE CLIENT DOES THE DATA ENTRY -->
+<section class="section-divider">
+  <div class="section">
+    <span class="section-label">02 &nbsp;Intake</span>
+    <h2 class="section-headline">You send a link. <em>They do the typing.</em></h2>
+    <p class="section-body">
+      Pick the calculations you want out of the domain and send the link. Your
+      client opens it at 10pm on their own phone. They fill in the form, or
+      they type what they know into a chat box, or they do some of each. The
+      scenarios come back to you before the first call.
+    </p>
+
+    <div class="lnd-modes">
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Step 1</div>
+        <h4>Pick the calculations</h4>
+        <p>
+          Choose what this client needs out of the domain. A purchase
+          scenario and a refinance scenario are different picks from the same
+          set, so you are not sending a form full of fields nobody will use.
+        </p>
+      </div>
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Step 2</div>
+        <h4>Send the link</h4>
+        <p>
+          Text it or email it. Your client does not install anything, does not
+          make an account, and does not need you on the phone to get through
+          it. The form works on the phone they already have in their hand.
+        </p>
+      </div>
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Step 3</div>
+        <h4>Get the scenarios back</h4>
+        <p>
+          Their answers run through the same math you would have run yourself.
+          You open real numbers instead of a voicemail that says call me back.
+        </p>
+      </div>
+    </div>
+
+    <div class="lnd-rowlab">And once the scenarios are back</div>
+
+    <div class="lnd-modes lnd-modes--four">
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Compare</div>
+        <h4>Side by side</h4>
+        <p>
+          Scenarios sit next to each other instead of overwriting each other.
+          That is how a client works out which trade they actually want.
+        </p>
+      </div>
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Lock</div>
+        <h4>Fix what is fixed</h4>
+        <p>
+          Lock the fields that are not up for discussion. Everything else stays
+          open to change, so the comparison is between the things that differ.
+        </p>
+      </div>
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Share</div>
+        <h4>A link or a PDF</h4>
+        <p>
+          Send the work to the client, the agent, or whoever else is on the
+          deal. They see the same scenarios you are looking at.
+        </p>
+      </div>
+      <div class="lnd-mode">
+        <div class="lnd-mode-tag">Brand</div>
+        <h4>Your logo on it</h4>
+        <p>
+          Your logo and your contact information on what you send out. It goes
+          out looking like it came from you, because it did.
+        </p>
+      </div>
+    </div>
+
+    <div class="lss-cta">
+      <div class="lss-cta-line">Stop being the data entry clerk on your own deals.</div>
+      <a class="btn-large" href="{{ page.early_access_url }}"
+         data-tm-event="early_access_client_intake" data-tm-section="client_intake">Get early access</a>
+      <div class="lss-fine">We will send the link the day it opens.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SHOW THE WORK -->
+<section class="section">
+  <span class="section-label">03 &nbsp;Show the work</span>
+  <h2 class="section-headline">Every number can <em>show how it got there.</em></h2>
+  <p class="section-body">
+    Open a result and the steps behind it are right there. When a client asks
+    where a figure came from, or your processor does, you do not have to
+    rebuild it in your head or go find the spreadsheet you used in March.
+  </p>
+
+  <div class="lnd-grid">
+    <div>
+      <h3 class="lnd-head">What you can see</h3>
+      <div class="lnd-sub">On any result</div>
+      <ul class="lnd-list lnd-list--check">
+        <li><strong>Every intermediate step, labeled.</strong> Not one number at the end of a black box.</li>
+        <li><strong>The values it had to assume.</strong> When the math needs a figure your client never gave, it says so and counts them.</li>
+        <li><strong>The inputs that fed each step.</strong> You can follow a figure back to where it came from.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="lnd-head">Why it stays right</h3>
+      <div class="lnd-sub">Deterministic, not generated</div>
+      <ul class="lnd-list lnd-list--check">
+        <li><strong>The same inputs give the same result.</strong> Every time, to the last decimal.</li>
+        <li><strong>The math is not being written on the fly.</strong> It is a reviewed domain, not a model improvising an answer.</li>
+        <li><strong>A rule change is a dated revision.</strong> Not a silent edit you find out about later.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lss-cta">
+    <div class="lss-cta-line">If you have ever been asked to defend a number you sent, you know why this matters.</div>
+    <a class="btn-large" href="{{ page.early_access_url }}"
+       data-tm-event="early_access_derivation" data-tm-section="derivation">Get early access</a>
+  </div>
+</section>
+
+<!-- 04 FAKE DOOR: WEBSITE INTAKE WIDGET -->
+{%- comment -%}
+  This is a demand test, not a feature. It is deliberately kept small, plain
+  and below the coverage message so it cannot become the headline: no tinted
+  band, no section-headline, no purple button. The "In development" tag and the
+  body copy both say it does not ship today. Its CTA fires its own event
+  (widget_interest) and points at its own URL, so a click here is countable
+  apart from a general early-access signup.
+{%- endcomment -%}
+<section class="section section-sm">
+  <span class="section-label">04 &nbsp;Not built yet</span>
+
+  <div class="lss-widget">
+    <div class="lss-widget-tag">In development</div>
+    <h3 class="lss-widget-head">An intake widget for your own site</h3>
+    <p class="lss-widget-body">
+      The same form, embedded on your website, as part of how you take in
+      leads. A prospect runs their own numbers, and the numbers reach you with
+      their contact details attached instead of a name and a phone number you
+      have to chase for the rest.
+    </p>
+    <p class="lss-widget-body">
+      <strong>This does not exist yet.</strong> We are deciding whether to
+      build it, and a click here is the vote.
+    </p>
+    <div class="lss-widget-cta">
+      <a class="btn-outline" href="{{ page.widget_url }}"
+         data-tm-event="widget_interest" data-tm-section="intake_widget">I’d want this</a>
+      <span class="lss-fine">Puts you on the list for the widget specifically, separate from early access.</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 SUBJECT MATTER EXPERTS -->
+<section class="section-divider">
+  <div class="section">
+    <span class="section-label">05 &nbsp;Domain review</span>
+    <h2 class="section-headline">Try to break one of these domains.</h2>
+    <p class="section-body">
+      We want originators who actually write reverse, DSCR, construction or
+      renovation to spend 45 minutes finding what is wrong with ours. A bad
+      assumption. A field that should be there and is not. A rule that does not
+      match how the product works in your market. We are asking for the list of
+      what it gets wrong, and we would rather hear it from you now than from a
+      borrower later.
+    </p>
+
+    <div class="lss-cta lss-cta--left">
+      <div class="lss-cta-line">Six months free for the people we take.</div>
+      <a class="btn-outline" href="{{ page.expert_url }}"
+         data-tm-event="expert_panel_apply" data-tm-section="expert_panel">Ask for a domain to pick apart</a>
+      <div class="lss-fine">Tell us which of the four you write and how long you have been writing it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRAIGHT ANSWERS -->
+<section class="section section-sm">
+  <div class="lss-facts">
+    <div class="lss-fact">
+      <div class="lss-fact-label">What it costs</div>
+      <div class="lss-fact-value"><span class="lss-tbd">[PRICE]</span></div>
+    </div>
+    <div class="lss-fact">
+      <div class="lss-fact-label">When it opens</div>
+      <div class="lss-fact-value"><span class="lss-tbd">[LAUNCH MONTH]</span></div>
+    </div>
+    <div class="lss-fact">
+      <div class="lss-fact-label">Who to ask</div>
+      <div class="lss-fact-value"><span class="lss-tbd">[CONTACT EMAIL]</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2 class="cta-headline">Get on the early access list.</h2>
+    <p class="cta-subhead">
+      One email address. You hear from us when it opens. If enough loan
+      officers who write these loan types want it, we keep building it.
+    </p>
+    <a class="btn-cta" href="{{ page.early_access_url }}"
+       data-tm-event="early_access_closing" data-tm-section="closing">Join the early access list</a>
+  </div>
+</section>

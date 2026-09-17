@@ -500,4 +500,31 @@
     }
   })();
 
+
+  /* ---------- CTA click tracking (data-tm-event) ----------
+     Any element carrying data-tm-event reports its click to GA4 under that
+     event name, so a landing page can tell which message produced the signup.
+     Give each message its OWN event name rather than one shared name with a
+     parameter: distinct names show up in GA's stock event report with no
+     custom-dimension setup. data-tm-section rides along as a parameter.
+
+     GA4's default transport is navigator.sendBeacon, so the event survives the
+     navigation the click is about to cause. No gtag on the page (or a blocked
+     analytics script) means this quietly does nothing. */
+  (function initCtaTracking() {
+    const ctas = document.querySelectorAll('[data-tm-event]');
+    if (!ctas.length) return;
+
+    ctas.forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', el.getAttribute('data-tm-event'), {
+          cta_section: el.getAttribute('data-tm-section') || '',
+          cta_label: (el.textContent || '').trim().slice(0, 100),
+          page_path: window.location.pathname
+        });
+      });
+    });
+  })();
+
 })();
