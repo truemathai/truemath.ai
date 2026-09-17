@@ -1387,6 +1387,11 @@ a.vignette-card-link:hover .role-label { color: var(--purple); }
 .page-lss .hero-headline { font-size: clamp(32px, 4.6vw, 58px); line-height: 1.12; margin-bottom: 16px; }
 .page-lss .hero-subhead { max-width: 620px; margin: 24px auto 0; }
 
+/* the availability line in the hero. It carries the single most important
+   fact on a demand-test page, so it sits at full ink weight under the subhead
+   rather than being tucked into the fine print. */
+.lss-soon { display: block; margin-top: 14px; color: var(--ink); font-weight: 500; }
+
 .lss-herocta { margin-top: 36px; }
 .lss-fine { display: block; font-size: 13.5px; line-height: 1.55; color: var(--ink-muted); margin-top: 12px; }
 
