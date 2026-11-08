@@ -19,6 +19,7 @@ import build_go  # noqa: E402
 import campaign_codes as cc  # noqa: E402
 import migrate_existing_codes  # noqa: E402
 import new_code  # noqa: E402
+import set_post_id  # noqa: E402
 
 TODAY = datetime.date(2026, 11, 5)
 UID = "86358cfbfbf38b02338ddc9cc2c9ece8"
@@ -26,10 +27,10 @@ UID = "86358cfbfbf38b02338ddc9cc2c9ece8"
 
 def good(**over):
     entry = cc.full_entry(
-        code="R7K9XM", series="cleared-for-exactness", episode="ep1-weight-and-balance",
+        code="R7K9XM", campaign="exactly", series="cleared-for-exactness", episode="ep1-weight-and-balance",
         platform="youtube", placement="description",
         to="/series/cleared-for-exactness#weight-and-balance",
-        utm_source="youtube", utm_medium="video", utm_campaign="cleared-for-exactness",
+        utm_source="youtube", utm_medium="video", utm_campaign="exactly-cleared-for-exactness",
         utm_content="cfe-ep1-youtube-description", note="CfE Ep1 YouTube description link",
         created=TODAY, owner="bill", destination_type="landing-page")
     entry.update(over)
@@ -80,20 +81,31 @@ class TestDerivation(unittest.TestCase):
 
     def test_utm(self):
         self.assertEqual(
-            cc.derive_utm("cleared-for-exactness", "ep1-weight-and-balance", "youtube", "description"),
+            cc.derive_utm("exactly", "cleared-for-exactness", "ep1-weight-and-balance",
+                          "youtube", "description"),
             {"utm_source": "youtube", "utm_medium": "video",
-             "utm_campaign": "cleared-for-exactness", "utm_content": "cfe-ep1-youtube-description"})
-        self.assertEqual(cc.derive_utm("cleared-for-exactness", None, "qr", "print")["utm_content"],
-                         "cfe-series-qr-print")
-        self.assertEqual(cc.derive_utm("dana", "ep2-x", "tiktok", "bio-link", abbr="dn")["utm_content"],
-                         "dn-ep2-tiktok-bio-link")
+             "utm_campaign": "exactly-cleared-for-exactness",
+             "utm_content": "cfe-ep1-youtube-description"})
+        self.assertEqual(
+            cc.derive_utm("exactly", "cleared-for-exactness", None, "qr", "print")["utm_content"],
+            "cfe-series-qr-print")
+        self.assertEqual(
+            cc.derive_utm("exactly", "dana", "ep2-x", "tiktok", "bio-link", abbr="dn")["utm_content"],
+            "dn-ep2-tiktok-bio-link")
+        self.assertEqual(cc.utm_campaign_for("live-numbers", "dana"), "live-numbers-dana")
+
+    def test_paid(self):
+        utm = cc.derive_utm("exactly", "cleared-for-exactness", "ep1-x", "linkedin", "ad", paid=True)
+        self.assertEqual((utm["utm_medium"], utm["utm_content"]),
+                         ("paid-social", "cfe-ep1-linkedin-ad"))
+        self.assertEqual(cc.utm_medium_for("youtube", True), "paid-video")
 
     def test_medium_map(self):
         expected = {"youtube": "video", "tiktok": "video", "instagram": "video",
                     "linkedin": "social", "facebook": "social", "qr": "qr", "email": "email",
                     "podcast": "podcast", "trade-media": "referral"}
         for platform, medium in expected.items():
-            self.assertEqual(cc.derive_utm("s", None, platform, "post")["utm_medium"], medium)
+            self.assertEqual(cc.derive_utm("c", "s", None, platform, "post")["utm_medium"], medium)
         self.assertEqual(sorted(expected), sorted(cc.PLATFORMS))
 
     def test_codes_are_crockford_and_unique(self):
@@ -143,8 +155,35 @@ class TestValidation(TempRepo):
         self.assertTrue(self.errors(good(utm_term="Big Term")))
         self.assertEqual(self.errors(legacy(utm_campaign="099AWD", utm_source="Acme Pod")), [])
 
-    def test_campaign_is_series(self):
-        self.assertTrue(self.errors(good(utm_campaign="other-series")))
+    def test_campaign(self):
+        self.assertTrue(self.errors(good(utm_campaign="cleared-for-exactness")))
+        self.assertTrue(self.errors(good(utm_campaign="exactly-other-series")))
+        self.assertTrue(self.errors(good(campaign=None)))
+        self.assertTrue(self.errors(good(campaign="Exactly!")))
+        self.assertEqual(self.errors(good(campaign="live-numbers",
+                                          utm_campaign="live-numbers-cleared-for-exactness")), [])
+
+    def test_legacy_has_no_new_fields(self):
+        self.assertNotIn("campaign", legacy())
+        self.assertNotIn("post_id", legacy())
+        self.assertTrue(self.errors(legacy(campaign="exactly")))
+        self.assertTrue(self.errors(legacy(paid=True)))
+        self.assertTrue(self.errors(legacy(post_id="abc")))
+
+    def test_paid_field(self):
+        self.assertEqual(self.errors(good(paid=True, placement="ad", utm_medium="paid-video")), [])
+        self.assertTrue(self.errors(good(paid="yes")))
+
+    def test_post_id(self):
+        self.assertEqual(self.errors(good(post_id="dQw4w9WgXcQ")), [])
+        self.assertTrue(self.errors(good(post_id="dQw4w9WgXc")))      # 10 chars
+        self.assertTrue(self.errors(good(post_id="dQw4w9WgXc!")))
+        self.assertTrue(self.errors(good(post_id="has space")))
+        self.assertTrue(self.errors(good(post_id=1234567890)))        # unquoted number
+        linkedin = dict(platform="linkedin", utm_source="linkedin", utm_medium="social",
+                        placement="post")
+        self.assertEqual(self.errors(good(post_id="urn:li:share:7261234567890", **linkedin)), [])
+        self.assertTrue(self.errors(good(post_id="urn li", **linkedin)))
 
     def test_required_series_platform_placement(self):
         for field in ("series", "platform", "placement"):
@@ -214,11 +253,16 @@ class TestYamlEmitter(unittest.TestCase):
             'description: "cleared-for-exactness / ep1-weight-and-balance / youtube / description"',
             "to: /series/cleared-for-exactness#weight-and-balance",
             "utm_source: youtube", "utm_medium: video",
-            "utm_campaign: cleared-for-exactness",
+            "utm_campaign: exactly-cleared-for-exactness",
             "utm_content: cfe-ep1-youtube-description",
             "utm_id: R7K9XM", "---", ""]))
         self.assertIn("to: /series/cleared-for-exactness?v=%s#weight-and-balance" % UID,
                       cc.render_go_file(good(video_uid=UID)))
+        # post_id, paid and campaign stay out of the redirect file (never in URLs).
+        text = cc.render_go_file(good(post_id="dQw4w9WgXcQ", paid=True))
+        self.assertNotIn("dQw4w9WgXcQ", text)
+        self.assertNotIn("paid:", text)
+        self.assertNotIn("campaign: exactly\n", text)
 
     def test_legacy_front_matter_is_exact(self):
         text = cc.render_go_file(legacy())
@@ -276,7 +320,7 @@ class TestNewCode(TempRepo):
 
     def test_single(self):
         rc, out, err = self.run_cli(
-            "--series", "cleared-for-exactness", "--episode", "ep1-weight-and-balance",
+            "--campaign", "exactly", "--series", "cleared-for-exactness", "--episode", "ep1-weight-and-balance",
             "--platform", "youtube", "--placement", "description",
             "--to", "/series/cleared-for-exactness#weight-and-balance",
             "--note", "CfE Ep1 YouTube description link")
@@ -289,6 +333,8 @@ class TestNewCode(TempRepo):
         new = entries[1]
         self.assertIn(cc.go_url(new["code"]), out)
         self.assertEqual(new["utm_content"], "cfe-ep1-youtube-description")
+        self.assertEqual(new["utm_campaign"], "exactly-cleared-for-exactness")
+        self.assertEqual((new["paid"], new["post_id"]), (False, None))
         self.assertEqual(new["owner"], "bill")
         self.assertEqual(new["destination_type"], "landing-page")
         self.assertEqual(new["created"], datetime.date.today())
@@ -297,7 +343,7 @@ class TestNewCode(TempRepo):
     def test_dry_run_writes_nothing(self):
         with open(self.data) as f:
             before = f.read()
-        rc, _, _ = self.run_cli("--series", "dana", "--platform", "qr", "--placement", "print",
+        rc, _, _ = self.run_cli("--campaign", "exactly", "--series", "dana", "--platform", "qr", "--placement", "print",
                                 "--to", "/", "--dry-run")
         self.assertEqual(rc, 0)
         with open(self.data) as f:
@@ -306,13 +352,28 @@ class TestNewCode(TempRepo):
     def test_invalid_single_writes_nothing(self):
         with open(self.data) as f:
             before = f.read()
-        rc, _, _ = self.run_cli("--series", "dana", "--platform", "qr", "--placement", "print",
+        rc, _, _ = self.run_cli("--campaign", "exactly", "--series", "dana", "--platform", "qr", "--placement", "print",
                                 "--to", "not-a-path")
         self.assertEqual(rc, 1)
         with open(self.data) as f:
             self.assertEqual(f.read(), before)
 
-    def batch_file(self, rows, header="series,episode,platform,placement,to,video_uid,note"):
+    def test_single_paid_with_post_id(self):
+        rc, _, err = self.run_cli("--campaign", "exactly", "--series", "dana", "--episode", "ep1-x",
+                                  "--platform", "youtube", "--placement", "ad", "--paid",
+                                  "--post-id", "dQw4w9WgXcQ", "--to", "/")
+        self.assertEqual(rc, 0, err)
+        new = cc.load_entries(self.data)[-1]
+        self.assertEqual((new["utm_medium"], new["utm_content"], new["post_id"], new["paid"]),
+                         ("paid-video", "dana-ep1-youtube-ad", "dQw4w9WgXcQ", True))
+
+    def test_campaign_required(self):
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                new_code.main(["--series", "dana", "--platform", "qr", "--placement", "print",
+                               "--to", "/"], data_file=self.data, repo_root=self.root)
+
+    def batch_file(self, rows, header="campaign,series,episode,platform,placement,to,video_uid,note"):
         path = os.path.join(self.root, "launch.csv")
         with open(path, "w") as f:
             f.write(header + "\n" + "\n".join(rows) + "\n")
@@ -320,8 +381,8 @@ class TestNewCode(TempRepo):
 
     def test_batch(self):
         path = self.batch_file([
-            "cleared-for-exactness,ep1-weight-and-balance,youtube,description,/s#a,,One",
-            "cleared-for-exactness,,qr,print,/s,%s,Two" % UID,
+            "exactly,cleared-for-exactness,ep1-weight-and-balance,youtube,description,/s#a,,One",
+            "exactly,cleared-for-exactness,,qr,print,/s,%s,Two" % UID,
         ])
         rc, _, err = self.run_cli("--batch", path)
         self.assertEqual(rc, 0, err)
@@ -337,8 +398,8 @@ class TestNewCode(TempRepo):
         with open(self.data) as f:
             before = f.read()
         path = self.batch_file([
-            "cleared-for-exactness,ep1,youtube,description,/s,,Good",
-            "cleared-for-exactness,ep1,myspace,description,/s,,Bad platform",
+            "exactly,cleared-for-exactness,ep1,youtube,description,/s,,Good",
+            "exactly,cleared-for-exactness,ep1,myspace,description,/s,,Bad platform",
         ])
         rc, _, err = self.run_cli("--batch", path)
         self.assertEqual(rc, 1)
@@ -348,26 +409,93 @@ class TestNewCode(TempRepo):
         self.assertFalse(os.path.exists(os.path.join(self.root, "launch.codes.csv")))
 
     def test_batch_columns(self):
-        rc, _, err = self.run_cli("--batch", self.batch_file(["dana,,qr,print,/"],
-                                                             header="series,episode,platform,placement,to"))
+        rc, _, err = self.run_cli("--batch", self.batch_file(
+            ["dana,,qr,print,/,,n"], header="series,episode,platform,placement,to,video_uid,note"))
         self.assertEqual(rc, 1)
         self.assertIn("missing column", err)
         rc, _, _ = self.run_cli("--batch", self.batch_file(
-            ["dana,,qr,print,/,,n,x"], header="series,episode,platform,placement,to,video_uid,note,bogus"))
+            ["exactly,dana,,qr,print,/,,n,x"],
+            header="campaign,series,episode,platform,placement,to,video_uid,note,bogus"))
         self.assertEqual(rc, 1)
 
     def test_batch_optional_columns(self):
-        header = ("series,episode,platform,placement,to,video_uid,note,description,abbr,"
-                  "utm_term,owner,destination_type,expires,qr_generated")
-        path = self.batch_file(["dana,ep2-x,email,post,/,,n,d,dn,t,elizabeth,playground,2027-01-01,true"],
-                               header=header)
+        header = ("campaign,series,episode,platform,placement,to,video_uid,note,description,abbr,"
+                  "utm_term,owner,destination_type,expires,qr_generated,paid,post_id")
+        path = self.batch_file([
+            "exactly,dana,ep2-x,email,post,/,,n,d,dn,t,elizabeth,playground,2027-01-01,true,,",
+            "exactly,dana,ep2-x,linkedin,ad,/,,n,,,,,,,,true,urn:li:sponsoredContent:42",
+        ], header=header)
         rc, _, err = self.run_cli("--batch", path)
         self.assertEqual(rc, 0, err)
-        new = cc.parse_entries(read(self.data))[-1]
-        self.assertEqual((new["utm_content"], new["utm_term"], new["owner"], new["destination_type"],
-                          new["expires"], new["qr_generated"], new["description"]),
+        first, second = cc.parse_entries(read(self.data))[-2:]
+        self.assertEqual((first["utm_content"], first["utm_term"], first["owner"],
+                          first["destination_type"], first["expires"], first["qr_generated"],
+                          first["description"], first["paid"], first["post_id"]),
                          ("dn-ep2-email-post", "t", "elizabeth", "playground",
-                          datetime.date(2027, 1, 1), True, "d"))
+                          datetime.date(2027, 1, 1), True, "d", False, None))
+        self.assertEqual((second["utm_medium"], second["utm_content"], second["post_id"]),
+                         ("paid-social", "dana-ep2-linkedin-ad", "urn:li:sponsoredContent:42"))
+        self.assertEqual(second["utm_campaign"], "exactly-dana")
+
+    def test_batch_bad_paid_value(self):
+        path = self.batch_file(["exactly,dana,,qr,print,/,,n,maybe"],
+                               header="campaign,series,episode,platform,placement,to,video_uid,note,paid")
+        rc, _, err = self.run_cli("--batch", path)
+        self.assertEqual(rc, 1)
+        self.assertIn("paid", err)
+
+
+class TestSetPostId(TempRepo):
+    def setUp(self):
+        super().setUp()
+        self.text = (cc.DATA_HEADER + "\n" + cc.entry_to_yaml(legacy()) + "\n"
+                     + cc.entry_to_yaml(good()) + "\n# trailing comment\n")
+        with open(self.data, "w") as f:
+            f.write(self.text)
+
+    def run_cli(self, *argv):
+        return run_quietly(set_post_id.main, list(argv), data_file=self.data, repo_root=self.root)
+
+    def test_sets_and_preserves_layout(self):
+        rc, _, err = self.run_cli("R7K9XM", "dQw4w9WgXcQ")
+        self.assertEqual(rc, 0, err)
+        after = read(self.data)
+        self.assertEqual(after, self.text.replace("  post_id: null\n", "  post_id: dQw4w9WgXcQ\n"))
+        self.assertEqual(cc.load_entries(self.data)[1]["post_id"], "dQw4w9WgXcQ")
+
+    def test_lowercase_code_accepted(self):
+        self.assertEqual(self.run_cli("r7k9xm", "dQw4w9WgXcQ")[0], 0)
+
+    def test_refuses_overwrite_without_force(self):
+        self.run_cli("R7K9XM", "dQw4w9WgXcQ")
+        rc, _, err = self.run_cli("R7K9XM", "aaaaaaaaaaa")
+        self.assertEqual(rc, 1)
+        self.assertIn("--force", err)
+        self.assertEqual(self.run_cli("R7K9XM", "aaaaaaaaaaa", "--force")[0], 0)
+        self.assertEqual(cc.load_entries(self.data)[1]["post_id"], "aaaaaaaaaaa")
+
+    def test_invalid_or_unknown_writes_nothing(self):
+        for argv in (("R7K9XM", "too-short"), ("ZZZZZZ", "dQw4w9WgXcQ"), ("099AWD", "dQw4w9WgXcQ")):
+            rc, _, _ = self.run_cli(*argv)
+            self.assertEqual(rc, 1, argv)
+            self.assertEqual(read(self.data), self.text)
+
+    def test_numeric_id_is_quoted(self):
+        entry = good(platform="facebook", utm_source="facebook", utm_medium="social",
+                     placement="post")
+        with open(self.data, "w") as f:
+            f.write(cc.entry_to_yaml(entry))
+        self.assertEqual(self.run_cli("R7K9XM", "120210000000000")[0], 0)
+        self.assertIn('post_id: "120210000000000"', read(self.data))
+        self.assertEqual(cc.load_entries(self.data)[0]["post_id"], "120210000000000")
+
+    def test_inserts_key_when_missing(self):
+        entry = good()
+        del entry["post_id"]
+        with open(self.data, "w") as f:
+            f.write(cc.entry_to_yaml(entry))
+        self.assertEqual(self.run_cli("R7K9XM", "dQw4w9WgXcQ")[0], 0)
+        self.assertEqual(cc.load_entries(self.data)[0]["post_id"], "dQw4w9WgXcQ")
 
 
 class TestMigration(TempRepo):

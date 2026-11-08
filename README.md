@@ -20,7 +20,7 @@ to `main` — there is no separate build step or CI to manage.
 ├── _verticals/              One file per industry vertical → /for/<name>/ (see below).
 ├── _data/campaign_codes.yml Source of truth for /go/ campaign codes (see below).
 ├── _go/                     GENERATED /go/<CODE> redirect files. Don't hand-edit.
-├── scripts/                 Campaign code tooling (new_code.py, build_go.py). Not published.
+├── scripts/                 Campaign code tooling (new_code, build_go, set_post_id). Not published.
 ├── campaign_batches/        Batch CSVs for new_code.py --batch. Not published.
 ├── index.html, developers.html, teams.html, saas-fintech.html,
 │   faq.html, privacy.html, terms.html, 404.html
@@ -157,6 +157,7 @@ The scripts need Python 3.8+ and PyYAML (`python3 -m pip install --user pyyaml`)
 
 ```bash
 python3 scripts/new_code.py \
+  --campaign exactly \
   --series cleared-for-exactness \
   --episode ep1-weight-and-balance \
   --platform youtube \
@@ -167,8 +168,11 @@ python3 scripts/build_go.py
 ```
 
 `new_code.py` picks a random unused code, derives the UTM values, appends the
-entry to the YAML (comments and layout are kept), and prints the URL. Other
-options: `--video-uid` (Cloudflare Stream clip, added as `?v=`), `--description`,
+entry to the YAML (comments and layout are kept), and prints the URL.
+`--campaign` is the launch campaign the code belongs to (`exactly` for the
+"Exactly!" MCP launch, later `live-numbers`). Other options: `--paid` (a paid ad
+or boosted post), `--post-id` (the platform's ID for the post, if already
+known), `--video-uid` (Cloudflare Stream clip, added as `?v=`), `--description`,
 `--abbr` (override the series abbreviation), `--utm-term`, `--owner` (default
 `bill`), `--destination-type` (default `landing-page`), `--qr [PATH]`,
 `--expires YYYY-MM-DD`, and `--dry-run` to validate and print without writing.
@@ -178,20 +182,37 @@ UTM values are derived, never typed by hand:
 | Field | Value |
 | --- | --- |
 | `utm_source` | the platform (`youtube`, `linkedin`, `qr`, ...) |
-| `utm_medium` | youtube/tiktok/instagram = `video`; linkedin/facebook = `social`; qr = `qr`; email = `email`; podcast = `podcast`; trade-media = `referral` |
-| `utm_campaign` | the series slug |
+| `utm_medium` | youtube/tiktok/instagram = `video`; linkedin/facebook = `social`; qr = `qr`; email = `email`; podcast = `podcast`; trade-media = `referral`. With `--paid` it gets a `paid-` prefix (`paid-video`, `paid-social`, ...), which GA4's default channel grouping files under the paid channels |
+| `utm_campaign` | `<campaign>-<series>`, e.g. `exactly-cleared-for-exactness` |
 | `utm_content` | series abbreviation + episode + platform + placement, e.g. `cfe-ep1-youtube-description`; series-level links use `series` (`cfe-series-qr-print`) |
 | `utm_id` | the code itself (added to the generated file) |
 
 The abbreviation is the first letter of each word of the series slug
 (`cleared-for-exactness` = `cfe`), or the whole word for one-word slugs (`dana`).
+For paid placements use placement `ad`, so ads and organic posts get different
+`utm_content` (`cfe-ep1-linkedin-ad` vs `cfe-ep1-linkedin-post`).
+
+### Record the post ID once it's live
+
+Codes are created before posting, so `post_id` starts empty. When the video,
+post or ad is live, record the platform's ID for it (YouTube video ID, TikTok
+video ID, LinkedIn post URN, Meta ad ID, ...):
+
+```bash
+python3 scripts/set_post_id.py R7K9XM dQw4w9WgXcQ
+```
+
+It edits the YAML in place (comments kept) and refuses to replace an existing
+ID unless you pass `--force`. `post_id` never goes into URLs or UTMs, so there's
+nothing to rebuild; it lets the campaign dashboard join platform views to codes.
 
 ### Launch a series (batch)
 
 1. Put a CSV in `campaign_batches/` with one row per code. Required columns:
-   `series, episode, platform, placement, to, video_uid, note` (episode and
-   video_uid may be blank). Optional: `description, abbr, utm_term, owner,
-   destination_type, expires, qr_generated`.
+   `campaign, series, episode, platform, placement, to, video_uid, note`
+   (episode and video_uid may be blank). Optional: `description, abbr,
+   utm_term, owner, destination_type, expires, qr_generated, paid, post_id`
+   (`paid` is true/false; blank means false).
 2. `python3 scripts/new_code.py --batch campaign_batches/launch_codes.csv`.
    If any row is invalid nothing is written. On success it also writes
    `campaign_batches/launch_codes.codes.csv` listing every new code and URL.
@@ -220,14 +241,18 @@ address or phone number.
 - `to`: a site path starting with `/` (optionally ending in `#section`) or a full
   `http(s)` URL. UTM params are inserted before any `#section`, since browsers
   never send the fragment.
-- `series`, `platform`, `placement` and all of `utm_source`, `utm_medium`,
-  `utm_campaign`, `utm_content` are required; UTM values are lowercase with no
-  spaces, and `utm_campaign` equals the series slug. `platform`, `placement`
+- `campaign`, `series`, `platform`, `placement` and all of `utm_source`,
+  `utm_medium`, `utm_campaign`, `utm_content` are required; `campaign` and
+  `series` are lowercase slugs; UTM values are lowercase with no spaces, and
+  `utm_campaign` equals `<campaign>-<series>`. `platform`, `placement`
   and `destination_type` must come from the lists in the YAML header.
 - `created` is a valid date; `expires`, if set, is on or after `created`.
 - `video_uid`, if set, is a 32-character lowercase hex Cloudflare Stream UID, and
   `to` must not also carry `?v=`.
 - `owner` is a lowercase slug (who asked for the code; never in URLs).
+- `paid` is `true` or `false`.
+- `post_id`, if set, has no whitespace; on YouTube codes it must be an
+  11-character video ID (`A-Z a-z 0-9 _ -`).
 - `qr_generated` is `false`, `true`, or a path to an existing file under
   `campaign_assets/`.
 - Unknown fields are rejected, so a typo like `utm_souce` can't slip through.
@@ -238,7 +263,8 @@ The eight codes that predate this system (`099AWD`, `09G3SA`, `0BBF19`,
 `8ZP2QR`, `HR67H3`, `J4K7WM`, `Q3XR9T`, `R7K9XM`) are entries with
 `legacy: true`. They were migrated by `scripts/migrate_existing_codes.py` with
 every field copied exactly and `created` taken from git history. Their files are
-generated with exactly their original fields (no `utm_id`; fields they left out
+generated with exactly their original fields, and they have no `campaign`,
+`paid` or `post_id` (no `utm_id`; fields they left out
 fall back to the layout defaults `utm_source=go`, `utm_medium=referral`,
 `utm_campaign=<CODE>`), so their redirects and GA history are unchanged. They
 are exempt from the UTM naming rules.
@@ -255,9 +281,10 @@ are exempt from the UTM naming rules.
   params are stripped from the address bar. The strip fires from GA's page-view
   `event_callback` (wired in [`_layouts/default.html`](_layouts/default.html)),
   only after the analytics beacon has gone out, so attribution is never lost.
-- **Reading it in GA4:** the Campaign report has one row per series;
-  Source/medium shows platform and format; drill into `utm_content` for the exact
-  placement. To trace a visit to its exact code, use the **Session campaign ID**
+- **Reading it in GA4:** the Campaign report has one row per campaign and
+  series (`exactly-cleared-for-exactness`, `exactly-dana`, ...);
+  Source/medium shows platform and format (paid placements show as
+  `paid-*`); drill into `utm_content` for the exact placement. To trace a visit to its exact code, use the **Session campaign ID**
   dimension, which carries `utm_id`.
 - `/go/` links are kept out of `sitemap.xml` and marked `noindex` automatically.
 - If you ever need true server-side 302s or case-insensitive codes, move this to

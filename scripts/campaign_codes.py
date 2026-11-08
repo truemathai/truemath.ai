@@ -38,7 +38,7 @@ PLATFORMS = [
 ]
 PLACEMENTS = [
     "description", "pinned-comment", "end-screen", "bio-link", "post",
-    "story", "group-post", "show-notes", "print", "slide",
+    "story", "group-post", "show-notes", "print", "slide", "ad",
 ]
 DESTINATION_TYPES = [
     "landing-page", "video", "playground", "domain-signup", "series-page",
@@ -58,16 +58,19 @@ PLATFORM_MEDIUM = {
 
 # Every key an entry may carry, in the order they are written to the data file.
 FIELDS = [
-    "code", "series", "episode", "platform", "placement", "to", "video_uid",
-    "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+    "code", "campaign", "series", "episode", "platform", "placement", "paid",
+    "to", "video_uid", "post_id", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
     "note", "created", "description", "legacy", "expires", "owner",
     "destination_type", "qr_generated",
 ]
 UTM_FIELDS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
 REQUIRED_UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content"]
+# Added after the Nov 5 spec; only non-legacy entries carry them.
+NON_LEGACY_FIELDS = ["campaign", "paid", "post_id"]
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 VIDEO_UID_RE = re.compile(r"^[0-9a-f]{32}$")
+YOUTUBE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 URL_RE = re.compile(r"^https?://[^\s/]+\S*$")
 QR_DIR = "campaign_assets/"
 
@@ -112,7 +115,22 @@ def episode_part(episode):
     return episode.split("-")[0]
 
 
-def derive_utm(series, episode, platform, placement, abbr=None):
+def utm_campaign_for(campaign, series):
+    """The one place utm_campaign is derived: <campaign>-<series>.
+
+    exactly + cleared-for-exactness -> exactly-cleared-for-exactness.
+    """
+    return "%s-%s" % (campaign, series)
+
+
+def utm_medium_for(platform, paid=False):
+    """Medium for a platform; paid placements get a "paid-" prefix so GA4's
+    default channel grouping files them under the paid channels."""
+    medium = PLATFORM_MEDIUM[platform]
+    return "paid-" + medium if paid else medium
+
+
+def derive_utm(campaign, series, episode, platform, placement, paid=False, abbr=None):
     if platform not in PLATFORM_MEDIUM:
         raise ValidationError(
             "platform %r must be one of: %s" % (platform, ", ".join(PLATFORMS)))
@@ -120,8 +138,8 @@ def derive_utm(series, episode, platform, placement, abbr=None):
                         platform, placement])
     return {
         "utm_source": platform,
-        "utm_medium": PLATFORM_MEDIUM[platform],
-        "utm_campaign": series,
+        "utm_medium": utm_medium_for(platform, paid),
+        "utm_campaign": utm_campaign_for(campaign, series),
         "utm_content": content,
     }
 
@@ -224,13 +242,20 @@ def validate_entry(entry, repo_root=REPO_ROOT, today=None):
 
     # Series / episode / platform / placement
     series = entry.get("series")
-    if not legacy:
+    campaign = entry.get("campaign")
+    if legacy:
+        for field in NON_LEGACY_FIELDS:
+            if entry.get(field) not in (None, False):
+                errors.append("%s is not used on legacy entries" % field)
+    else:
+        if _blank(campaign):
+            errors.append("campaign is required (e.g. exactly)")
         if _blank(series):
             errors.append("series is required")
-        for field, allowed in (("platform", PLATFORMS), ("placement", PLACEMENTS)):
+        for field in ("platform", "placement"):
             if _blank(entry.get(field)):
                 errors.append("%s is required" % field)
-    for field in ("series", "episode"):
+    for field in ("campaign", "series", "episode"):
         value = entry.get(field)
         if value is not None and not (isinstance(value, str) and SLUG_RE.match(value)):
             errors.append("%s %r must be a lowercase slug (letters, digits, hyphens)"
@@ -255,9 +280,26 @@ def validate_entry(entry, repo_root=REPO_ROOT, today=None):
                 if value != value.lower() or re.search(r"\s", value):
                     errors.append("%s %r must be lowercase with no spaces (use hyphens)"
                                   % (field, value))
-        campaign = entry.get("utm_campaign")
-        if isinstance(series, str) and isinstance(campaign, str) and campaign and campaign != series:
-            errors.append("utm_campaign %r must equal the series slug %r" % (campaign, series))
+        utm_campaign = entry.get("utm_campaign")
+        if (isinstance(campaign, str) and campaign and isinstance(series, str) and series
+                and isinstance(utm_campaign, str) and utm_campaign):
+            expected = utm_campaign_for(campaign, series)
+            if utm_campaign != expected:
+                errors.append("utm_campaign %r must be %r (campaign-series)"
+                              % (utm_campaign, expected))
+
+    # paid / post_id
+    paid = entry.get("paid", False)
+    if paid is not None and not isinstance(paid, bool):
+        errors.append("paid must be true or false")
+    post_id = entry.get("post_id")
+    if post_id is not None:
+        if not isinstance(post_id, str):
+            errors.append("post_id %r must be a string (quote numeric IDs)" % (post_id,))
+        elif not post_id or re.search(r"\s", post_id):
+            errors.append("post_id %r must be non-empty with no whitespace" % post_id)
+        elif entry.get("platform") == "youtube" and not YOUTUBE_ID_RE.match(post_id):
+            errors.append("post_id %r must be an 11-character YouTube video ID" % post_id)
 
     # PII heuristics (warnings only)
     for field in ("utm_source", "utm_medium", "utm_campaign", "utm_content",
@@ -386,8 +428,13 @@ def full_entry(**values):
     """An entry with every schema key present, defaults filled in."""
     entry = {k: None for k in FIELDS}
     entry["legacy"] = False
+    entry["paid"] = False
     entry["qr_generated"] = False
     entry.update(values)
+    if entry["legacy"]:
+        for field in NON_LEGACY_FIELDS:
+            if field not in values:
+                del entry[field]
     return entry
 
 
@@ -444,23 +491,29 @@ DATA_HEADER = """\
 #
 # Schema, one list item per code:
 #   code              six-char Crockford Base32, uppercase (required, unique)
-#   series            series slug (required); also utm_campaign
+#   campaign          campaign slug (required), e.g. exactly, later live-numbers
+#   series            series slug (required)
 #   episode           episode slug, or null for series-level links
 #   platform          youtube, linkedin, facebook, tiktok, instagram, qr, email,
 #                     podcast, trade-media
 #   placement         description, pinned-comment, end-screen, bio-link, post,
-#                     story, group-post, show-notes, print, slide
+#                     story, group-post, show-notes, print, slide, ad
+#   paid              true for a paid ad or boosted post (utm_medium gets "paid-")
 #   to                site path ("/x", "/x#section") or full http(s) URL (required)
 #   video_uid         Cloudflare Stream UID, appended as ?v=; null if none
+#   post_id           the platform's own ID for the post/video/ad (YouTube video
+#                     ID, TikTok video ID, LinkedIn URN, Meta ad ID); null until
+#                     known; set it with scripts/set_post_id.py. Never in URLs.
 #   utm_source        required; lowercase, no spaces
-#   utm_medium        required; lowercase, no spaces
-#   utm_campaign      required; always the series slug
+#   utm_medium        required; lowercase, no spaces; "paid-<medium>" when paid
+#   utm_campaign      required; always <campaign>-<series>
 #   utm_content       required; identifies the placement, e.g. cfe-ep1-youtube-description
 #   utm_term          optional
 #   note              internal label; never in URLs or GA
 #   created           date the code was created (YYYY-MM-DD)
 #   description       fuller internal detail, optional
 #   legacy            true only for codes migrated from before this system
+#                     (legacy entries have no campaign, paid or post_id)
 #   expires           date to retire the code, or null
 #   owner             who requested or owns the code (lowercase slug)
 #   destination_type  landing-page, video, playground, domain-signup,

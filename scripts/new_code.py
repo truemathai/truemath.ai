@@ -4,6 +4,7 @@
 Single code:
 
     python3 scripts/new_code.py \\
+      --campaign exactly \\
       --series cleared-for-exactness \\
       --episode ep1-weight-and-balance \\
       --platform youtube \\
@@ -28,11 +29,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import campaign_codes as cc  # noqa: E402
 
-BATCH_REQUIRED = ["series", "episode", "platform", "placement", "to", "video_uid", "note"]
+BATCH_REQUIRED = ["campaign", "series", "episode", "platform", "placement", "to", "video_uid", "note"]
 BATCH_OPTIONAL = ["description", "abbr", "utm_term", "owner", "destination_type",
-                  "expires", "qr_generated"]
-OUTPUT_COLUMNS = ["code", "url", "utm_content", "series", "episode", "platform",
-                  "placement", "note"]
+                  "expires", "qr_generated", "paid", "post_id"]
+OUTPUT_COLUMNS = ["code", "url", "utm_campaign", "utm_content", "series", "episode",
+                  "platform", "placement", "note"]
 
 
 def _clean(value):
@@ -55,6 +56,18 @@ def parse_qr(value):
     return value  # a path under campaign_assets/
 
 
+def parse_bool(value):
+    """CSV/CLI boolean: blank means false. Bad input is returned for validation."""
+    if value is None or isinstance(value, bool):
+        return bool(value)
+    text = value.strip().lower()
+    if text in ("", "false", "no", "0"):
+        return False
+    if text in ("true", "yes", "1"):
+        return True
+    return value
+
+
 def parse_date(value):
     value = _clean(value)
     if value is None:
@@ -62,20 +75,24 @@ def parse_date(value):
     return cc.as_date(value) or value  # leave bad input for validation to report
 
 
-def build_entry(code, series, episode, platform, placement, to, note=None,
+def build_entry(code, campaign, series, episode, platform, placement, to, note=None,
                 video_uid=None, description=None, abbr=None, utm_term=None,
                 owner=None, destination_type=None, expires=None, qr_generated=None,
-                today=None):
-    series, episode, platform, placement = (_clean(series), _clean(episode),
-                                            _clean(platform), _clean(placement))
+                paid=False, post_id=None, today=None):
+    campaign, series, episode, platform, placement = (
+        _clean(campaign), _clean(series), _clean(episode), _clean(platform), _clean(placement))
+    paid = parse_bool(paid)
     entry = cc.full_entry(
         code=code,
+        campaign=campaign,
         series=series,
         episode=episode,
         platform=platform,
         placement=placement,
+        paid=paid,
         to=_clean(to),
         video_uid=_clean(video_uid),
+        post_id=_clean(post_id),
         utm_term=_clean(utm_term),
         note=_clean(note),
         created=today or datetime.date.today(),
@@ -86,12 +103,13 @@ def build_entry(code, series, episode, platform, placement, to, note=None,
         destination_type=_clean(destination_type) or "landing-page",
         qr_generated=parse_qr(qr_generated),
     )
-    if series and platform in cc.PLATFORM_MEDIUM and placement:
-        entry.update(cc.derive_utm(series, episode, platform, placement, abbr=_clean(abbr)))
+    if campaign and series and platform in cc.PLATFORM_MEDIUM and placement and isinstance(paid, bool):
+        entry.update(cc.derive_utm(campaign, series, episode, platform, placement,
+                                   paid=paid, abbr=_clean(abbr)))
     else:
         # Leave UTM fields empty; validation reports the underlying problem.
         entry.update({"utm_source": platform, "utm_medium": None,
-                      "utm_campaign": series, "utm_content": None})
+                      "utm_campaign": None, "utm_content": None})
     return entry
 
 
@@ -134,8 +152,9 @@ def commit(entries, data_file, repo_root, dry_run):
 def run_single(args, data_file, repo_root):
     existing = {e.get("code") for e in cc.load_entries(data_file) if isinstance(e, dict)}
     entry = build_entry(
-        cc.new_unique_code(existing), args.series, args.episode, args.platform,
+        cc.new_unique_code(existing), args.campaign, args.series, args.episode, args.platform,
         args.placement, args.to, note=args.note, video_uid=args.video_uid,
+        paid=args.paid, post_id=args.post_id,
         description=args.description, abbr=args.abbr, utm_term=args.utm_term,
         owner=args.owner, destination_type=args.destination_type,
         expires=args.expires, qr_generated=args.qr)
@@ -183,7 +202,7 @@ def run_batch(path, data_file, repo_root, dry_run, today=None):
         code = cc.new_unique_code(taken)
         taken.add(code)
         kwargs = {k: row.get(k) for k in BATCH_OPTIONAL}
-        entry = build_entry(code, row.get("series"), row.get("episode"), row.get("platform"),
+        entry = build_entry(code, row.get("campaign"), row.get("series"), row.get("episode"), row.get("platform"),
                             row.get("placement"), row.get("to"), note=row.get("note"),
                             video_uid=row.get("video_uid"), today=today, **kwargs)
         row_errors, _ = cc.validate_entry(entry, repo_root=repo_root)
@@ -218,13 +237,17 @@ def main(argv=None, data_file=None, repo_root=None):
         description="Create campaign codes in _data/campaign_codes.yml.",
         formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
     p.add_argument("--batch", metavar="CSV", help="create one code per row of a CSV file")
-    p.add_argument("--series", help="series slug, e.g. cleared-for-exactness (utm_campaign)")
+    p.add_argument("--campaign", help="campaign slug, e.g. exactly; utm_campaign is <campaign>-<series>")
+    p.add_argument("--series", help="series slug, e.g. cleared-for-exactness")
     p.add_argument("--episode", help="episode slug, e.g. ep1-weight-and-balance; omit for series-level links")
     p.add_argument("--platform", choices=cc.PLATFORMS, help="where the code is used (utm_source)")
     p.add_argument("--placement", choices=cc.PLACEMENTS, help="where on the platform")
     p.add_argument("--to", help="destination: site path (/x, /x#section) or full http(s) URL")
     p.add_argument("--note", help="short internal label (never in URLs or GA)")
     p.add_argument("--video-uid", help="Cloudflare Stream UID, appended to the destination as ?v=")
+    p.add_argument("--paid", action="store_true",
+                   help="a paid ad or boosted post: utm_medium becomes paid-<medium>")
+    p.add_argument("--post-id", help="the platform's ID for the post/video/ad, if already known")
     p.add_argument("--description", help="fuller internal detail")
     p.add_argument("--abbr", help="override the series abbreviation used in utm_content")
     p.add_argument("--utm-term", help="optional utm_term")
@@ -241,7 +264,7 @@ def main(argv=None, data_file=None, repo_root=None):
     repo_root = repo_root or cc.REPO_ROOT
     if args.batch:
         return run_batch(args.batch, data_file, repo_root, args.dry_run)
-    missing = [flag for flag, v in (("--series", args.series), ("--platform", args.platform),
+    missing = [flag for flag, v in (("--campaign", args.campaign), ("--series", args.series), ("--platform", args.platform),
                                     ("--placement", args.placement), ("--to", args.to)) if not v]
     if missing:
         p.error("missing required option(s): %s (or use --batch)" % ", ".join(missing))

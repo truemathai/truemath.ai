@@ -6,23 +6,29 @@
 #
 # Schema, one list item per code:
 #   code              six-char Crockford Base32, uppercase (required, unique)
-#   series            series slug (required); also utm_campaign
+#   campaign          campaign slug (required), e.g. exactly, later live-numbers
+#   series            series slug (required)
 #   episode           episode slug, or null for series-level links
 #   platform          youtube, linkedin, facebook, tiktok, instagram, qr, email,
 #                     podcast, trade-media
 #   placement         description, pinned-comment, end-screen, bio-link, post,
-#                     story, group-post, show-notes, print, slide
+#                     story, group-post, show-notes, print, slide, ad
+#   paid              true for a paid ad or boosted post (utm_medium gets "paid-")
 #   to                site path ("/x", "/x#section") or full http(s) URL (required)
 #   video_uid         Cloudflare Stream UID, appended as ?v=; null if none
+#   post_id           the platform's own ID for the post/video/ad (YouTube video
+#                     ID, TikTok video ID, LinkedIn URN, Meta ad ID); null until
+#                     known; set it with scripts/set_post_id.py. Never in URLs.
 #   utm_source        required; lowercase, no spaces
-#   utm_medium        required; lowercase, no spaces
-#   utm_campaign      required; always the series slug
+#   utm_medium        required; lowercase, no spaces; "paid-<medium>" when paid
+#   utm_campaign      required; always <campaign>-<series>
 #   utm_content       required; identifies the placement, e.g. cfe-ep1-youtube-description
 #   utm_term          optional
 #   note              internal label; never in URLs or GA
 #   created           date the code was created (YYYY-MM-DD)
 #   description       fuller internal detail, optional
 #   legacy            true only for codes migrated from before this system
+#                     (legacy entries have no campaign, paid or post_id)
 #   expires           date to retire the code, or null
 #   owner             who requested or owns the code (lowercase slug)
 #   destination_type  landing-page, video, playground, domain-signup,
