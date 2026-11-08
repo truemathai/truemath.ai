@@ -48,5 +48,8 @@ exclude:
   - Gemfile.lock
   - vendor
   - .bundle
+  # Campaign code tooling and batch CSVs (see README) are not part of the site.
+  - scripts
+  - campaign_batches
 keep_files:
   - CNAME
