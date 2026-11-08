@@ -1,0 +1,201 @@
+# Campaign codes: the source of truth for every truemath.ai/go/<CODE> link.
+#
+# Edit THIS file (or use scripts/new_code.py), then run scripts/build_go.py to
+# regenerate _go/*.md. Never hand-edit _go/: those files are generated.
+# See "Campaign redirect links" in README.md for the full workflow.
+#
+# Schema, one list item per code:
+#   code              six-char Crockford Base32, uppercase (required, unique)
+#   series            series slug (required); also utm_campaign
+#   episode           episode slug, or null for series-level links
+#   platform          youtube, linkedin, facebook, tiktok, instagram, qr, email,
+#                     podcast, trade-media
+#   placement         description, pinned-comment, end-screen, bio-link, post,
+#                     story, group-post, show-notes, print, slide
+#   to                site path ("/x", "/x#section") or full http(s) URL (required)
+#   video_uid         Cloudflare Stream UID, appended as ?v=; null if none
+#   utm_source        required; lowercase, no spaces
+#   utm_medium        required; lowercase, no spaces
+#   utm_campaign      required; always the series slug
+#   utm_content       required; identifies the placement, e.g. cfe-ep1-youtube-description
+#   utm_term          optional
+#   note              internal label; never in URLs or GA
+#   created           date the code was created (YYYY-MM-DD)
+#   description       fuller internal detail, optional
+#   legacy            true only for codes migrated from before this system
+#   expires           date to retire the code, or null
+#   owner             who requested or owns the code (lowercase slug)
+#   destination_type  landing-page, video, playground, domain-signup,
+#                     series-page, external
+#   qr_generated      false, true, or a path to the QR image under campaign_assets/
+#
+# This repo is public: keep personal or private details out of every field,
+# note and description included.
+
+- code: 099AWD
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /introduction.html
+  video_uid: null
+  utm_source: null
+  utm_medium: null
+  utm_campaign: 099AWD
+  utm_content: null
+  utm_term: null
+  note: "Intro video player"
+  created: 2026-07-27
+  description: "Points at the video player — currently the /introduction.html page. Repoint `to:` to the home-page player once the player lives there."
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: 09G3SA
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /introduction.html?v=86358cfbfbf38b02338ddc9cc2c9ece8
+  video_uid: null
+  utm_source: null
+  utm_medium: null
+  utm_campaign: 09G3SA
+  utm_content: null
+  utm_term: null
+  note: "Financial Advisor walkthrough"
+  created: 2026-07-27
+  description: "Opens the video player deep-linked to the Financial Advisor domain walkthrough clip (Domains tab)."
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: 0BBF19
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /lending.html
+  video_uid: null
+  utm_source: partner
+  utm_medium: referral
+  utm_campaign: 0BBF19
+  utm_content: null
+  utm_term: null
+  note: "Metal Toad lending pitch — Austin Verdi"
+  created: 2026-09-07
+  description: "The /lending.html partner pitch page, for Metal Toad's pitch to a banking customer that wants mortgage, auto, and savings calculators on its site. Destination is unlisted and noindex, so this code is the only way anyone is meant to arrive."
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: 8ZP2QR
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /for/residential-mortgage-broker/
+  video_uid: null
+  utm_source: linkedin
+  utm_medium: social
+  utm_campaign: 8ZP2QR
+  utm_content: null
+  utm_term: null
+  note: "LinkedIn RMB"
+  created: 2026-07-21
+  description: null
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: HR67H3
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /
+  video_uid: null
+  utm_source: qr
+  utm_medium: event
+  utm_campaign: HR67H3
+  utm_content: null
+  utm_term: null
+  note: "Steve Brown Keynote"
+  created: 2026-07-22
+  description: "QR code on the closing slide of Steve Brown's keynote. In-person lead source for attendees who scan during or after the talk. Internal-only — never appears in the URL or in GA."
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: J4K7WM
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /for/cre-acquisitions-analyst/
+  video_uid: null
+  utm_source: linkedin
+  utm_medium: social
+  utm_campaign: J4K7WM
+  utm_content: null
+  utm_term: null
+  note: "LinkedIn CRE"
+  created: 2026-07-21
+  description: null
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: Q3XR9T
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: https://app.truemath.ai/signup
+  video_uid: null
+  utm_source: acme-podcast
+  utm_medium: sponsorship
+  utm_campaign: podcast-2026h1
+  utm_content: null
+  utm_term: null
+  note: "Podcast read — sponsor spot, direct to signup"
+  created: 2026-07-21
+  description: null
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
+
+- code: R7K9XM
+  series: null
+  episode: null
+  platform: null
+  placement: null
+  to: /for/real-estate-investor/
+  video_uid: null
+  utm_source: linkedin
+  utm_medium: social
+  utm_campaign: R7K9XM
+  utm_content: null
+  utm_term: null
+  note: "LinkedIn REI"
+  created: 2026-07-30
+  description: null
+  legacy: true
+  expires: null
+  owner: null
+  destination_type: null
+  qr_generated: false
